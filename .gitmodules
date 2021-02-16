@@ -1,0 +1,3 @@
+[submodule "src/Networking/roboteam_proto"]
+	path = src/Networking/roboteam_proto
+	url = https://github.com/RoboTeamTwente/roboteam_proto
