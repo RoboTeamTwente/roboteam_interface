@@ -11,12 +11,25 @@ interface FieldState {
 }
 
 class Field extends React.Component<FieldProps, FieldState> {
+    fieldWidthOffset: number;
+    fieldHeightOffset: number;
     constructor(props: FieldProps) {
         super(props);
         this.state = {
             state: null,
             canvas: React.createRef<HTMLCanvasElement>()
         };
+
+        this.fieldWidthOffset = 5;
+        this.fieldHeightOffset = 5;
+    }
+
+    public getWidth() {
+        return this.props.width - this.fieldWidthOffset * 2;
+    }
+
+    public getHeight() {
+        return this.props.height - this.fieldHeightOffset * 2;
     }
 
     public componentDidMount() {
@@ -32,11 +45,14 @@ class Field extends React.Component<FieldProps, FieldState> {
 
         // Draw the outlines of the field
         console.log(this.props, this.state)
-        ctx.rect(0, 0, this.props.width, this.props.height);
-        ctx.moveTo(this.props.width / 2, 0);
-        ctx.lineTo(this.props.width / 2, this.props.height);
-        ctx.moveTo(this.props.width / 2 + 100, this.props.height / 2);
-        ctx.arc(this.props.width / 2, this.props.height / 2, 100, 0, 2 * Math.PI);
+        ctx.fillStyle = "#23272a";
+        ctx.fillRect(0, 0, this.props.width, this.props.height);
+        ctx.strokeStyle = "#ffffff";
+        ctx.rect(this.fieldWidthOffset, this.fieldHeightOffset, this.getWidth(), this.getHeight());
+        ctx.moveTo(this.getWidth() / 2, this.fieldWidthOffset);
+        ctx.lineTo(this.getWidth() / 2, this.props.height - this.fieldHeightOffset);
+        ctx.moveTo(this.getWidth() / 2 + 100, this.getHeight() / 2);
+        ctx.arc(this.getWidth() / 2, this.getHeight() / 2, 100, 0, 2 * Math.PI);
         ctx.stroke();
     }
 
