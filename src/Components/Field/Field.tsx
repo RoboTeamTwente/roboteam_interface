@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ModuleState } from '../../Networking/proto_build/State';
+import { getPhantomModuleState } from '../PhantomData/State';
 
 interface FieldProps {
     height: number;
@@ -22,6 +23,9 @@ class Field extends React.Component<FieldProps, FieldState> {
 
         this.fieldWidthOffset = 5;
         this.fieldHeightOffset = 5;
+
+        this.update = this.update.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     public getWidth() {
@@ -33,18 +37,33 @@ class Field extends React.Component<FieldProps, FieldState> {
     }
 
     public componentDidMount() {
-        this.update();
+        let data = getPhantomModuleState();
+        this.update(data);
+        this.draw(data);
     }
 
-    public update() {
+    public update(state: ModuleState) {
+        this.setState({
+            state: state,
+            canvas: this.state.canvas
+        });
+    }
+
+    public draw(state: ModuleState | null) {
         const ctx = this.state.canvas.current?.getContext("2d");
+        
         if (ctx == null) {
             return;
         }
+
+        if (state == null) {
+            return;
+        }
+
         ctx.lineWidth = 1;
 
         // Draw the outlines of the field
-        console.log(this.props, this.state)
+        console.log(this.props, state)
         ctx.fillStyle = "#23272a";
         ctx.fillRect(0, 0, this.props.width, this.props.height);
         ctx.strokeStyle = "#ffffff";
