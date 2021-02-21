@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { SSLFieldCircularArc, SSLFieldLineSegment } from '../../Networking/proto_build/messages_robocup_ssl_geometry';
+import { TeamParameters } from '../../Networking/proto_build/RobotParameters';
 import { ModuleState, State } from '../../Networking/proto_build/State';
 import { World } from '../../Networking/proto_build/World';
-import { scale, setFieldLength } from '../../Utils/Dimensions';
+import { WorldBall } from '../../Networking/proto_build/WorldBall';
+import { WorldRobot } from '../../Networking/proto_build/WorldRobot';
+import { getLength, getWidth, scale, setFieldLength } from '../../Utils/Dimensions';
 import { getPhantomModuleState } from '../PhantomData/State';
 
 interface FieldProps { }
@@ -53,7 +56,7 @@ class Field extends React.Component<FieldProps, FieldState> {
             return;
         }
         ctx?.translate(canvas.width / 2, canvas.height / 2);
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
 
         // Draw the field
         // ctx.strokeStyle = "#000000";
@@ -70,10 +73,7 @@ class Field extends React.Component<FieldProps, FieldState> {
 
     drawField(ctx: CanvasRenderingContext2D, state: ModuleState) {
         let data = state.systemState!.state!.field!.field!;
-        console.log(data);
         let {
-            // fieldLength,
-            // fieldWidth,
             // goalWidth,
             // goalDepth,
             // boundaryWidth,
@@ -82,7 +82,6 @@ class Field extends React.Component<FieldProps, FieldState> {
             // penaltyAreaDepth,
             // penaltyAreaWidth
         } = data;
-        console.log(state);
         // let width = scale(fieldWidth);
         // let length = scale(fieldLength);
         this.drawLines(ctx, fieldLines);
@@ -95,24 +94,27 @@ class Field extends React.Component<FieldProps, FieldState> {
             yellow, blue, ball
         } = world;
 
-        for (let each of yellow) {
-            let { yellowRobotParameters } = state;
-            let { x, y } = each.pos!;
-            let realX = scale(x * 1000);
-            let realY = scale(y * 1000);
-            let realRadius = scale(yellowRobotParameters!.parameters!.radius! * 1000);
-            this.drawCircleWithColor(ctx, realX, realY, realRadius, "yellow");
-        }
+        yellow.map(e => this.drawRobot(ctx, state, e, true));
+        blue.map(e => this.drawRobot(ctx, state, e, false));
 
-        for (let each of blue) {
-            let { blueRobotParameters } = state;
-            let { x, y } = each.pos!;
-            let realX = scale(x * 1000);
-            let realY = scale(y * 1000);
-            let realRadius = scale(blueRobotParameters!.parameters!.radius! * 1000);
-            this.drawCircleWithColor(ctx, realX, realY, realRadius, "blue");
-        }
         console.log(world);
+    }
+
+    drawRobot(ctx: CanvasRenderingContext2D, state: State, each: WorldRobot, yellow: boolean) {
+        let robotParameters = yellow ? state.yellowRobotParameters! : state.blueRobotParameters!;
+        let { angle, vel, w, id, pos } = each;
+        let { x, y } = pos!;
+        let realX = scale(x * 1000);
+        let realY = scale(y * 1000);
+        let realRadius = scale(robotParameters.parameters!.radius! * 1000);
+        this.drawCircle(ctx, realX, realY, realRadius);
+        ctx.fillText(id.toString(), realX + realRadius + 1, realY + realRadius + 1);
+        console.log(vel);
+        ctx.moveTo(realX, realY);
+        let velX = scale(vel!.x! * 1000);
+        let velY = scale(vel!.y! * 1000);
+        console.log(velX, velY);
+        ctx.lineTo(realX + velX, realY + velY);
     }
 
     drawLines(ctx: CanvasRenderingContext2D, lines: SSLFieldLineSegment[]) {
@@ -132,7 +134,6 @@ class Field extends React.Component<FieldProps, FieldState> {
 
     drawCircleWithColor(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) {
         let oldColor = ctx.fillStyle;
-        console.log(oldColor);
         ctx.fillStyle = color;
         this.drawCircle(ctx, x, y, radius);
         ctx.fill();
@@ -146,7 +147,7 @@ class Field extends React.Component<FieldProps, FieldState> {
         }
     }
 
-    public render() {
+    render() {
         return <canvas id="myCanvas" className="fieldCanvas" ref={this.state.canvas} />;
     }
 }
