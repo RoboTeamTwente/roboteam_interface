@@ -17,9 +17,7 @@ export class StpStateWidget extends Component<StpStateWidgetState, StpStateWidge
     render() {
         return (
             <>
-                <div>
-                    Some STP information here
-                </div>
+                Some STP information here
             </>
         )
     }
