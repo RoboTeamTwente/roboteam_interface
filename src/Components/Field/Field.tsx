@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { createRegularExpressionLiteral } from 'typescript';
 import { SSLFieldCircularArc, SSLFieldLineSegment } from '../../Networking/proto_build/messages_robocup_ssl_geometry';
 import { TeamParameters } from '../../Networking/proto_build/RobotParameters';
 import { ModuleState, State } from '../../Networking/proto_build/State';
+import { Vector2f } from '../../Networking/proto_build/Vector2f';
 import { World } from '../../Networking/proto_build/World';
 import { WorldBall } from '../../Networking/proto_build/WorldBall';
 import { WorldRobot } from '../../Networking/proto_build/WorldRobot';
@@ -96,8 +98,29 @@ class Field extends React.Component<FieldProps, FieldState> {
 
         yellow.map(e => this.drawRobot(ctx, state, e, true));
         blue.map(e => this.drawRobot(ctx, state, e, false));
-
+        if (ball !== undefined) {
+            this.drawBall(ctx, ball!);
+        }
         console.log(world);
+    }
+
+    drawBall(ctx: CanvasRenderingContext2D, ball: WorldBall) {
+        let {
+            area,
+            pos,
+            z,
+            vel,
+            zVel,
+            visible
+        } = ball;
+
+        let realX = scale(pos?.x!);
+        let realY = scale(pos?.y!);
+        let radius = Math.sqrt(area / Math.PI);
+        this.drawCircleWithColor(ctx, realX, realY, radius, "#ff7832");
+        ctx.moveTo(realX, realY);
+        ctx.lineTo(realX + scale(vel?.x!), realY + scale(vel?.y!));
+        ctx.stroke();
     }
 
     drawRobot(ctx: CanvasRenderingContext2D, state: State, each: WorldRobot, yellow: boolean) {
@@ -107,14 +130,14 @@ class Field extends React.Component<FieldProps, FieldState> {
         let realX = scale(x * 1000);
         let realY = scale(y * 1000);
         let realRadius = scale(robotParameters.parameters!.radius! * 1000);
-        this.drawCircle(ctx, realX, realY, realRadius);
+        this.drawCircleWithColor(ctx, realX, realY, realRadius, yellow ? "#ffff00" : "#9696ff");
+        ctx.font = "15px Arial";
         ctx.fillText(id.toString(), realX + realRadius + 1, realY + realRadius + 1);
-        console.log(vel);
         ctx.moveTo(realX, realY);
         let velX = scale(vel!.x! * 1000);
         let velY = scale(vel!.y! * 1000);
-        console.log(velX, velY);
         ctx.lineTo(realX + velX, realY + velY);
+        ctx.stroke();
     }
 
     drawLines(ctx: CanvasRenderingContext2D, lines: SSLFieldLineSegment[]) {
@@ -124,18 +147,29 @@ class Field extends React.Component<FieldProps, FieldState> {
             } = line;
             ctx.moveTo(scale(p1!.x!), scale(p1!.y!));
             ctx.lineTo(scale(p2!.x!), scale(p2!.y!));
+            ctx.stroke();
         }
     }
+
+    // Later for robots.
+    // drawPartialCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, ) {
+
+    // }
 
     drawCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number) {
         ctx.moveTo(x + radius, y);
         ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+        ctx.stroke();
     }
 
     drawCircleWithColor(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) {
         let oldColor = ctx.fillStyle;
         ctx.fillStyle = color;
-        this.drawCircle(ctx, x, y, radius);
+        ctx.moveTo(x + radius, y);
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+        ctx.fill();
+        ctx.closePath();
         ctx.fill();
         ctx.fillStyle = oldColor;
     }
@@ -148,7 +182,7 @@ class Field extends React.Component<FieldProps, FieldState> {
     }
 
     render() {
-        return <canvas id="myCanvas" className="fieldCanvas" ref={this.state.canvas} />;
+        return <canvas className="fieldCanvas" ref={this.state.canvas} />;
     }
 }
 
