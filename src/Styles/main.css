@@ -1,25 +1,27 @@
+/*import styles from './mystyle.module.css';  */
+
 .settingsDiv {
-    float: right;
-    width: 30%;
+  float: right;
+  width: 30%;
 }
 
 .settingsTitle {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 .roboteamLogoTopDiv {
-    position: sticky;
-    top: 0;
-    width: 20%;
-    height: 20%;
+  position: sticky;
+  top: 0;
+  width: 20%;
+  height: 20%;
 }
 
 .roboteamLogoTop {
-    width: 50%;
-    height: 50%;
+  width: 50%;
+  height: 50%;
 }
 
 /* * {
     /* background-color: #2c2f33; */
-    /* color: #ffffff; */
+/* color: #ffffff; */
 /* } */
