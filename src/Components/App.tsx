@@ -14,17 +14,15 @@ class App extends React.Component<{}, AppState> {
         super(props);
         this.coerceRefreshOnWebSocketEvent = this.coerceRefreshOnWebSocketEvent.bind(this);
 
-        if (localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY) == null) {
-            this.state = {data: null, ws: null};
-        } else {
-            this.state = {data: ModuleState.fromJSON(JSON.parse(localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY)!)), ws: null};
-        }
+        const pastUIState = localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY);
+        const data = pastUIState == null ? null : ModuleState.fromJSON(JSON.parse(pastUIState!));
+
+        this.state = {data: data, ws: null};
     }
 
     componentDidMount() {
         const [host, port] = this.getStartingPortHostnameCombination();
 
-        console.log("Starting: "+ host + ":" + port)
         this.installWebsocket(new WebSocket(hostnamePortPairToWSURL(host, port, "")));
 
         window.onbeforeunload = () => {
