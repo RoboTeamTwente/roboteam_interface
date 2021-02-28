@@ -13,17 +13,13 @@ class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, {h
     constructor(props: any) {
         super(props);
 
-        this.state = {hostname: "", port: 0};
+        const [host, port] = this.props.defaultHostPortPair;
+        this.state = {hostname: host, port: port};
 
         this.handleHostnameChange = this.handleHostnameChange.bind(this);
         this.handlePortChange = this.handlePortChange.bind(this);
         this.areFieldsValid = this.areFieldsValid.bind(this);
         this.handleConnect = this.handleConnect.bind(this);
-    }
-
-    componentDidMount() {
-        const [host, port] = this.props.defaultHostPortPair;
-        this.setState({hostname: host, port: port});
     }
 
     private handleHostnameChange(event: ChangeEvent<HTMLInputElement>) {

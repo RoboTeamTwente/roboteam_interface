@@ -3,7 +3,7 @@ import RemoteUIReactComponent from "./Abstract/AbstractRemoteSubscribedReactComp
 
 class DebugUIComponent extends  RemoteUIReactComponent {
     public render() {
-        return (<div>{this.props.valueList}
+        return (<div>{this.props.name}
                 <p>Working!</p>
         </div>)
     }

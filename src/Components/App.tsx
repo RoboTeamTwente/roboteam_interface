@@ -3,6 +3,14 @@ import {ModuleState} from "../Networking/proto_build/State";
 import ConnectionSettings from "./ConnectionSettings";
 import {CONSTANTS} from "./Constants";
 import {hostnamePortPairToWSURL} from "./Util";
+import DebugUIComponent from "./DebugUIComponent";
+import RemoteTextField from "./Abstract/RemoteTextField";
+import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
+import CheckboxField from "./Abstract/CheckboxField";
+import RemoteSliderField from "./Abstract/RemoteSliderField";
+import Long from "long";
+import RemoteDropdownField from "./Abstract/RemoteDropdownField";
+import RadioButtonField from "./Abstract/RadioButtonField";
 
 type AppState = {
     readonly data: ModuleState | null
@@ -12,12 +20,18 @@ type AppState = {
 class App extends React.Component<{}, AppState> {
     constructor(props: any) {
         super(props);
+
+        this.didChangeServer = this.didChangeServer.bind(this);
         this.coerceRefreshOnWebSocketEvent = this.coerceRefreshOnWebSocketEvent.bind(this);
+        this.childWillUpdate = this.childWillUpdate.bind(this);
 
         const pastUIState = localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY);
         const data = pastUIState == null ? null : ModuleState.fromJSON(JSON.parse(pastUIState!));
 
+        // const mod: ModuleState = {systemState: {state: undefined, uiSettings: {uiValues: {"testTextField": {floatValue: undefined, textValue: "aaaa", integerValue: undefined, boolValue: undefined}}}},handshakes: [{name: "aa", options: [{name: "testRadio", slider: undefined, dropdown: undefined, radiobutton: {default: new Long(1), options: ["Error1", "good", "error2"]}, textfield: undefined, checkbox: undefined}]}]}
         this.state = {data: data, ws: null};
+        // this.state = {data: mod, ws: null};
+
     }
 
     componentDidMount() {
@@ -68,8 +82,19 @@ class App extends React.Component<{}, AppState> {
         this.saveServerPreferences(hostname, port);
     }
 
+    private childWillUpdate(name: string, newValue: PossibleUiValue): void {
+        console.log("Child `" + name + "` -> " + newValue);
+        const mod = this.state.data;
+        mod!.systemState!.uiSettings!.uiValues[name] = newValue;
+
+        this.setState({...this.state, data: mod});
+    }
+
     render() {
-        return <ConnectionSettings socketSettingsDidChange={this.didChangeServer.bind(this)} wsocket={this.state.ws} defaultHostPortPair={this.getStartingPortHostnameCombination()}/>;
+        return (
+        <div>
+            <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws} defaultHostPortPair={this.getStartingPortHostnameCombination()}/>
+        </div>);
     }
 }
 

@@ -1,16 +1,29 @@
 import * as React from 'react';
-import {PossibleUiValue} from "../../Networking/proto_build/UiOptions";
+import {PossibleUiValue, UiOption, UiSettings} from "../../Networking/proto_build/UiOptions";
 
-abstract class RemoteUIReactComponent extends React.Component<{valueList: {[p: string]: PossibleUiValue} | undefined}, any> {
+type RemoteUIProps = {
+    values: UiSettings | undefined;
+    options: UiOption[] | undefined;
+    onChange: (name: string, newValue: PossibleUiValue) => void;
+
+    name: string;
+};
+
+abstract class RemoteUIReactComponent extends React.Component<RemoteUIProps, any> {
     protected abstract subscribedValues(): string[];
 
-    public shouldComponentUpdate(nextProps: Readonly<{ valueList: {[p: string]: PossibleUiValue} | undefined }>, nextState: Readonly<any>, nextContext: any): boolean {
+    constructor(props: any) {
+        super(props);
+    }
 
+    public shouldComponentUpdate(nextProps: Readonly<RemoteUIProps>, nextState: Readonly<any>, nextContext: any): boolean {
         const valuesToCheck = this.subscribedValues();
 
+        if (this.state !== nextState) return true;
+
         for (const value of valuesToCheck) {
-            const nextValue = nextProps.valueList![value];
-            const thisValue = this.props.valueList![value];
+            const nextValue = nextProps.values!.uiValues[value];
+            const thisValue = this.props.values!.uiValues[value];
 
             if (nextValue?.boolValue !== thisValue?.boolValue ||
                 nextValue?.floatValue !== thisValue?.floatValue ||
