@@ -35,11 +35,11 @@ class App extends React.Component {
     public render() {
         return (
             <>
-                <div className="roboteamLogoTopDiv">
+                {/* <div className="roboteamLogoTopDiv">
                     <img className="roboteamLogoTop" src={logo} alt="Logo" />
-                </div>
+                </div> */}
                 <div>
-                    <Field></Field>
+                    <Field transformation={0}></Field>
                     <SettingsWidget />
                 </div>
             </>

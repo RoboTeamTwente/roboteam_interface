@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { createRegularExpressionLiteral } from 'typescript';
 import { SSLFieldCircularArc, SSLFieldLineSegment } from '../../Networking/proto_build/messages_robocup_ssl_geometry';
-import { TeamParameters } from '../../Networking/proto_build/RobotParameters';
 import { ModuleState, State } from '../../Networking/proto_build/State';
 import { Vector2f } from '../../Networking/proto_build/Vector2f';
 import { World } from '../../Networking/proto_build/World';
 import { WorldBall } from '../../Networking/proto_build/WorldBall';
 import { WorldRobot } from '../../Networking/proto_build/WorldRobot';
-import { getLength, getWidth, scale, setFieldLength } from '../../Utils/Dimensions';
+import { calculateScaling, scale } from '../../Utils/Dimensions';
 import { getPhantomModuleState } from '../PhantomData/State';
 
-interface FieldProps { }
+interface FieldProps {
+    transformation: number; // degrees, valid values are 0, 90, 180, 270
+}
 
 interface FieldState {
     state: ModuleState | null;
@@ -30,11 +30,27 @@ class Field extends React.Component<FieldProps, FieldState> {
         this.fieldWidthOffset = 0;
         this.fieldHeightOffset = 0;
 
-        this.draw = this.draw.bind(this);
+        this.update = this.update.bind(this);
         this.drawField = this.drawField.bind(this);
     }
 
-    public draw(state: ModuleState | null) {
+    scaleTransform(x: number, y: number): { x: number, y: number } {
+        for (let i = 0; i < this.props.transformation / 90; i++) {
+            let xTemp = -y;
+            y = x;
+            x = xTemp;
+        }
+        return {
+            x: scale(x),
+            y: scale(y),
+        }
+    }
+
+    scaleTransformVector(vec: Vector2f): { x: number, y: number } {
+        return this.scaleTransform(vec.x, vec.y);
+    }
+
+    public update(state: ModuleState | null) {
         let canvas = document.querySelector(".fieldCanvas")! as HTMLCanvasElement;
         let ctx = canvas.getContext("2d");
 
@@ -46,7 +62,7 @@ class Field extends React.Component<FieldProps, FieldState> {
 
         let world = lastState.lastSeenWorld!;
 
-        setFieldLength(fieldLength);
+        calculateScaling(fieldLength, fieldWidth);
         canvas.width = scale(fieldLength);
         canvas.height = scale(fieldWidth);
 
@@ -57,7 +73,7 @@ class Field extends React.Component<FieldProps, FieldState> {
         if (state == null) {
             return;
         }
-        ctx?.translate(canvas.width / 2, canvas.height / 2);
+        ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.lineWidth = 1;
 
         // Draw the field
@@ -68,9 +84,11 @@ class Field extends React.Component<FieldProps, FieldState> {
     }
 
 
+    // TODO: Comment this out when we get actual data,
+    // Instead just call update() from wherever.
     componentDidMount() {
         let data = getPhantomModuleState();
-        this.draw(data);
+        this.update(data);
     }
 
     drawField(ctx: CanvasRenderingContext2D, state: ModuleState) {
@@ -84,11 +102,9 @@ class Field extends React.Component<FieldProps, FieldState> {
             // penaltyAreaDepth,
             // penaltyAreaWidth
         } = data;
-        // let width = scale(fieldWidth);
-        // let length = scale(fieldLength);
+        console.log(data)
         this.drawLines(ctx, fieldLines);
         this.drawArcs(ctx, fieldArcs);
-        // fieldLines = [fieldLines[0], fieldLines[1]];
     }
 
     drawWorld(ctx: CanvasRenderingContext2D, world: World, state: State) {
@@ -108,24 +124,25 @@ class Field extends React.Component<FieldProps, FieldState> {
         let {
             area,
             pos,
-            z,
-            vel,
-            zVel,
-            visible
+            vel
         } = ball;
 
-        let realX = scale(pos?.x!);
-        let realY = scale(pos?.y!);
-        let radius = Math.sqrt(area / Math.PI);
+        let { x, y } = this.scaleTransformVector(pos!);
+        let realX = x * 1000;
+        let realY = y * 1000;
+        // let radius = Math.sqrt(area / Math.PI);
+        let radius = scale(0.021333 * 1000) * 3.5;
         this.drawCircleWithColor(ctx, realX, realY, radius, "#ff7832");
         ctx.moveTo(realX, realY);
-        ctx.lineTo(realX + scale(vel?.x!), realY + scale(vel?.y!));
+        let velTrans = this.scaleTransformVector(vel!);
+        ctx.lineTo(realX + velTrans.x, realY + velTrans.y);
         ctx.stroke();
     }
 
+    // TODO: transformScale stuff
     drawRobot(ctx: CanvasRenderingContext2D, state: State, each: WorldRobot, yellow: boolean) {
         let robotParameters = yellow ? state.yellowRobotParameters! : state.blueRobotParameters!;
-        let { angle, vel, w, id, pos } = each;
+        let { vel, id, pos } = each;
         let { x, y } = pos!;
         let realX = scale(x * 1000);
         let realY = scale(y * 1000);
@@ -140,28 +157,36 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.stroke();
     }
 
+    // TODO: transformScale stuff
     drawLines(ctx: CanvasRenderingContext2D, lines: SSLFieldLineSegment[]) {
         for (let line of lines) {
             let {
-                p1, p2
+                p1, p2, thickness
             } = line;
+            let oldStrokeWidth = ctx.lineWidth;
+            ctx.lineWidth = scale(thickness);
             ctx.moveTo(scale(p1!.x!), scale(p1!.y!));
             ctx.lineTo(scale(p2!.x!), scale(p2!.y!));
             ctx.stroke();
+            ctx.lineWidth = oldStrokeWidth;
         }
     }
 
-    // Later for robots.
-    // drawPartialCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, ) {
-
-    // }
-
+    // TODO: transformScale stuff
     drawCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number) {
         ctx.moveTo(x + radius, y);
-        ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+        this.drawCircleFromAngles(ctx, x, y, radius, 0, 2 * Math.PI);
         ctx.stroke();
     }
 
+    // TODO: transformScale stuff
+    drawCircleFromAngles(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, a1: number, a2: number) {
+        ctx.moveTo(x + radius, y);
+        ctx.arc(x, y, radius, a1, a2, true);
+        ctx.stroke();
+    }
+
+    // TODO: transformScale stuff
     drawCircleWithColor(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) {
         let oldColor = ctx.fillStyle;
         ctx.fillStyle = color;
@@ -174,10 +199,14 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.fillStyle = oldColor;
     }
 
+    // TODO: transformScale stuff
     drawArcs(ctx: CanvasRenderingContext2D, arcs: SSLFieldCircularArc[]) {
         for (let arc of arcs) {
-            let { center, radius } = arc;
+            let { center, radius, thickness } = arc;
+            let oldStrokeWidth = ctx.lineWidth;
+            ctx.lineWidth = scale(thickness);
             this.drawCircle(ctx, scale(center?.x!), scale(center?.y!), scale(radius!));
+            ctx.lineWidth = oldStrokeWidth;
         }
     }
 

@@ -1,16 +1,35 @@
-let scaling: number;
+// module-global state go boop, nothing outside this file can access these 3.
+// Could probably encapsulate this in a class
+// But eh for now
+// TODO: Encapsulate in class
+let fieldLength: number;
+let fieldWidth: number;
+let scaling: number = 0;
 
 export function setFieldLength(length: number) {
-    // The width should be 0.66 * getWidth();
-    // (0.66 * getWidth()) / width
-    scaling = (0.66 * getWidth()) / length;
+    fieldLength = length;
+}
+
+export function setFieldWidth(width: number) {
+    fieldWidth = width;
+}
+
+export function calculateScaling(length: number, width: number) {
+    setFieldLength(length);
+    setFieldWidth(width);
+    let tentativeScaling = 0.66 * getLength() / fieldLength;
+    if ((tentativeScaling * fieldWidth) <= (0.9 * getWidth())) {
+        scaling = tentativeScaling;
+    } else {
+        scaling = 0.9 * getWidth() / fieldWidth;
+    }
 }
 
 export function scale(value: number) : number {
     return scaling * value;
 }
 
-export function getLength(): number {
+export function getLength() : number {
     return Math.max(
         document.body.scrollWidth,
         document.documentElement.scrollWidth,
