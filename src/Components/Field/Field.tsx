@@ -83,7 +83,6 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.stroke();
     }
 
-
     // TODO: Comment this out when we get actual data,
     // Instead just call update() from wherever.
     componentDidMount() {
