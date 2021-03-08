@@ -1,4 +1,16 @@
 import * as React from "react";
+import { getWidth } from "../Utils/Dimensions";
+import Field from "./Field/Field";
+import SettingsWidget from "./Settings/SettingsWidget";
+import "../Styles/main.css";
+import {
+  createMuiTheme,
+  CssBaseline,
+  responsiveFontSizes,
+  ThemeProvider,
+} from "@material-ui/core";
+import logo from "../Images/roboteam_logo_trans.png";
+import * as React from "react";
 import "../Styles/main.css";
 import {ModuleState} from "../Networking/proto_build/State";
 import ConnectionSettings from "./ConnectionSettings";
@@ -21,7 +33,10 @@ type AppState = {
 }
 
 class App extends React.Component<{}, AppState> {
-    private readonly defaultStateData: ModuleState = {systemState: {state: undefined, uiSettings: {uiValues: {}}}, handshakes: []};
+    private readonly defaultStateData: ModuleState = {
+        systemState: {state: undefined, uiSettings: {uiValues: {}}},
+        handshakes: []
+    };
 
     readonly root = "flexGrow: 1";
     readonly paper = 'textAlign: "center"';
@@ -57,66 +72,66 @@ class App extends React.Component<{}, AppState> {
         return (
             <body>
             <div className={this.root}>
-              <Grid container spacing={3}>
-                <Grid item xs={7} container>
-                  <Grid item xs={12}>
-                    <Paper className={"column"}>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                      <p>field</p>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Paper className={"column"}>
-                      <p>controls</p>
-                      <p>controls</p>
-                      <p>controls</p>
-                      <p>controls</p>
-                    </Paper>
-                  </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={7} container>
+                        <Grid item xs={12}>
+                            <Paper className={"column"}>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                                <p>field</p>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Paper className={"column"}>
+                                <p>controls</p>
+                                <p>controls</p>
+                                <p>controls</p>
+                                <p>controls</p>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={5} container>
+                        <Grid item xs={12}>
+                            <Paper className={"column"}>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                                <p>info</p>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Paper className={"column"}>
+                                <img className="roboteamLogo" src={logo} alt="Logo"/>
+                            </Paper>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item xs={5} container>
-                  <Grid item xs={12}>
-                    <Paper className={"column"}>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                      <p>info</p>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Paper className={"column"}>
-                      <img className="roboteamLogo" src={logo} alt="Logo" />
-                    </Paper>
-                  </Grid>
-                </Grid>
-              </Grid>
             </div>
             </body>);
     }
@@ -183,5 +198,16 @@ class App extends React.Component<{}, AppState> {
         }
     }
 }
+// let theme = createMuiTheme({
+//     palette: {
+//         primary: {
+//             main: purple[500],
+//         },
+//         secondary: {
+//             main: green[500],
+//         },
+//     },
+// });
+// theme = responsiveFontSizes(theme);
 
 export default App;
