@@ -1,3 +1,15 @@
+import * as React from "react";
+import { getWidth } from "../Utils/Dimensions";
+import Field from "./Field/Field";
+import SettingsWidget from "./Settings/SettingsWidget";
+import "../Styles/main.css";
+import {
+  createMuiTheme,
+  CssBaseline,
+  responsiveFontSizes,
+  ThemeProvider,
+} from "@material-ui/core";
+import logo from "../Images/roboteam_logo_trans.png";
 import * as React from 'react';
 import {ModuleState} from "../Networking/proto_build/State";
 import ConnectionSettings from "./ConnectionSettings";
@@ -8,7 +20,6 @@ import { getWidth } from '../Utils/Dimensions';
 import Field from './Field/Field';
 import SettingsWidget from './Settings/SettingsWidget';
 import "../Styles/main.css"
-import { createMuiTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import logo from '../Images/roboteam_logo_trans.png';
 
 type AppState = {
@@ -17,7 +28,10 @@ type AppState = {
 }
 
 class App extends React.Component<{}, AppState> {
-    private readonly defaultStateData: ModuleState = {systemState: {state: undefined, uiSettings: {uiValues: {}}}, handshakes: []};
+    private readonly defaultStateData: ModuleState = {
+        systemState: {state: undefined, uiSettings: {uiValues: {}}},
+        handshakes: []
+    };
 
     constructor(props: any) {
         super(props);
@@ -29,7 +43,7 @@ class App extends React.Component<{}, AppState> {
         this.getEnsureNotEmpty = this.getEnsureNotEmpty.bind(this);
 
         const pastUIState = localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY);
-        const data = pastUIState == null ? this.defaultStateData: ModuleState.fromJSON(pastUIState!);
+        const data = pastUIState == null ? this.defaultStateData : ModuleState.fromJSON(pastUIState!);
         this.state = {data: data, ws: undefined};
 
     }
@@ -48,13 +62,41 @@ class App extends React.Component<{}, AppState> {
 
     render() {
         return (
-            <div>
-                <div>
+            <body>
+            <div className="row">
+                <div className="column field">
                     <Field transformation={0}></Field>
+                    <div className="wrapperControls">
+                        <div className="row">
+                            <div className="column">
+                                <p className="grey">Robots on our Team: </p>
+                            </div>
+                            <div className="column">
+                                <p> 8 </p>
+                            </div>
+                            <div className="column">
+                                <p className="grey">Playing as:</p>
+                            </div>
+                            <div className="column">
+                                <p>yellow</p>
+                            </div>
+                            <div className="column">
+                                <button className="button">switch sides</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws}
-                                    defaultHostPortPair={getStartingPortHostnameCombination()}/>
-            </div>);
+                <div className="column settings">
+                    <SettingsWidget/>
+                </div>
+            </div>
+            <div className="wrapperControls">
+                <button>Replay</button>
+            </div>
+            <div className="roboteamLogoTopDiv">
+                <img className="roboteamLogoTop" src={logo} alt="Logo"/>
+            </div>
+            </body>);
     }
 
     private coerceRefreshOnWebSocketEvent(): any {
@@ -65,7 +107,7 @@ class App extends React.Component<{}, AppState> {
         let data: ModuleState | undefined = undefined;
         try {
             data = ModuleState.decode(new Uint8Array(event.data));
-        } catch(err) {
+        } catch (err) {
             console.log("[-] Error when decoding data");
             return;
         }
@@ -96,9 +138,9 @@ class App extends React.Component<{}, AppState> {
 
         if (mod.systemState == null) {
             mod.systemState = this.defaultStateData.systemState;
-        } else if(mod.systemState.uiSettings == null) {
+        } else if (mod.systemState.uiSettings == null) {
             mod.systemState.uiSettings = this.defaultStateData.systemState!.uiSettings!;
-        } else if(mod.systemState.uiSettings.uiValues == null) {
+        } else if (mod.systemState.uiSettings.uiValues == null) {
             mod.systemState.uiSettings.uiValues = this.defaultStateData.systemState!.uiSettings?.uiValues!;
         }
 
