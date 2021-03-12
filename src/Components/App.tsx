@@ -2,19 +2,13 @@ import * as React from 'react';
 import {ModuleState} from "../Networking/proto_build/State";
 import ConnectionSettings from "./ConnectionSettings";
 import {CONSTANTS} from "./Constants";
-import {hostnamePortPairToWSURL} from "./Util";
-import DebugUIComponent from "./DebugUIComponent";
-import RemoteTextField from "./Abstract/RemoteTextField";
+import {hostnamePortPairToWSURL, saveServerPreferences, getStartingPortHostnameCombination} from "./Util";
 import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
-import CheckboxField from "./Abstract/CheckboxField";
-import RemoteSliderField from "./Abstract/RemoteSliderField";
-import Long from "long";
-import RemoteDropdownField from "./Abstract/RemoteDropdownField";
-import RadioButtonField from "./Abstract/RadioButtonField";
+import RadioButtonField from "./BasicComponents/RemoteRadioButtonField";
 
 type AppState = {
-    readonly data: ModuleState | null
-    readonly ws: WebSocket | null
+    readonly data: ModuleState | undefined
+    readonly ws: WebSocket | undefined
 }
 
 class App extends React.Component<{}, AppState> {
@@ -26,16 +20,15 @@ class App extends React.Component<{}, AppState> {
         this.childWillUpdate = this.childWillUpdate.bind(this);
 
         const pastUIState = localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY);
-        const data = pastUIState == null ? null : ModuleState.fromJSON(JSON.parse(pastUIState!));
+        const data = pastUIState == null ? undefined : ModuleState.fromJSON(JSON.parse(pastUIState!));
 
         // const mod: ModuleState = {systemState: {state: undefined, uiSettings: {uiValues: {"testTextField": {floatValue: undefined, textValue: "aaaa", integerValue: undefined, boolValue: undefined}}}},handshakes: [{name: "aa", options: [{name: "testRadio", slider: undefined, dropdown: undefined, radiobutton: {default: new Long(1), options: ["Error1", "good", "error2"]}, textfield: undefined, checkbox: undefined}]}]}
-        this.state = {data: data, ws: null};
-        // this.state = {data: mod, ws: null};
+        this.state = {data: data, ws: undefined};
 
     }
 
     componentDidMount() {
-        const [host, port] = this.getStartingPortHostnameCombination();
+        const [host, port] = getStartingPortHostnameCombination();
 
         this.installWebsocket(new WebSocket(hostnamePortPairToWSURL(host, port, "")));
 
@@ -46,18 +39,15 @@ class App extends React.Component<{}, AppState> {
         };
     }
 
-    private getStartingPortHostnameCombination(): [string, number] {
-        const port = Number(localStorage.getItem(CONSTANTS.PORT_SETTINGS_KEY) ?? CONSTANTS.DEFAULT_PORT);
-        const host = localStorage.getItem(CONSTANTS.HOSTNAME_SETTINGS_KEY) ?? CONSTANTS.DEFAULT_HOSTNAME;
-
-        this.saveServerPreferences(host, port);
-
-        return [host, port];
-    }
-
-    private saveServerPreferences(host: string, port: number) {
-        localStorage.setItem(CONSTANTS.HOSTNAME_SETTINGS_KEY, host);
-        localStorage.setItem(CONSTANTS.PORT_SETTINGS_KEY, port.toString());
+    render() {
+        return (
+            <div>
+                <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws}
+                                    defaultHostPortPair={getStartingPortHostnameCombination()}/>
+                <RadioButtonField values={this.state.data?.systemState?.uiSettings ?? {uiValues: {}}}
+                                  options={this.state.data?.handshakes?.[0]?.options ?? []}
+                                  onChange={this.childWillUpdate} name={"testRadio"}/>
+            </div>);
     }
 
     private coerceRefreshOnWebSocketEvent(): any {
@@ -69,7 +59,12 @@ class App extends React.Component<{}, AppState> {
 
         ws.onmessage = (event: MessageEvent) => {
             const data = ModuleState.decode(event.data);
-            this.setState({...this.state, data: data});
+
+            if (data != null) {
+                this.setState({...this.state, data: data});
+            } else {
+                console.log("[-] Received corrupted proto message!");
+            }
         }
 
         ws.onopen = this.coerceRefreshOnWebSocketEvent;
@@ -79,22 +74,23 @@ class App extends React.Component<{}, AppState> {
 
     private didChangeServer(hostname: string, port: number): void {
         this.installWebsocket(new WebSocket(hostnamePortPairToWSURL(hostname, port, "")));
-        this.saveServerPreferences(hostname, port);
+        saveServerPreferences(hostname, port);
     }
 
     private childWillUpdate(name: string, newValue: PossibleUiValue): void {
-        console.log("Child `" + name + "` -> " + newValue);
         const mod = this.state.data;
-        mod!.systemState!.uiSettings!.uiValues[name] = newValue;
 
-        this.setState({...this.state, data: mod});
-    }
+        if (mod?.systemState?.uiSettings?.uiValues != null) {
+            mod!.systemState!.uiSettings!.uiValues[name] = newValue;
+            this.setState({...this.state, data: mod});
+        } else {
+            console.log("[-] No values to manipulate!");
+        }
 
-    render() {
-        return (
-        <div>
-            <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws} defaultHostPortPair={this.getStartingPortHostnameCombination()}/>
-        </div>);
+        if (this.state.ws != null && this.state.ws?.readyState === this.state.ws?.OPEN && this.state.data != null) {
+            const writer = ModuleState.encode(this.state.data!);
+            this.state.ws.send(writer.finish());
+        }
     }
 }
 

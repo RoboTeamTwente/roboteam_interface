@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {ChangeEvent} from "react";
+import {ChangeEvent} from 'react';
 import {hostnamePortPairToWSURL} from "./Util";
 
 type ConnectionSettingsProps = {
-    socketSettingsDidChange: (hostname: string, port: number)  => void;
-    wsocket: WebSocket | null;
+    socketSettingsDidChange: (hostname: string, port: number) => void;
+    wsocket: WebSocket | undefined;
     defaultHostPortPair: [string, number];
 }
 
-class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, {hostname: string, port: number | null}> {
+class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, { hostname: string, port: number | undefined }> {
 
     constructor(props: any) {
         super(props);
@@ -22,6 +22,23 @@ class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, {h
         this.handleConnect = this.handleConnect.bind(this);
     }
 
+    render() {
+        return <div>
+            <h1>State: {this.getWebsocketReadyStateDisplayString()}</h1>
+            <p>
+                Current: {this.props.wsocket?.url}
+            </p>
+            <p>Proposed change: {this.renderSocketURL()} </p>
+            <form>
+                Hostname:
+                <input type="text" value={this.state.hostname} onChange={this.handleHostnameChange}/>
+                Port:
+                <input type="text" value={this.renderPort()} onChange={this.handlePortChange}/>
+                <button disabled={this.areFieldsValid()} onClick={this.handleConnect}>Connect</button>
+            </form>
+        </div>;
+    }
+
     private handleHostnameChange(event: ChangeEvent<HTMLInputElement>) {
         if (event.target.value == null) return;
 
@@ -32,12 +49,12 @@ class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, {h
         // see https://medium.com/@nikjohn/cast-to-number-in-javascript-using-the-unary-operator-f4ca67c792ce for nice number conversion chart
         // Number() has most desirable behaviour in this case
         // Only concern is 'Infinity', however 'I' is not a number and will not be committed to state, preventing the user from typing 'Infinity'
-        let parsedPort: number | null =  Number(event.target.value.trim());
+        let parsedPort: number | undefined = Number(event.target.value.trim());
 
-        if (Math.pow(2, 16) < parsedPort || parsedPort < 0 ) return; // Ensure is within valid port range
+        if (Math.pow(2, 16) < parsedPort || parsedPort < 0) return; // Ensure is within valid port range
         if (isNaN(parsedPort)) return; // We don't want non-numbers (number + trailing string, characters, etc.)
 
-        if (parsedPort === 0) parsedPort = null; // Number() converts empty string to 0. Port 0 is invalid and has to be filtered out anyways
+        if (parsedPort === 0) parsedPort = undefined; // Number() converts empty string to 0. Port 0 is invalid and has to be filtered out anyways
 
         this.setState({...this.state, port: parsedPort});
     }
@@ -63,26 +80,9 @@ class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, {h
         return this.state.port == null ? "" : this.state.port.toString();
     }
 
-    private handleConnect(ev: any){
+    private handleConnect(ev: any) {
         ev.preventDefault();
         this.props.socketSettingsDidChange(this.state.hostname, this.state.port!);
-    }
-
-    render() {
-        return <div>
-            <h1>State: {this.getWebsocketReadyStateDisplayString()}</h1>
-            <p>
-                Current: {this.props.wsocket?.url}
-            </p>
-            <p>Proposed change: {this.renderSocketURL()} </p>
-            <form>
-                Hostname:
-                <input type="text" value={this.state.hostname} onChange={this.handleHostnameChange}/>
-                Port:
-                <input type="text" value={this.renderPort()} onChange={this.handlePortChange}/>
-                <button disabled={this.areFieldsValid()} onClick={this.handleConnect}>Connect</button>
-            </form>
-            </div>;
     }
 }
 
