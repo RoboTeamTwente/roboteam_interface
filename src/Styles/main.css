@@ -38,9 +38,11 @@ p.grey {
 } */
 
 .column {
-  float: left;
   background-color: #1d1d1d;
   margin: 5px;
+}
+.testcolor {
+  background-color: brown;
 }
 
 .column.field {
@@ -111,9 +113,9 @@ p.grey {
   float: right;
 }
 
-.roboteamLogoTop {
-  width: 50%;
-  height: 50%;
+.roboteamLogo {
+  width: 30%;
+  height: 30%;
   float: right;
   margin-right: 20px;
 }
