@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Vector2f } from "./Vector2f";
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
@@ -16,7 +17,10 @@ export interface WorldBall {
 const baseWorldBall: object = { area: 0, z: 0, zVel: 0, visible: false };
 
 export const WorldBall = {
-  encode(message: WorldBall, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WorldBall,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.area !== 0) {
       writer.uint32(8).uint32(message.area);
     }
@@ -38,10 +42,10 @@ export const WorldBall = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WorldBall {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): WorldBall {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseWorldBall) as WorldBall;
+    const message = { ...baseWorldBall } as WorldBall;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -70,14 +74,105 @@ export const WorldBall = {
     }
     return message;
   },
+
+  fromJSON(object: any): WorldBall {
+    const message = { ...baseWorldBall } as WorldBall;
+    if (object.area !== undefined && object.area !== null) {
+      message.area = Number(object.area);
+    } else {
+      message.area = 0;
+    }
+    if (object.pos !== undefined && object.pos !== null) {
+      message.pos = Vector2f.fromJSON(object.pos);
+    } else {
+      message.pos = undefined;
+    }
+    if (object.z !== undefined && object.z !== null) {
+      message.z = Number(object.z);
+    } else {
+      message.z = 0;
+    }
+    if (object.vel !== undefined && object.vel !== null) {
+      message.vel = Vector2f.fromJSON(object.vel);
+    } else {
+      message.vel = undefined;
+    }
+    if (object.zVel !== undefined && object.zVel !== null) {
+      message.zVel = Number(object.zVel);
+    } else {
+      message.zVel = 0;
+    }
+    if (object.visible !== undefined && object.visible !== null) {
+      message.visible = Boolean(object.visible);
+    } else {
+      message.visible = false;
+    }
+    return message;
+  },
+
+  toJSON(message: WorldBall): unknown {
+    const obj: any = {};
+    message.area !== undefined && (obj.area = message.area);
+    message.pos !== undefined &&
+      (obj.pos = message.pos ? Vector2f.toJSON(message.pos) : undefined);
+    message.z !== undefined && (obj.z = message.z);
+    message.vel !== undefined &&
+      (obj.vel = message.vel ? Vector2f.toJSON(message.vel) : undefined);
+    message.zVel !== undefined && (obj.zVel = message.zVel);
+    message.visible !== undefined && (obj.visible = message.visible);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<WorldBall>): WorldBall {
+    const message = { ...baseWorldBall } as WorldBall;
+    if (object.area !== undefined && object.area !== null) {
+      message.area = object.area;
+    } else {
+      message.area = 0;
+    }
+    if (object.pos !== undefined && object.pos !== null) {
+      message.pos = Vector2f.fromPartial(object.pos);
+    } else {
+      message.pos = undefined;
+    }
+    if (object.z !== undefined && object.z !== null) {
+      message.z = object.z;
+    } else {
+      message.z = 0;
+    }
+    if (object.vel !== undefined && object.vel !== null) {
+      message.vel = Vector2f.fromPartial(object.vel);
+    } else {
+      message.vel = undefined;
+    }
+    if (object.zVel !== undefined && object.zVel !== null) {
+      message.zVel = object.zVel;
+    } else {
+      message.zVel = 0;
+    }
+    if (object.visible !== undefined && object.visible !== null) {
+      message.visible = object.visible;
+    } else {
+      message.visible = false;
+    }
+    return message;
+  },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | undefined
+  | Long;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;

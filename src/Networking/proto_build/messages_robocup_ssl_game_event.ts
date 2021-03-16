@@ -1,8 +1,12 @@
 /* eslint-disable */
-import { Team } from "./messages_robocup_ssl_game_controller_common";
-import * as Long from "long";
+import {
+  Team,
+  teamFromJSON,
+  teamToJSON,
+} from "./messages_robocup_ssl_game_controller_common";
+import Long from "long";
 import { Vector2 } from "./messages_robocup_ssl_game_controller_geometry";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
@@ -222,6 +226,247 @@ export enum GameEvent_Type {
   /** @deprecated */
   MULTIPLE_PLACEMENT_FAILURES = 33,
   UNRECOGNIZED = -1,
+}
+
+export function gameEvent_TypeFromJSON(object: any): GameEvent_Type {
+  switch (object) {
+    case 0:
+    case "UNKNOWN_GAME_EVENT_TYPE":
+      return GameEvent_Type.UNKNOWN_GAME_EVENT_TYPE;
+    case 6:
+    case "BALL_LEFT_FIELD_TOUCH_LINE":
+      return GameEvent_Type.BALL_LEFT_FIELD_TOUCH_LINE;
+    case 7:
+    case "BALL_LEFT_FIELD_GOAL_LINE":
+      return GameEvent_Type.BALL_LEFT_FIELD_GOAL_LINE;
+    case 11:
+    case "AIMLESS_KICK":
+      return GameEvent_Type.AIMLESS_KICK;
+    case 19:
+    case "ATTACKER_TOO_CLOSE_TO_DEFENSE_AREA":
+      return GameEvent_Type.ATTACKER_TOO_CLOSE_TO_DEFENSE_AREA;
+    case 31:
+    case "DEFENDER_IN_DEFENSE_AREA":
+      return GameEvent_Type.DEFENDER_IN_DEFENSE_AREA;
+    case 41:
+    case "BOUNDARY_CROSSING":
+      return GameEvent_Type.BOUNDARY_CROSSING;
+    case 13:
+    case "KEEPER_HELD_BALL":
+      return GameEvent_Type.KEEPER_HELD_BALL;
+    case 17:
+    case "BOT_DRIBBLED_BALL_TOO_FAR":
+      return GameEvent_Type.BOT_DRIBBLED_BALL_TOO_FAR;
+    case 24:
+    case "BOT_PUSHED_BOT":
+      return GameEvent_Type.BOT_PUSHED_BOT;
+    case 26:
+    case "BOT_HELD_BALL_DELIBERATELY":
+      return GameEvent_Type.BOT_HELD_BALL_DELIBERATELY;
+    case 27:
+    case "BOT_TIPPED_OVER":
+      return GameEvent_Type.BOT_TIPPED_OVER;
+    case 15:
+    case "ATTACKER_TOUCHED_BALL_IN_DEFENSE_AREA":
+      return GameEvent_Type.ATTACKER_TOUCHED_BALL_IN_DEFENSE_AREA;
+    case 18:
+    case "BOT_KICKED_BALL_TOO_FAST":
+      return GameEvent_Type.BOT_KICKED_BALL_TOO_FAST;
+    case 22:
+    case "BOT_CRASH_UNIQUE":
+      return GameEvent_Type.BOT_CRASH_UNIQUE;
+    case 21:
+    case "BOT_CRASH_DRAWN":
+      return GameEvent_Type.BOT_CRASH_DRAWN;
+    case 29:
+    case "DEFENDER_TOO_CLOSE_TO_KICK_POINT":
+      return GameEvent_Type.DEFENDER_TOO_CLOSE_TO_KICK_POINT;
+    case 28:
+    case "BOT_TOO_FAST_IN_STOP":
+      return GameEvent_Type.BOT_TOO_FAST_IN_STOP;
+    case 20:
+    case "BOT_INTERFERED_PLACEMENT":
+      return GameEvent_Type.BOT_INTERFERED_PLACEMENT;
+    case 39:
+    case "POSSIBLE_GOAL":
+      return GameEvent_Type.POSSIBLE_GOAL;
+    case 8:
+    case "GOAL":
+      return GameEvent_Type.GOAL;
+    case 42:
+    case "INVALID_GOAL":
+      return GameEvent_Type.INVALID_GOAL;
+    case 14:
+    case "ATTACKER_DOUBLE_TOUCHED_BALL":
+      return GameEvent_Type.ATTACKER_DOUBLE_TOUCHED_BALL;
+    case 5:
+    case "PLACEMENT_SUCCEEDED":
+      return GameEvent_Type.PLACEMENT_SUCCEEDED;
+    case 43:
+    case "PENALTY_KICK_FAILED":
+      return GameEvent_Type.PENALTY_KICK_FAILED;
+    case 2:
+    case "NO_PROGRESS_IN_GAME":
+      return GameEvent_Type.NO_PROGRESS_IN_GAME;
+    case 3:
+    case "PLACEMENT_FAILED":
+      return GameEvent_Type.PLACEMENT_FAILED;
+    case 32:
+    case "MULTIPLE_CARDS":
+      return GameEvent_Type.MULTIPLE_CARDS;
+    case 34:
+    case "MULTIPLE_FOULS":
+      return GameEvent_Type.MULTIPLE_FOULS;
+    case 37:
+    case "BOT_SUBSTITUTION":
+      return GameEvent_Type.BOT_SUBSTITUTION;
+    case 38:
+    case "TOO_MANY_ROBOTS":
+      return GameEvent_Type.TOO_MANY_ROBOTS;
+    case 44:
+    case "CHALLENGE_FLAG":
+      return GameEvent_Type.CHALLENGE_FLAG;
+    case 45:
+    case "EMERGENCY_STOP":
+      return GameEvent_Type.EMERGENCY_STOP;
+    case 35:
+    case "UNSPORTING_BEHAVIOR_MINOR":
+      return GameEvent_Type.UNSPORTING_BEHAVIOR_MINOR;
+    case 36:
+    case "UNSPORTING_BEHAVIOR_MAJOR":
+      return GameEvent_Type.UNSPORTING_BEHAVIOR_MAJOR;
+    case 1:
+    case "PREPARED":
+      return GameEvent_Type.PREPARED;
+    case 9:
+    case "INDIRECT_GOAL":
+      return GameEvent_Type.INDIRECT_GOAL;
+    case 10:
+    case "CHIPPED_GOAL":
+      return GameEvent_Type.CHIPPED_GOAL;
+    case 12:
+    case "KICK_TIMEOUT":
+      return GameEvent_Type.KICK_TIMEOUT;
+    case 16:
+    case "ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA":
+      return GameEvent_Type.ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA;
+    case 40:
+    case "ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA_SKIPPED":
+      return GameEvent_Type.ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA_SKIPPED;
+    case 23:
+    case "BOT_CRASH_UNIQUE_SKIPPED":
+      return GameEvent_Type.BOT_CRASH_UNIQUE_SKIPPED;
+    case 25:
+    case "BOT_PUSHED_BOT_SKIPPED":
+      return GameEvent_Type.BOT_PUSHED_BOT_SKIPPED;
+    case 30:
+    case "DEFENDER_IN_DEFENSE_AREA_PARTIALLY":
+      return GameEvent_Type.DEFENDER_IN_DEFENSE_AREA_PARTIALLY;
+    case 33:
+    case "MULTIPLE_PLACEMENT_FAILURES":
+      return GameEvent_Type.MULTIPLE_PLACEMENT_FAILURES;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return GameEvent_Type.UNRECOGNIZED;
+  }
+}
+
+export function gameEvent_TypeToJSON(object: GameEvent_Type): string {
+  switch (object) {
+    case GameEvent_Type.UNKNOWN_GAME_EVENT_TYPE:
+      return "UNKNOWN_GAME_EVENT_TYPE";
+    case GameEvent_Type.BALL_LEFT_FIELD_TOUCH_LINE:
+      return "BALL_LEFT_FIELD_TOUCH_LINE";
+    case GameEvent_Type.BALL_LEFT_FIELD_GOAL_LINE:
+      return "BALL_LEFT_FIELD_GOAL_LINE";
+    case GameEvent_Type.AIMLESS_KICK:
+      return "AIMLESS_KICK";
+    case GameEvent_Type.ATTACKER_TOO_CLOSE_TO_DEFENSE_AREA:
+      return "ATTACKER_TOO_CLOSE_TO_DEFENSE_AREA";
+    case GameEvent_Type.DEFENDER_IN_DEFENSE_AREA:
+      return "DEFENDER_IN_DEFENSE_AREA";
+    case GameEvent_Type.BOUNDARY_CROSSING:
+      return "BOUNDARY_CROSSING";
+    case GameEvent_Type.KEEPER_HELD_BALL:
+      return "KEEPER_HELD_BALL";
+    case GameEvent_Type.BOT_DRIBBLED_BALL_TOO_FAR:
+      return "BOT_DRIBBLED_BALL_TOO_FAR";
+    case GameEvent_Type.BOT_PUSHED_BOT:
+      return "BOT_PUSHED_BOT";
+    case GameEvent_Type.BOT_HELD_BALL_DELIBERATELY:
+      return "BOT_HELD_BALL_DELIBERATELY";
+    case GameEvent_Type.BOT_TIPPED_OVER:
+      return "BOT_TIPPED_OVER";
+    case GameEvent_Type.ATTACKER_TOUCHED_BALL_IN_DEFENSE_AREA:
+      return "ATTACKER_TOUCHED_BALL_IN_DEFENSE_AREA";
+    case GameEvent_Type.BOT_KICKED_BALL_TOO_FAST:
+      return "BOT_KICKED_BALL_TOO_FAST";
+    case GameEvent_Type.BOT_CRASH_UNIQUE:
+      return "BOT_CRASH_UNIQUE";
+    case GameEvent_Type.BOT_CRASH_DRAWN:
+      return "BOT_CRASH_DRAWN";
+    case GameEvent_Type.DEFENDER_TOO_CLOSE_TO_KICK_POINT:
+      return "DEFENDER_TOO_CLOSE_TO_KICK_POINT";
+    case GameEvent_Type.BOT_TOO_FAST_IN_STOP:
+      return "BOT_TOO_FAST_IN_STOP";
+    case GameEvent_Type.BOT_INTERFERED_PLACEMENT:
+      return "BOT_INTERFERED_PLACEMENT";
+    case GameEvent_Type.POSSIBLE_GOAL:
+      return "POSSIBLE_GOAL";
+    case GameEvent_Type.GOAL:
+      return "GOAL";
+    case GameEvent_Type.INVALID_GOAL:
+      return "INVALID_GOAL";
+    case GameEvent_Type.ATTACKER_DOUBLE_TOUCHED_BALL:
+      return "ATTACKER_DOUBLE_TOUCHED_BALL";
+    case GameEvent_Type.PLACEMENT_SUCCEEDED:
+      return "PLACEMENT_SUCCEEDED";
+    case GameEvent_Type.PENALTY_KICK_FAILED:
+      return "PENALTY_KICK_FAILED";
+    case GameEvent_Type.NO_PROGRESS_IN_GAME:
+      return "NO_PROGRESS_IN_GAME";
+    case GameEvent_Type.PLACEMENT_FAILED:
+      return "PLACEMENT_FAILED";
+    case GameEvent_Type.MULTIPLE_CARDS:
+      return "MULTIPLE_CARDS";
+    case GameEvent_Type.MULTIPLE_FOULS:
+      return "MULTIPLE_FOULS";
+    case GameEvent_Type.BOT_SUBSTITUTION:
+      return "BOT_SUBSTITUTION";
+    case GameEvent_Type.TOO_MANY_ROBOTS:
+      return "TOO_MANY_ROBOTS";
+    case GameEvent_Type.CHALLENGE_FLAG:
+      return "CHALLENGE_FLAG";
+    case GameEvent_Type.EMERGENCY_STOP:
+      return "EMERGENCY_STOP";
+    case GameEvent_Type.UNSPORTING_BEHAVIOR_MINOR:
+      return "UNSPORTING_BEHAVIOR_MINOR";
+    case GameEvent_Type.UNSPORTING_BEHAVIOR_MAJOR:
+      return "UNSPORTING_BEHAVIOR_MAJOR";
+    case GameEvent_Type.PREPARED:
+      return "PREPARED";
+    case GameEvent_Type.INDIRECT_GOAL:
+      return "INDIRECT_GOAL";
+    case GameEvent_Type.CHIPPED_GOAL:
+      return "CHIPPED_GOAL";
+    case GameEvent_Type.KICK_TIMEOUT:
+      return "KICK_TIMEOUT";
+    case GameEvent_Type.ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA:
+      return "ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA";
+    case GameEvent_Type.ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA_SKIPPED:
+      return "ATTACKER_TOUCHED_OPPONENT_IN_DEFENSE_AREA_SKIPPED";
+    case GameEvent_Type.BOT_CRASH_UNIQUE_SKIPPED:
+      return "BOT_CRASH_UNIQUE_SKIPPED";
+    case GameEvent_Type.BOT_PUSHED_BOT_SKIPPED:
+      return "BOT_PUSHED_BOT_SKIPPED";
+    case GameEvent_Type.DEFENDER_IN_DEFENSE_AREA_PARTIALLY:
+      return "DEFENDER_IN_DEFENSE_AREA_PARTIALLY";
+    case GameEvent_Type.MULTIPLE_PLACEMENT_FAILURES:
+      return "MULTIPLE_PLACEMENT_FAILURES";
+    default:
+      return "UNKNOWN";
+  }
 }
 
 /** the ball left the field normally */
@@ -645,7 +890,10 @@ export interface GameEvent_PenaltyKickFailed {
 const baseGameEvent: object = { type: 0, origin: "" };
 
 export const GameEvent = {
-  encode(message: GameEvent, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: GameEvent,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.type !== 0) {
       writer.uint32(320).int32(message.type);
     }
@@ -916,10 +1164,10 @@ export const GameEvent = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): GameEvent {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseGameEvent) as GameEvent;
+    const message = { ...baseGameEvent } as GameEvent;
     message.origin = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -1189,6 +1437,1000 @@ export const GameEvent = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent {
+    const message = { ...baseGameEvent } as GameEvent;
+    message.origin = [];
+    if (object.type !== undefined && object.type !== null) {
+      message.type = gameEvent_TypeFromJSON(object.type);
+    } else {
+      message.type = 0;
+    }
+    if (object.origin !== undefined && object.origin !== null) {
+      for (const e of object.origin) {
+        message.origin.push(String(e));
+      }
+    }
+    if (
+      object.ballLeftFieldTouchLine !== undefined &&
+      object.ballLeftFieldTouchLine !== null
+    ) {
+      message.ballLeftFieldTouchLine = GameEvent_BallLeftField.fromJSON(
+        object.ballLeftFieldTouchLine
+      );
+    } else {
+      message.ballLeftFieldTouchLine = undefined;
+    }
+    if (
+      object.ballLeftFieldGoalLine !== undefined &&
+      object.ballLeftFieldGoalLine !== null
+    ) {
+      message.ballLeftFieldGoalLine = GameEvent_BallLeftField.fromJSON(
+        object.ballLeftFieldGoalLine
+      );
+    } else {
+      message.ballLeftFieldGoalLine = undefined;
+    }
+    if (object.aimlessKick !== undefined && object.aimlessKick !== null) {
+      message.aimlessKick = GameEvent_AimlessKick.fromJSON(object.aimlessKick);
+    } else {
+      message.aimlessKick = undefined;
+    }
+    if (
+      object.attackerTooCloseToDefenseArea !== undefined &&
+      object.attackerTooCloseToDefenseArea !== null
+    ) {
+      message.attackerTooCloseToDefenseArea = GameEvent_AttackerTooCloseToDefenseArea.fromJSON(
+        object.attackerTooCloseToDefenseArea
+      );
+    } else {
+      message.attackerTooCloseToDefenseArea = undefined;
+    }
+    if (
+      object.defenderInDefenseArea !== undefined &&
+      object.defenderInDefenseArea !== null
+    ) {
+      message.defenderInDefenseArea = GameEvent_DefenderInDefenseArea.fromJSON(
+        object.defenderInDefenseArea
+      );
+    } else {
+      message.defenderInDefenseArea = undefined;
+    }
+    if (
+      object.boundaryCrossing !== undefined &&
+      object.boundaryCrossing !== null
+    ) {
+      message.boundaryCrossing = GameEvent_BoundaryCrossing.fromJSON(
+        object.boundaryCrossing
+      );
+    } else {
+      message.boundaryCrossing = undefined;
+    }
+    if (object.keeperHeldBall !== undefined && object.keeperHeldBall !== null) {
+      message.keeperHeldBall = GameEvent_KeeperHeldBall.fromJSON(
+        object.keeperHeldBall
+      );
+    } else {
+      message.keeperHeldBall = undefined;
+    }
+    if (
+      object.botDribbledBallTooFar !== undefined &&
+      object.botDribbledBallTooFar !== null
+    ) {
+      message.botDribbledBallTooFar = GameEvent_BotDribbledBallTooFar.fromJSON(
+        object.botDribbledBallTooFar
+      );
+    } else {
+      message.botDribbledBallTooFar = undefined;
+    }
+    if (object.botPushedBot !== undefined && object.botPushedBot !== null) {
+      message.botPushedBot = GameEvent_BotPushedBot.fromJSON(
+        object.botPushedBot
+      );
+    } else {
+      message.botPushedBot = undefined;
+    }
+    if (
+      object.botHeldBallDeliberately !== undefined &&
+      object.botHeldBallDeliberately !== null
+    ) {
+      message.botHeldBallDeliberately = GameEvent_BotHeldBallDeliberately.fromJSON(
+        object.botHeldBallDeliberately
+      );
+    } else {
+      message.botHeldBallDeliberately = undefined;
+    }
+    if (object.botTippedOver !== undefined && object.botTippedOver !== null) {
+      message.botTippedOver = GameEvent_BotTippedOver.fromJSON(
+        object.botTippedOver
+      );
+    } else {
+      message.botTippedOver = undefined;
+    }
+    if (
+      object.attackerTouchedBallInDefenseArea !== undefined &&
+      object.attackerTouchedBallInDefenseArea !== null
+    ) {
+      message.attackerTouchedBallInDefenseArea = GameEvent_AttackerTouchedBallInDefenseArea.fromJSON(
+        object.attackerTouchedBallInDefenseArea
+      );
+    } else {
+      message.attackerTouchedBallInDefenseArea = undefined;
+    }
+    if (
+      object.botKickedBallTooFast !== undefined &&
+      object.botKickedBallTooFast !== null
+    ) {
+      message.botKickedBallTooFast = GameEvent_BotKickedBallTooFast.fromJSON(
+        object.botKickedBallTooFast
+      );
+    } else {
+      message.botKickedBallTooFast = undefined;
+    }
+    if (object.botCrashUnique !== undefined && object.botCrashUnique !== null) {
+      message.botCrashUnique = GameEvent_BotCrashUnique.fromJSON(
+        object.botCrashUnique
+      );
+    } else {
+      message.botCrashUnique = undefined;
+    }
+    if (object.botCrashDrawn !== undefined && object.botCrashDrawn !== null) {
+      message.botCrashDrawn = GameEvent_BotCrashDrawn.fromJSON(
+        object.botCrashDrawn
+      );
+    } else {
+      message.botCrashDrawn = undefined;
+    }
+    if (
+      object.defenderTooCloseToKickPoint !== undefined &&
+      object.defenderTooCloseToKickPoint !== null
+    ) {
+      message.defenderTooCloseToKickPoint = GameEvent_DefenderTooCloseToKickPoint.fromJSON(
+        object.defenderTooCloseToKickPoint
+      );
+    } else {
+      message.defenderTooCloseToKickPoint = undefined;
+    }
+    if (
+      object.botTooFastInStop !== undefined &&
+      object.botTooFastInStop !== null
+    ) {
+      message.botTooFastInStop = GameEvent_BotTooFastInStop.fromJSON(
+        object.botTooFastInStop
+      );
+    } else {
+      message.botTooFastInStop = undefined;
+    }
+    if (
+      object.botInterferedPlacement !== undefined &&
+      object.botInterferedPlacement !== null
+    ) {
+      message.botInterferedPlacement = GameEvent_BotInterferedPlacement.fromJSON(
+        object.botInterferedPlacement
+      );
+    } else {
+      message.botInterferedPlacement = undefined;
+    }
+    if (object.possibleGoal !== undefined && object.possibleGoal !== null) {
+      message.possibleGoal = GameEvent_Goal.fromJSON(object.possibleGoal);
+    } else {
+      message.possibleGoal = undefined;
+    }
+    if (object.goal !== undefined && object.goal !== null) {
+      message.goal = GameEvent_Goal.fromJSON(object.goal);
+    } else {
+      message.goal = undefined;
+    }
+    if (object.invalidGoal !== undefined && object.invalidGoal !== null) {
+      message.invalidGoal = GameEvent_Goal.fromJSON(object.invalidGoal);
+    } else {
+      message.invalidGoal = undefined;
+    }
+    if (
+      object.attackerDoubleTouchedBall !== undefined &&
+      object.attackerDoubleTouchedBall !== null
+    ) {
+      message.attackerDoubleTouchedBall = GameEvent_AttackerDoubleTouchedBall.fromJSON(
+        object.attackerDoubleTouchedBall
+      );
+    } else {
+      message.attackerDoubleTouchedBall = undefined;
+    }
+    if (
+      object.placementSucceeded !== undefined &&
+      object.placementSucceeded !== null
+    ) {
+      message.placementSucceeded = GameEvent_PlacementSucceeded.fromJSON(
+        object.placementSucceeded
+      );
+    } else {
+      message.placementSucceeded = undefined;
+    }
+    if (
+      object.penaltyKickFailed !== undefined &&
+      object.penaltyKickFailed !== null
+    ) {
+      message.penaltyKickFailed = GameEvent_PenaltyKickFailed.fromJSON(
+        object.penaltyKickFailed
+      );
+    } else {
+      message.penaltyKickFailed = undefined;
+    }
+    if (
+      object.noProgressInGame !== undefined &&
+      object.noProgressInGame !== null
+    ) {
+      message.noProgressInGame = GameEvent_NoProgressInGame.fromJSON(
+        object.noProgressInGame
+      );
+    } else {
+      message.noProgressInGame = undefined;
+    }
+    if (
+      object.placementFailed !== undefined &&
+      object.placementFailed !== null
+    ) {
+      message.placementFailed = GameEvent_PlacementFailed.fromJSON(
+        object.placementFailed
+      );
+    } else {
+      message.placementFailed = undefined;
+    }
+    if (object.multipleCards !== undefined && object.multipleCards !== null) {
+      message.multipleCards = GameEvent_MultipleCards.fromJSON(
+        object.multipleCards
+      );
+    } else {
+      message.multipleCards = undefined;
+    }
+    if (object.multipleFouls !== undefined && object.multipleFouls !== null) {
+      message.multipleFouls = GameEvent_MultipleFouls.fromJSON(
+        object.multipleFouls
+      );
+    } else {
+      message.multipleFouls = undefined;
+    }
+    if (
+      object.botSubstitution !== undefined &&
+      object.botSubstitution !== null
+    ) {
+      message.botSubstitution = GameEvent_BotSubstitution.fromJSON(
+        object.botSubstitution
+      );
+    } else {
+      message.botSubstitution = undefined;
+    }
+    if (object.tooManyRobots !== undefined && object.tooManyRobots !== null) {
+      message.tooManyRobots = GameEvent_TooManyRobots.fromJSON(
+        object.tooManyRobots
+      );
+    } else {
+      message.tooManyRobots = undefined;
+    }
+    if (object.challengeFlag !== undefined && object.challengeFlag !== null) {
+      message.challengeFlag = GameEvent_ChallengeFlag.fromJSON(
+        object.challengeFlag
+      );
+    } else {
+      message.challengeFlag = undefined;
+    }
+    if (object.emergencyStop !== undefined && object.emergencyStop !== null) {
+      message.emergencyStop = GameEvent_EmergencyStop.fromJSON(
+        object.emergencyStop
+      );
+    } else {
+      message.emergencyStop = undefined;
+    }
+    if (
+      object.unsportingBehaviorMinor !== undefined &&
+      object.unsportingBehaviorMinor !== null
+    ) {
+      message.unsportingBehaviorMinor = GameEvent_UnsportingBehaviorMinor.fromJSON(
+        object.unsportingBehaviorMinor
+      );
+    } else {
+      message.unsportingBehaviorMinor = undefined;
+    }
+    if (
+      object.unsportingBehaviorMajor !== undefined &&
+      object.unsportingBehaviorMajor !== null
+    ) {
+      message.unsportingBehaviorMajor = GameEvent_UnsportingBehaviorMajor.fromJSON(
+        object.unsportingBehaviorMajor
+      );
+    } else {
+      message.unsportingBehaviorMajor = undefined;
+    }
+    if (object.prepared !== undefined && object.prepared !== null) {
+      message.prepared = GameEvent_Prepared.fromJSON(object.prepared);
+    } else {
+      message.prepared = undefined;
+    }
+    if (object.indirectGoal !== undefined && object.indirectGoal !== null) {
+      message.indirectGoal = GameEvent_IndirectGoal.fromJSON(
+        object.indirectGoal
+      );
+    } else {
+      message.indirectGoal = undefined;
+    }
+    if (object.chippedGoal !== undefined && object.chippedGoal !== null) {
+      message.chippedGoal = GameEvent_ChippedGoal.fromJSON(object.chippedGoal);
+    } else {
+      message.chippedGoal = undefined;
+    }
+    if (object.kickTimeout !== undefined && object.kickTimeout !== null) {
+      message.kickTimeout = GameEvent_KickTimeout.fromJSON(object.kickTimeout);
+    } else {
+      message.kickTimeout = undefined;
+    }
+    if (
+      object.attackerTouchedOpponentInDefenseArea !== undefined &&
+      object.attackerTouchedOpponentInDefenseArea !== null
+    ) {
+      message.attackerTouchedOpponentInDefenseArea = GameEvent_AttackerTouchedOpponentInDefenseArea.fromJSON(
+        object.attackerTouchedOpponentInDefenseArea
+      );
+    } else {
+      message.attackerTouchedOpponentInDefenseArea = undefined;
+    }
+    if (
+      object.attackerTouchedOpponentInDefenseAreaSkipped !== undefined &&
+      object.attackerTouchedOpponentInDefenseAreaSkipped !== null
+    ) {
+      message.attackerTouchedOpponentInDefenseAreaSkipped = GameEvent_AttackerTouchedOpponentInDefenseArea.fromJSON(
+        object.attackerTouchedOpponentInDefenseAreaSkipped
+      );
+    } else {
+      message.attackerTouchedOpponentInDefenseAreaSkipped = undefined;
+    }
+    if (
+      object.botCrashUniqueSkipped !== undefined &&
+      object.botCrashUniqueSkipped !== null
+    ) {
+      message.botCrashUniqueSkipped = GameEvent_BotCrashUnique.fromJSON(
+        object.botCrashUniqueSkipped
+      );
+    } else {
+      message.botCrashUniqueSkipped = undefined;
+    }
+    if (
+      object.botPushedBotSkipped !== undefined &&
+      object.botPushedBotSkipped !== null
+    ) {
+      message.botPushedBotSkipped = GameEvent_BotPushedBot.fromJSON(
+        object.botPushedBotSkipped
+      );
+    } else {
+      message.botPushedBotSkipped = undefined;
+    }
+    if (
+      object.defenderInDefenseAreaPartially !== undefined &&
+      object.defenderInDefenseAreaPartially !== null
+    ) {
+      message.defenderInDefenseAreaPartially = GameEvent_DefenderInDefenseAreaPartially.fromJSON(
+        object.defenderInDefenseAreaPartially
+      );
+    } else {
+      message.defenderInDefenseAreaPartially = undefined;
+    }
+    if (
+      object.multiplePlacementFailures !== undefined &&
+      object.multiplePlacementFailures !== null
+    ) {
+      message.multiplePlacementFailures = GameEvent_MultiplePlacementFailures.fromJSON(
+        object.multiplePlacementFailures
+      );
+    } else {
+      message.multiplePlacementFailures = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent): unknown {
+    const obj: any = {};
+    message.type !== undefined &&
+      (obj.type = gameEvent_TypeToJSON(message.type));
+    if (message.origin) {
+      obj.origin = message.origin.map((e) => e);
+    } else {
+      obj.origin = [];
+    }
+    message.ballLeftFieldTouchLine !== undefined &&
+      (obj.ballLeftFieldTouchLine = message.ballLeftFieldTouchLine
+        ? GameEvent_BallLeftField.toJSON(message.ballLeftFieldTouchLine)
+        : undefined);
+    message.ballLeftFieldGoalLine !== undefined &&
+      (obj.ballLeftFieldGoalLine = message.ballLeftFieldGoalLine
+        ? GameEvent_BallLeftField.toJSON(message.ballLeftFieldGoalLine)
+        : undefined);
+    message.aimlessKick !== undefined &&
+      (obj.aimlessKick = message.aimlessKick
+        ? GameEvent_AimlessKick.toJSON(message.aimlessKick)
+        : undefined);
+    message.attackerTooCloseToDefenseArea !== undefined &&
+      (obj.attackerTooCloseToDefenseArea = message.attackerTooCloseToDefenseArea
+        ? GameEvent_AttackerTooCloseToDefenseArea.toJSON(
+            message.attackerTooCloseToDefenseArea
+          )
+        : undefined);
+    message.defenderInDefenseArea !== undefined &&
+      (obj.defenderInDefenseArea = message.defenderInDefenseArea
+        ? GameEvent_DefenderInDefenseArea.toJSON(message.defenderInDefenseArea)
+        : undefined);
+    message.boundaryCrossing !== undefined &&
+      (obj.boundaryCrossing = message.boundaryCrossing
+        ? GameEvent_BoundaryCrossing.toJSON(message.boundaryCrossing)
+        : undefined);
+    message.keeperHeldBall !== undefined &&
+      (obj.keeperHeldBall = message.keeperHeldBall
+        ? GameEvent_KeeperHeldBall.toJSON(message.keeperHeldBall)
+        : undefined);
+    message.botDribbledBallTooFar !== undefined &&
+      (obj.botDribbledBallTooFar = message.botDribbledBallTooFar
+        ? GameEvent_BotDribbledBallTooFar.toJSON(message.botDribbledBallTooFar)
+        : undefined);
+    message.botPushedBot !== undefined &&
+      (obj.botPushedBot = message.botPushedBot
+        ? GameEvent_BotPushedBot.toJSON(message.botPushedBot)
+        : undefined);
+    message.botHeldBallDeliberately !== undefined &&
+      (obj.botHeldBallDeliberately = message.botHeldBallDeliberately
+        ? GameEvent_BotHeldBallDeliberately.toJSON(
+            message.botHeldBallDeliberately
+          )
+        : undefined);
+    message.botTippedOver !== undefined &&
+      (obj.botTippedOver = message.botTippedOver
+        ? GameEvent_BotTippedOver.toJSON(message.botTippedOver)
+        : undefined);
+    message.attackerTouchedBallInDefenseArea !== undefined &&
+      (obj.attackerTouchedBallInDefenseArea = message.attackerTouchedBallInDefenseArea
+        ? GameEvent_AttackerTouchedBallInDefenseArea.toJSON(
+            message.attackerTouchedBallInDefenseArea
+          )
+        : undefined);
+    message.botKickedBallTooFast !== undefined &&
+      (obj.botKickedBallTooFast = message.botKickedBallTooFast
+        ? GameEvent_BotKickedBallTooFast.toJSON(message.botKickedBallTooFast)
+        : undefined);
+    message.botCrashUnique !== undefined &&
+      (obj.botCrashUnique = message.botCrashUnique
+        ? GameEvent_BotCrashUnique.toJSON(message.botCrashUnique)
+        : undefined);
+    message.botCrashDrawn !== undefined &&
+      (obj.botCrashDrawn = message.botCrashDrawn
+        ? GameEvent_BotCrashDrawn.toJSON(message.botCrashDrawn)
+        : undefined);
+    message.defenderTooCloseToKickPoint !== undefined &&
+      (obj.defenderTooCloseToKickPoint = message.defenderTooCloseToKickPoint
+        ? GameEvent_DefenderTooCloseToKickPoint.toJSON(
+            message.defenderTooCloseToKickPoint
+          )
+        : undefined);
+    message.botTooFastInStop !== undefined &&
+      (obj.botTooFastInStop = message.botTooFastInStop
+        ? GameEvent_BotTooFastInStop.toJSON(message.botTooFastInStop)
+        : undefined);
+    message.botInterferedPlacement !== undefined &&
+      (obj.botInterferedPlacement = message.botInterferedPlacement
+        ? GameEvent_BotInterferedPlacement.toJSON(
+            message.botInterferedPlacement
+          )
+        : undefined);
+    message.possibleGoal !== undefined &&
+      (obj.possibleGoal = message.possibleGoal
+        ? GameEvent_Goal.toJSON(message.possibleGoal)
+        : undefined);
+    message.goal !== undefined &&
+      (obj.goal = message.goal
+        ? GameEvent_Goal.toJSON(message.goal)
+        : undefined);
+    message.invalidGoal !== undefined &&
+      (obj.invalidGoal = message.invalidGoal
+        ? GameEvent_Goal.toJSON(message.invalidGoal)
+        : undefined);
+    message.attackerDoubleTouchedBall !== undefined &&
+      (obj.attackerDoubleTouchedBall = message.attackerDoubleTouchedBall
+        ? GameEvent_AttackerDoubleTouchedBall.toJSON(
+            message.attackerDoubleTouchedBall
+          )
+        : undefined);
+    message.placementSucceeded !== undefined &&
+      (obj.placementSucceeded = message.placementSucceeded
+        ? GameEvent_PlacementSucceeded.toJSON(message.placementSucceeded)
+        : undefined);
+    message.penaltyKickFailed !== undefined &&
+      (obj.penaltyKickFailed = message.penaltyKickFailed
+        ? GameEvent_PenaltyKickFailed.toJSON(message.penaltyKickFailed)
+        : undefined);
+    message.noProgressInGame !== undefined &&
+      (obj.noProgressInGame = message.noProgressInGame
+        ? GameEvent_NoProgressInGame.toJSON(message.noProgressInGame)
+        : undefined);
+    message.placementFailed !== undefined &&
+      (obj.placementFailed = message.placementFailed
+        ? GameEvent_PlacementFailed.toJSON(message.placementFailed)
+        : undefined);
+    message.multipleCards !== undefined &&
+      (obj.multipleCards = message.multipleCards
+        ? GameEvent_MultipleCards.toJSON(message.multipleCards)
+        : undefined);
+    message.multipleFouls !== undefined &&
+      (obj.multipleFouls = message.multipleFouls
+        ? GameEvent_MultipleFouls.toJSON(message.multipleFouls)
+        : undefined);
+    message.botSubstitution !== undefined &&
+      (obj.botSubstitution = message.botSubstitution
+        ? GameEvent_BotSubstitution.toJSON(message.botSubstitution)
+        : undefined);
+    message.tooManyRobots !== undefined &&
+      (obj.tooManyRobots = message.tooManyRobots
+        ? GameEvent_TooManyRobots.toJSON(message.tooManyRobots)
+        : undefined);
+    message.challengeFlag !== undefined &&
+      (obj.challengeFlag = message.challengeFlag
+        ? GameEvent_ChallengeFlag.toJSON(message.challengeFlag)
+        : undefined);
+    message.emergencyStop !== undefined &&
+      (obj.emergencyStop = message.emergencyStop
+        ? GameEvent_EmergencyStop.toJSON(message.emergencyStop)
+        : undefined);
+    message.unsportingBehaviorMinor !== undefined &&
+      (obj.unsportingBehaviorMinor = message.unsportingBehaviorMinor
+        ? GameEvent_UnsportingBehaviorMinor.toJSON(
+            message.unsportingBehaviorMinor
+          )
+        : undefined);
+    message.unsportingBehaviorMajor !== undefined &&
+      (obj.unsportingBehaviorMajor = message.unsportingBehaviorMajor
+        ? GameEvent_UnsportingBehaviorMajor.toJSON(
+            message.unsportingBehaviorMajor
+          )
+        : undefined);
+    message.prepared !== undefined &&
+      (obj.prepared = message.prepared
+        ? GameEvent_Prepared.toJSON(message.prepared)
+        : undefined);
+    message.indirectGoal !== undefined &&
+      (obj.indirectGoal = message.indirectGoal
+        ? GameEvent_IndirectGoal.toJSON(message.indirectGoal)
+        : undefined);
+    message.chippedGoal !== undefined &&
+      (obj.chippedGoal = message.chippedGoal
+        ? GameEvent_ChippedGoal.toJSON(message.chippedGoal)
+        : undefined);
+    message.kickTimeout !== undefined &&
+      (obj.kickTimeout = message.kickTimeout
+        ? GameEvent_KickTimeout.toJSON(message.kickTimeout)
+        : undefined);
+    message.attackerTouchedOpponentInDefenseArea !== undefined &&
+      (obj.attackerTouchedOpponentInDefenseArea = message.attackerTouchedOpponentInDefenseArea
+        ? GameEvent_AttackerTouchedOpponentInDefenseArea.toJSON(
+            message.attackerTouchedOpponentInDefenseArea
+          )
+        : undefined);
+    message.attackerTouchedOpponentInDefenseAreaSkipped !== undefined &&
+      (obj.attackerTouchedOpponentInDefenseAreaSkipped = message.attackerTouchedOpponentInDefenseAreaSkipped
+        ? GameEvent_AttackerTouchedOpponentInDefenseArea.toJSON(
+            message.attackerTouchedOpponentInDefenseAreaSkipped
+          )
+        : undefined);
+    message.botCrashUniqueSkipped !== undefined &&
+      (obj.botCrashUniqueSkipped = message.botCrashUniqueSkipped
+        ? GameEvent_BotCrashUnique.toJSON(message.botCrashUniqueSkipped)
+        : undefined);
+    message.botPushedBotSkipped !== undefined &&
+      (obj.botPushedBotSkipped = message.botPushedBotSkipped
+        ? GameEvent_BotPushedBot.toJSON(message.botPushedBotSkipped)
+        : undefined);
+    message.defenderInDefenseAreaPartially !== undefined &&
+      (obj.defenderInDefenseAreaPartially = message.defenderInDefenseAreaPartially
+        ? GameEvent_DefenderInDefenseAreaPartially.toJSON(
+            message.defenderInDefenseAreaPartially
+          )
+        : undefined);
+    message.multiplePlacementFailures !== undefined &&
+      (obj.multiplePlacementFailures = message.multiplePlacementFailures
+        ? GameEvent_MultiplePlacementFailures.toJSON(
+            message.multiplePlacementFailures
+          )
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<GameEvent>): GameEvent {
+    const message = { ...baseGameEvent } as GameEvent;
+    message.origin = [];
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    } else {
+      message.type = 0;
+    }
+    if (object.origin !== undefined && object.origin !== null) {
+      for (const e of object.origin) {
+        message.origin.push(e);
+      }
+    }
+    if (
+      object.ballLeftFieldTouchLine !== undefined &&
+      object.ballLeftFieldTouchLine !== null
+    ) {
+      message.ballLeftFieldTouchLine = GameEvent_BallLeftField.fromPartial(
+        object.ballLeftFieldTouchLine
+      );
+    } else {
+      message.ballLeftFieldTouchLine = undefined;
+    }
+    if (
+      object.ballLeftFieldGoalLine !== undefined &&
+      object.ballLeftFieldGoalLine !== null
+    ) {
+      message.ballLeftFieldGoalLine = GameEvent_BallLeftField.fromPartial(
+        object.ballLeftFieldGoalLine
+      );
+    } else {
+      message.ballLeftFieldGoalLine = undefined;
+    }
+    if (object.aimlessKick !== undefined && object.aimlessKick !== null) {
+      message.aimlessKick = GameEvent_AimlessKick.fromPartial(
+        object.aimlessKick
+      );
+    } else {
+      message.aimlessKick = undefined;
+    }
+    if (
+      object.attackerTooCloseToDefenseArea !== undefined &&
+      object.attackerTooCloseToDefenseArea !== null
+    ) {
+      message.attackerTooCloseToDefenseArea = GameEvent_AttackerTooCloseToDefenseArea.fromPartial(
+        object.attackerTooCloseToDefenseArea
+      );
+    } else {
+      message.attackerTooCloseToDefenseArea = undefined;
+    }
+    if (
+      object.defenderInDefenseArea !== undefined &&
+      object.defenderInDefenseArea !== null
+    ) {
+      message.defenderInDefenseArea = GameEvent_DefenderInDefenseArea.fromPartial(
+        object.defenderInDefenseArea
+      );
+    } else {
+      message.defenderInDefenseArea = undefined;
+    }
+    if (
+      object.boundaryCrossing !== undefined &&
+      object.boundaryCrossing !== null
+    ) {
+      message.boundaryCrossing = GameEvent_BoundaryCrossing.fromPartial(
+        object.boundaryCrossing
+      );
+    } else {
+      message.boundaryCrossing = undefined;
+    }
+    if (object.keeperHeldBall !== undefined && object.keeperHeldBall !== null) {
+      message.keeperHeldBall = GameEvent_KeeperHeldBall.fromPartial(
+        object.keeperHeldBall
+      );
+    } else {
+      message.keeperHeldBall = undefined;
+    }
+    if (
+      object.botDribbledBallTooFar !== undefined &&
+      object.botDribbledBallTooFar !== null
+    ) {
+      message.botDribbledBallTooFar = GameEvent_BotDribbledBallTooFar.fromPartial(
+        object.botDribbledBallTooFar
+      );
+    } else {
+      message.botDribbledBallTooFar = undefined;
+    }
+    if (object.botPushedBot !== undefined && object.botPushedBot !== null) {
+      message.botPushedBot = GameEvent_BotPushedBot.fromPartial(
+        object.botPushedBot
+      );
+    } else {
+      message.botPushedBot = undefined;
+    }
+    if (
+      object.botHeldBallDeliberately !== undefined &&
+      object.botHeldBallDeliberately !== null
+    ) {
+      message.botHeldBallDeliberately = GameEvent_BotHeldBallDeliberately.fromPartial(
+        object.botHeldBallDeliberately
+      );
+    } else {
+      message.botHeldBallDeliberately = undefined;
+    }
+    if (object.botTippedOver !== undefined && object.botTippedOver !== null) {
+      message.botTippedOver = GameEvent_BotTippedOver.fromPartial(
+        object.botTippedOver
+      );
+    } else {
+      message.botTippedOver = undefined;
+    }
+    if (
+      object.attackerTouchedBallInDefenseArea !== undefined &&
+      object.attackerTouchedBallInDefenseArea !== null
+    ) {
+      message.attackerTouchedBallInDefenseArea = GameEvent_AttackerTouchedBallInDefenseArea.fromPartial(
+        object.attackerTouchedBallInDefenseArea
+      );
+    } else {
+      message.attackerTouchedBallInDefenseArea = undefined;
+    }
+    if (
+      object.botKickedBallTooFast !== undefined &&
+      object.botKickedBallTooFast !== null
+    ) {
+      message.botKickedBallTooFast = GameEvent_BotKickedBallTooFast.fromPartial(
+        object.botKickedBallTooFast
+      );
+    } else {
+      message.botKickedBallTooFast = undefined;
+    }
+    if (object.botCrashUnique !== undefined && object.botCrashUnique !== null) {
+      message.botCrashUnique = GameEvent_BotCrashUnique.fromPartial(
+        object.botCrashUnique
+      );
+    } else {
+      message.botCrashUnique = undefined;
+    }
+    if (object.botCrashDrawn !== undefined && object.botCrashDrawn !== null) {
+      message.botCrashDrawn = GameEvent_BotCrashDrawn.fromPartial(
+        object.botCrashDrawn
+      );
+    } else {
+      message.botCrashDrawn = undefined;
+    }
+    if (
+      object.defenderTooCloseToKickPoint !== undefined &&
+      object.defenderTooCloseToKickPoint !== null
+    ) {
+      message.defenderTooCloseToKickPoint = GameEvent_DefenderTooCloseToKickPoint.fromPartial(
+        object.defenderTooCloseToKickPoint
+      );
+    } else {
+      message.defenderTooCloseToKickPoint = undefined;
+    }
+    if (
+      object.botTooFastInStop !== undefined &&
+      object.botTooFastInStop !== null
+    ) {
+      message.botTooFastInStop = GameEvent_BotTooFastInStop.fromPartial(
+        object.botTooFastInStop
+      );
+    } else {
+      message.botTooFastInStop = undefined;
+    }
+    if (
+      object.botInterferedPlacement !== undefined &&
+      object.botInterferedPlacement !== null
+    ) {
+      message.botInterferedPlacement = GameEvent_BotInterferedPlacement.fromPartial(
+        object.botInterferedPlacement
+      );
+    } else {
+      message.botInterferedPlacement = undefined;
+    }
+    if (object.possibleGoal !== undefined && object.possibleGoal !== null) {
+      message.possibleGoal = GameEvent_Goal.fromPartial(object.possibleGoal);
+    } else {
+      message.possibleGoal = undefined;
+    }
+    if (object.goal !== undefined && object.goal !== null) {
+      message.goal = GameEvent_Goal.fromPartial(object.goal);
+    } else {
+      message.goal = undefined;
+    }
+    if (object.invalidGoal !== undefined && object.invalidGoal !== null) {
+      message.invalidGoal = GameEvent_Goal.fromPartial(object.invalidGoal);
+    } else {
+      message.invalidGoal = undefined;
+    }
+    if (
+      object.attackerDoubleTouchedBall !== undefined &&
+      object.attackerDoubleTouchedBall !== null
+    ) {
+      message.attackerDoubleTouchedBall = GameEvent_AttackerDoubleTouchedBall.fromPartial(
+        object.attackerDoubleTouchedBall
+      );
+    } else {
+      message.attackerDoubleTouchedBall = undefined;
+    }
+    if (
+      object.placementSucceeded !== undefined &&
+      object.placementSucceeded !== null
+    ) {
+      message.placementSucceeded = GameEvent_PlacementSucceeded.fromPartial(
+        object.placementSucceeded
+      );
+    } else {
+      message.placementSucceeded = undefined;
+    }
+    if (
+      object.penaltyKickFailed !== undefined &&
+      object.penaltyKickFailed !== null
+    ) {
+      message.penaltyKickFailed = GameEvent_PenaltyKickFailed.fromPartial(
+        object.penaltyKickFailed
+      );
+    } else {
+      message.penaltyKickFailed = undefined;
+    }
+    if (
+      object.noProgressInGame !== undefined &&
+      object.noProgressInGame !== null
+    ) {
+      message.noProgressInGame = GameEvent_NoProgressInGame.fromPartial(
+        object.noProgressInGame
+      );
+    } else {
+      message.noProgressInGame = undefined;
+    }
+    if (
+      object.placementFailed !== undefined &&
+      object.placementFailed !== null
+    ) {
+      message.placementFailed = GameEvent_PlacementFailed.fromPartial(
+        object.placementFailed
+      );
+    } else {
+      message.placementFailed = undefined;
+    }
+    if (object.multipleCards !== undefined && object.multipleCards !== null) {
+      message.multipleCards = GameEvent_MultipleCards.fromPartial(
+        object.multipleCards
+      );
+    } else {
+      message.multipleCards = undefined;
+    }
+    if (object.multipleFouls !== undefined && object.multipleFouls !== null) {
+      message.multipleFouls = GameEvent_MultipleFouls.fromPartial(
+        object.multipleFouls
+      );
+    } else {
+      message.multipleFouls = undefined;
+    }
+    if (
+      object.botSubstitution !== undefined &&
+      object.botSubstitution !== null
+    ) {
+      message.botSubstitution = GameEvent_BotSubstitution.fromPartial(
+        object.botSubstitution
+      );
+    } else {
+      message.botSubstitution = undefined;
+    }
+    if (object.tooManyRobots !== undefined && object.tooManyRobots !== null) {
+      message.tooManyRobots = GameEvent_TooManyRobots.fromPartial(
+        object.tooManyRobots
+      );
+    } else {
+      message.tooManyRobots = undefined;
+    }
+    if (object.challengeFlag !== undefined && object.challengeFlag !== null) {
+      message.challengeFlag = GameEvent_ChallengeFlag.fromPartial(
+        object.challengeFlag
+      );
+    } else {
+      message.challengeFlag = undefined;
+    }
+    if (object.emergencyStop !== undefined && object.emergencyStop !== null) {
+      message.emergencyStop = GameEvent_EmergencyStop.fromPartial(
+        object.emergencyStop
+      );
+    } else {
+      message.emergencyStop = undefined;
+    }
+    if (
+      object.unsportingBehaviorMinor !== undefined &&
+      object.unsportingBehaviorMinor !== null
+    ) {
+      message.unsportingBehaviorMinor = GameEvent_UnsportingBehaviorMinor.fromPartial(
+        object.unsportingBehaviorMinor
+      );
+    } else {
+      message.unsportingBehaviorMinor = undefined;
+    }
+    if (
+      object.unsportingBehaviorMajor !== undefined &&
+      object.unsportingBehaviorMajor !== null
+    ) {
+      message.unsportingBehaviorMajor = GameEvent_UnsportingBehaviorMajor.fromPartial(
+        object.unsportingBehaviorMajor
+      );
+    } else {
+      message.unsportingBehaviorMajor = undefined;
+    }
+    if (object.prepared !== undefined && object.prepared !== null) {
+      message.prepared = GameEvent_Prepared.fromPartial(object.prepared);
+    } else {
+      message.prepared = undefined;
+    }
+    if (object.indirectGoal !== undefined && object.indirectGoal !== null) {
+      message.indirectGoal = GameEvent_IndirectGoal.fromPartial(
+        object.indirectGoal
+      );
+    } else {
+      message.indirectGoal = undefined;
+    }
+    if (object.chippedGoal !== undefined && object.chippedGoal !== null) {
+      message.chippedGoal = GameEvent_ChippedGoal.fromPartial(
+        object.chippedGoal
+      );
+    } else {
+      message.chippedGoal = undefined;
+    }
+    if (object.kickTimeout !== undefined && object.kickTimeout !== null) {
+      message.kickTimeout = GameEvent_KickTimeout.fromPartial(
+        object.kickTimeout
+      );
+    } else {
+      message.kickTimeout = undefined;
+    }
+    if (
+      object.attackerTouchedOpponentInDefenseArea !== undefined &&
+      object.attackerTouchedOpponentInDefenseArea !== null
+    ) {
+      message.attackerTouchedOpponentInDefenseArea = GameEvent_AttackerTouchedOpponentInDefenseArea.fromPartial(
+        object.attackerTouchedOpponentInDefenseArea
+      );
+    } else {
+      message.attackerTouchedOpponentInDefenseArea = undefined;
+    }
+    if (
+      object.attackerTouchedOpponentInDefenseAreaSkipped !== undefined &&
+      object.attackerTouchedOpponentInDefenseAreaSkipped !== null
+    ) {
+      message.attackerTouchedOpponentInDefenseAreaSkipped = GameEvent_AttackerTouchedOpponentInDefenseArea.fromPartial(
+        object.attackerTouchedOpponentInDefenseAreaSkipped
+      );
+    } else {
+      message.attackerTouchedOpponentInDefenseAreaSkipped = undefined;
+    }
+    if (
+      object.botCrashUniqueSkipped !== undefined &&
+      object.botCrashUniqueSkipped !== null
+    ) {
+      message.botCrashUniqueSkipped = GameEvent_BotCrashUnique.fromPartial(
+        object.botCrashUniqueSkipped
+      );
+    } else {
+      message.botCrashUniqueSkipped = undefined;
+    }
+    if (
+      object.botPushedBotSkipped !== undefined &&
+      object.botPushedBotSkipped !== null
+    ) {
+      message.botPushedBotSkipped = GameEvent_BotPushedBot.fromPartial(
+        object.botPushedBotSkipped
+      );
+    } else {
+      message.botPushedBotSkipped = undefined;
+    }
+    if (
+      object.defenderInDefenseAreaPartially !== undefined &&
+      object.defenderInDefenseAreaPartially !== null
+    ) {
+      message.defenderInDefenseAreaPartially = GameEvent_DefenderInDefenseAreaPartially.fromPartial(
+        object.defenderInDefenseAreaPartially
+      );
+    } else {
+      message.defenderInDefenseAreaPartially = undefined;
+    }
+    if (
+      object.multiplePlacementFailures !== undefined &&
+      object.multiplePlacementFailures !== null
+    ) {
+      message.multiplePlacementFailures = GameEvent_MultiplePlacementFailures.fromPartial(
+        object.multiplePlacementFailures
+      );
+    } else {
+      message.multiplePlacementFailures = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BallLeftField: object = { byTeam: 0, byBot: 0 };
@@ -1196,8 +2438,8 @@ const baseGameEvent_BallLeftField: object = { byTeam: 0, byBot: 0 };
 export const GameEvent_BallLeftField = {
   encode(
     message: GameEvent_BallLeftField,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1210,12 +2452,15 @@ export const GameEvent_BallLeftField = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_BallLeftField {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_BallLeftField {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BallLeftField
-    ) as GameEvent_BallLeftField;
+    const message = {
+      ...baseGameEvent_BallLeftField,
+    } as GameEvent_BallLeftField;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1235,6 +2480,63 @@ export const GameEvent_BallLeftField = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BallLeftField {
+    const message = {
+      ...baseGameEvent_BallLeftField,
+    } as GameEvent_BallLeftField;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BallLeftField): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BallLeftField>
+  ): GameEvent_BallLeftField {
+    const message = {
+      ...baseGameEvent_BallLeftField,
+    } as GameEvent_BallLeftField;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_AimlessKick: object = { byTeam: 0, byBot: 0 };
@@ -1242,8 +2544,8 @@ const baseGameEvent_AimlessKick: object = { byTeam: 0, byBot: 0 };
 export const GameEvent_AimlessKick = {
   encode(
     message: GameEvent_AimlessKick,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1259,12 +2561,13 @@ export const GameEvent_AimlessKick = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_AimlessKick {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_AimlessKick {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_AimlessKick
-    ) as GameEvent_AimlessKick;
+    const message = { ...baseGameEvent_AimlessKick } as GameEvent_AimlessKick;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1287,6 +2590,73 @@ export const GameEvent_AimlessKick = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_AimlessKick {
+    const message = { ...baseGameEvent_AimlessKick } as GameEvent_AimlessKick;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromJSON(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_AimlessKick): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.kickLocation !== undefined &&
+      (obj.kickLocation = message.kickLocation
+        ? Vector2.toJSON(message.kickLocation)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_AimlessKick>
+  ): GameEvent_AimlessKick {
+    const message = { ...baseGameEvent_AimlessKick } as GameEvent_AimlessKick;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromPartial(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_Goal: object = {
@@ -1300,7 +2670,10 @@ const baseGameEvent_Goal: object = {
 };
 
 export const GameEvent_Goal = {
-  encode(message: GameEvent_Goal, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: GameEvent_Goal,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1331,12 +2704,10 @@ export const GameEvent_Goal = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_Goal {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): GameEvent_Goal {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_Goal
-    ) as GameEvent_Goal;
+    const message = { ...baseGameEvent_Goal } as GameEvent_Goal;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1374,6 +2745,144 @@ export const GameEvent_Goal = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_Goal {
+    const message = { ...baseGameEvent_Goal } as GameEvent_Goal;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.kickingTeam !== undefined && object.kickingTeam !== null) {
+      message.kickingTeam = teamFromJSON(object.kickingTeam);
+    } else {
+      message.kickingTeam = 0;
+    }
+    if (object.kickingBot !== undefined && object.kickingBot !== null) {
+      message.kickingBot = Number(object.kickingBot);
+    } else {
+      message.kickingBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromJSON(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    if (object.maxBallHeight !== undefined && object.maxBallHeight !== null) {
+      message.maxBallHeight = Number(object.maxBallHeight);
+    } else {
+      message.maxBallHeight = 0;
+    }
+    if (
+      object.numRobotsByTeam !== undefined &&
+      object.numRobotsByTeam !== null
+    ) {
+      message.numRobotsByTeam = Number(object.numRobotsByTeam);
+    } else {
+      message.numRobotsByTeam = 0;
+    }
+    if (
+      object.lastTouchByTeam !== undefined &&
+      object.lastTouchByTeam !== null
+    ) {
+      message.lastTouchByTeam = Long.fromString(object.lastTouchByTeam);
+    } else {
+      message.lastTouchByTeam = Long.UZERO;
+    }
+    if (object.message !== undefined && object.message !== null) {
+      message.message = String(object.message);
+    } else {
+      message.message = "";
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_Goal): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.kickingTeam !== undefined &&
+      (obj.kickingTeam = teamToJSON(message.kickingTeam));
+    message.kickingBot !== undefined && (obj.kickingBot = message.kickingBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.kickLocation !== undefined &&
+      (obj.kickLocation = message.kickLocation
+        ? Vector2.toJSON(message.kickLocation)
+        : undefined);
+    message.maxBallHeight !== undefined &&
+      (obj.maxBallHeight = message.maxBallHeight);
+    message.numRobotsByTeam !== undefined &&
+      (obj.numRobotsByTeam = message.numRobotsByTeam);
+    message.lastTouchByTeam !== undefined &&
+      (obj.lastTouchByTeam = (
+        message.lastTouchByTeam || Long.UZERO
+      ).toString());
+    message.message !== undefined && (obj.message = message.message);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<GameEvent_Goal>): GameEvent_Goal {
+    const message = { ...baseGameEvent_Goal } as GameEvent_Goal;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.kickingTeam !== undefined && object.kickingTeam !== null) {
+      message.kickingTeam = object.kickingTeam;
+    } else {
+      message.kickingTeam = 0;
+    }
+    if (object.kickingBot !== undefined && object.kickingBot !== null) {
+      message.kickingBot = object.kickingBot;
+    } else {
+      message.kickingBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromPartial(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    if (object.maxBallHeight !== undefined && object.maxBallHeight !== null) {
+      message.maxBallHeight = object.maxBallHeight;
+    } else {
+      message.maxBallHeight = 0;
+    }
+    if (
+      object.numRobotsByTeam !== undefined &&
+      object.numRobotsByTeam !== null
+    ) {
+      message.numRobotsByTeam = object.numRobotsByTeam;
+    } else {
+      message.numRobotsByTeam = 0;
+    }
+    if (
+      object.lastTouchByTeam !== undefined &&
+      object.lastTouchByTeam !== null
+    ) {
+      message.lastTouchByTeam = object.lastTouchByTeam as Long;
+    } else {
+      message.lastTouchByTeam = Long.UZERO;
+    }
+    if (object.message !== undefined && object.message !== null) {
+      message.message = object.message;
+    } else {
+      message.message = "";
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_IndirectGoal: object = { byTeam: 0, byBot: 0 };
@@ -1381,8 +2890,8 @@ const baseGameEvent_IndirectGoal: object = { byTeam: 0, byBot: 0 };
 export const GameEvent_IndirectGoal = {
   encode(
     message: GameEvent_IndirectGoal,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1398,12 +2907,13 @@ export const GameEvent_IndirectGoal = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_IndirectGoal {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_IndirectGoal {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_IndirectGoal
-    ) as GameEvent_IndirectGoal;
+    const message = { ...baseGameEvent_IndirectGoal } as GameEvent_IndirectGoal;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1426,6 +2936,73 @@ export const GameEvent_IndirectGoal = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_IndirectGoal {
+    const message = { ...baseGameEvent_IndirectGoal } as GameEvent_IndirectGoal;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromJSON(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_IndirectGoal): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.kickLocation !== undefined &&
+      (obj.kickLocation = message.kickLocation
+        ? Vector2.toJSON(message.kickLocation)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_IndirectGoal>
+  ): GameEvent_IndirectGoal {
+    const message = { ...baseGameEvent_IndirectGoal } as GameEvent_IndirectGoal;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromPartial(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_ChippedGoal: object = {
@@ -1437,8 +3014,8 @@ const baseGameEvent_ChippedGoal: object = {
 export const GameEvent_ChippedGoal = {
   encode(
     message: GameEvent_ChippedGoal,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1457,12 +3034,13 @@ export const GameEvent_ChippedGoal = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_ChippedGoal {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_ChippedGoal {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_ChippedGoal
-    ) as GameEvent_ChippedGoal;
+    const message = { ...baseGameEvent_ChippedGoal } as GameEvent_ChippedGoal;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1488,6 +3066,85 @@ export const GameEvent_ChippedGoal = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_ChippedGoal {
+    const message = { ...baseGameEvent_ChippedGoal } as GameEvent_ChippedGoal;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromJSON(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    if (object.maxBallHeight !== undefined && object.maxBallHeight !== null) {
+      message.maxBallHeight = Number(object.maxBallHeight);
+    } else {
+      message.maxBallHeight = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_ChippedGoal): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.kickLocation !== undefined &&
+      (obj.kickLocation = message.kickLocation
+        ? Vector2.toJSON(message.kickLocation)
+        : undefined);
+    message.maxBallHeight !== undefined &&
+      (obj.maxBallHeight = message.maxBallHeight);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_ChippedGoal>
+  ): GameEvent_ChippedGoal {
+    const message = { ...baseGameEvent_ChippedGoal } as GameEvent_ChippedGoal;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.kickLocation !== undefined && object.kickLocation !== null) {
+      message.kickLocation = Vector2.fromPartial(object.kickLocation);
+    } else {
+      message.kickLocation = undefined;
+    }
+    if (object.maxBallHeight !== undefined && object.maxBallHeight !== null) {
+      message.maxBallHeight = object.maxBallHeight;
+    } else {
+      message.maxBallHeight = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotTooFastInStop: object = {
@@ -1499,8 +3156,8 @@ const baseGameEvent_BotTooFastInStop: object = {
 export const GameEvent_BotTooFastInStop = {
   encode(
     message: GameEvent_BotTooFastInStop,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1517,14 +3174,14 @@ export const GameEvent_BotTooFastInStop = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotTooFastInStop {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotTooFastInStop
-    ) as GameEvent_BotTooFastInStop;
+    const message = {
+      ...baseGameEvent_BotTooFastInStop,
+    } as GameEvent_BotTooFastInStop;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1547,6 +3204,74 @@ export const GameEvent_BotTooFastInStop = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotTooFastInStop {
+    const message = {
+      ...baseGameEvent_BotTooFastInStop,
+    } as GameEvent_BotTooFastInStop;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.speed !== undefined && object.speed !== null) {
+      message.speed = Number(object.speed);
+    } else {
+      message.speed = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotTooFastInStop): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.speed !== undefined && (obj.speed = message.speed);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotTooFastInStop>
+  ): GameEvent_BotTooFastInStop {
+    const message = {
+      ...baseGameEvent_BotTooFastInStop,
+    } as GameEvent_BotTooFastInStop;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.speed !== undefined && object.speed !== null) {
+      message.speed = object.speed;
+    } else {
+      message.speed = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_DefenderTooCloseToKickPoint: object = {
@@ -1558,8 +3283,8 @@ const baseGameEvent_DefenderTooCloseToKickPoint: object = {
 export const GameEvent_DefenderTooCloseToKickPoint = {
   encode(
     message: GameEvent_DefenderTooCloseToKickPoint,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1576,14 +3301,14 @@ export const GameEvent_DefenderTooCloseToKickPoint = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_DefenderTooCloseToKickPoint {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_DefenderTooCloseToKickPoint
-    ) as GameEvent_DefenderTooCloseToKickPoint;
+    const message = {
+      ...baseGameEvent_DefenderTooCloseToKickPoint,
+    } as GameEvent_DefenderTooCloseToKickPoint;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1606,6 +3331,74 @@ export const GameEvent_DefenderTooCloseToKickPoint = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_DefenderTooCloseToKickPoint {
+    const message = {
+      ...baseGameEvent_DefenderTooCloseToKickPoint,
+    } as GameEvent_DefenderTooCloseToKickPoint;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = Number(object.distance);
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_DefenderTooCloseToKickPoint): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.distance !== undefined && (obj.distance = message.distance);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_DefenderTooCloseToKickPoint>
+  ): GameEvent_DefenderTooCloseToKickPoint {
+    const message = {
+      ...baseGameEvent_DefenderTooCloseToKickPoint,
+    } as GameEvent_DefenderTooCloseToKickPoint;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = object.distance;
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotCrashDrawn: object = {
@@ -1619,8 +3412,8 @@ const baseGameEvent_BotCrashDrawn: object = {
 export const GameEvent_BotCrashDrawn = {
   encode(
     message: GameEvent_BotCrashDrawn,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.botYellow !== 0) {
       writer.uint32(8).uint32(message.botYellow);
     }
@@ -1642,12 +3435,15 @@ export const GameEvent_BotCrashDrawn = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_BotCrashDrawn {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_BotCrashDrawn {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotCrashDrawn
-    ) as GameEvent_BotCrashDrawn;
+    const message = {
+      ...baseGameEvent_BotCrashDrawn,
+    } as GameEvent_BotCrashDrawn;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1676,6 +3472,96 @@ export const GameEvent_BotCrashDrawn = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotCrashDrawn {
+    const message = {
+      ...baseGameEvent_BotCrashDrawn,
+    } as GameEvent_BotCrashDrawn;
+    if (object.botYellow !== undefined && object.botYellow !== null) {
+      message.botYellow = Number(object.botYellow);
+    } else {
+      message.botYellow = 0;
+    }
+    if (object.botBlue !== undefined && object.botBlue !== null) {
+      message.botBlue = Number(object.botBlue);
+    } else {
+      message.botBlue = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.crashSpeed !== undefined && object.crashSpeed !== null) {
+      message.crashSpeed = Number(object.crashSpeed);
+    } else {
+      message.crashSpeed = 0;
+    }
+    if (object.speedDiff !== undefined && object.speedDiff !== null) {
+      message.speedDiff = Number(object.speedDiff);
+    } else {
+      message.speedDiff = 0;
+    }
+    if (object.crashAngle !== undefined && object.crashAngle !== null) {
+      message.crashAngle = Number(object.crashAngle);
+    } else {
+      message.crashAngle = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotCrashDrawn): unknown {
+    const obj: any = {};
+    message.botYellow !== undefined && (obj.botYellow = message.botYellow);
+    message.botBlue !== undefined && (obj.botBlue = message.botBlue);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.crashSpeed !== undefined && (obj.crashSpeed = message.crashSpeed);
+    message.speedDiff !== undefined && (obj.speedDiff = message.speedDiff);
+    message.crashAngle !== undefined && (obj.crashAngle = message.crashAngle);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotCrashDrawn>
+  ): GameEvent_BotCrashDrawn {
+    const message = {
+      ...baseGameEvent_BotCrashDrawn,
+    } as GameEvent_BotCrashDrawn;
+    if (object.botYellow !== undefined && object.botYellow !== null) {
+      message.botYellow = object.botYellow;
+    } else {
+      message.botYellow = 0;
+    }
+    if (object.botBlue !== undefined && object.botBlue !== null) {
+      message.botBlue = object.botBlue;
+    } else {
+      message.botBlue = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.crashSpeed !== undefined && object.crashSpeed !== null) {
+      message.crashSpeed = object.crashSpeed;
+    } else {
+      message.crashSpeed = 0;
+    }
+    if (object.speedDiff !== undefined && object.speedDiff !== null) {
+      message.speedDiff = object.speedDiff;
+    } else {
+      message.speedDiff = 0;
+    }
+    if (object.crashAngle !== undefined && object.crashAngle !== null) {
+      message.crashAngle = object.crashAngle;
+    } else {
+      message.crashAngle = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotCrashUnique: object = {
@@ -1690,8 +3576,8 @@ const baseGameEvent_BotCrashUnique: object = {
 export const GameEvent_BotCrashUnique = {
   encode(
     message: GameEvent_BotCrashUnique,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1717,14 +3603,14 @@ export const GameEvent_BotCrashUnique = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotCrashUnique {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotCrashUnique
-    ) as GameEvent_BotCrashUnique;
+    const message = {
+      ...baseGameEvent_BotCrashUnique,
+    } as GameEvent_BotCrashUnique;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1756,6 +3642,107 @@ export const GameEvent_BotCrashUnique = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotCrashUnique {
+    const message = {
+      ...baseGameEvent_BotCrashUnique,
+    } as GameEvent_BotCrashUnique;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.violator !== undefined && object.violator !== null) {
+      message.violator = Number(object.violator);
+    } else {
+      message.violator = 0;
+    }
+    if (object.victim !== undefined && object.victim !== null) {
+      message.victim = Number(object.victim);
+    } else {
+      message.victim = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.crashSpeed !== undefined && object.crashSpeed !== null) {
+      message.crashSpeed = Number(object.crashSpeed);
+    } else {
+      message.crashSpeed = 0;
+    }
+    if (object.speedDiff !== undefined && object.speedDiff !== null) {
+      message.speedDiff = Number(object.speedDiff);
+    } else {
+      message.speedDiff = 0;
+    }
+    if (object.crashAngle !== undefined && object.crashAngle !== null) {
+      message.crashAngle = Number(object.crashAngle);
+    } else {
+      message.crashAngle = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotCrashUnique): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.violator !== undefined && (obj.violator = message.violator);
+    message.victim !== undefined && (obj.victim = message.victim);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.crashSpeed !== undefined && (obj.crashSpeed = message.crashSpeed);
+    message.speedDiff !== undefined && (obj.speedDiff = message.speedDiff);
+    message.crashAngle !== undefined && (obj.crashAngle = message.crashAngle);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotCrashUnique>
+  ): GameEvent_BotCrashUnique {
+    const message = {
+      ...baseGameEvent_BotCrashUnique,
+    } as GameEvent_BotCrashUnique;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.violator !== undefined && object.violator !== null) {
+      message.violator = object.violator;
+    } else {
+      message.violator = 0;
+    }
+    if (object.victim !== undefined && object.victim !== null) {
+      message.victim = object.victim;
+    } else {
+      message.victim = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.crashSpeed !== undefined && object.crashSpeed !== null) {
+      message.crashSpeed = object.crashSpeed;
+    } else {
+      message.crashSpeed = 0;
+    }
+    if (object.speedDiff !== undefined && object.speedDiff !== null) {
+      message.speedDiff = object.speedDiff;
+    } else {
+      message.speedDiff = 0;
+    }
+    if (object.crashAngle !== undefined && object.crashAngle !== null) {
+      message.crashAngle = object.crashAngle;
+    } else {
+      message.crashAngle = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotPushedBot: object = {
@@ -1768,8 +3755,8 @@ const baseGameEvent_BotPushedBot: object = {
 export const GameEvent_BotPushedBot = {
   encode(
     message: GameEvent_BotPushedBot,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1788,12 +3775,13 @@ export const GameEvent_BotPushedBot = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_BotPushedBot {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_BotPushedBot {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotPushedBot
-    ) as GameEvent_BotPushedBot;
+    const message = { ...baseGameEvent_BotPushedBot } as GameEvent_BotPushedBot;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1819,6 +3807,82 @@ export const GameEvent_BotPushedBot = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotPushedBot {
+    const message = { ...baseGameEvent_BotPushedBot } as GameEvent_BotPushedBot;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.violator !== undefined && object.violator !== null) {
+      message.violator = Number(object.violator);
+    } else {
+      message.violator = 0;
+    }
+    if (object.victim !== undefined && object.victim !== null) {
+      message.victim = Number(object.victim);
+    } else {
+      message.victim = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.pushedDistance !== undefined && object.pushedDistance !== null) {
+      message.pushedDistance = Number(object.pushedDistance);
+    } else {
+      message.pushedDistance = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotPushedBot): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.violator !== undefined && (obj.violator = message.violator);
+    message.victim !== undefined && (obj.victim = message.victim);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.pushedDistance !== undefined &&
+      (obj.pushedDistance = message.pushedDistance);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotPushedBot>
+  ): GameEvent_BotPushedBot {
+    const message = { ...baseGameEvent_BotPushedBot } as GameEvent_BotPushedBot;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.violator !== undefined && object.violator !== null) {
+      message.violator = object.violator;
+    } else {
+      message.violator = 0;
+    }
+    if (object.victim !== undefined && object.victim !== null) {
+      message.victim = object.victim;
+    } else {
+      message.victim = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.pushedDistance !== undefined && object.pushedDistance !== null) {
+      message.pushedDistance = object.pushedDistance;
+    } else {
+      message.pushedDistance = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotTippedOver: object = { byTeam: 0, byBot: 0 };
@@ -1826,8 +3890,8 @@ const baseGameEvent_BotTippedOver: object = { byTeam: 0, byBot: 0 };
 export const GameEvent_BotTippedOver = {
   encode(
     message: GameEvent_BotTippedOver,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1843,12 +3907,15 @@ export const GameEvent_BotTippedOver = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_BotTippedOver {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_BotTippedOver {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotTippedOver
-    ) as GameEvent_BotTippedOver;
+    const message = {
+      ...baseGameEvent_BotTippedOver,
+    } as GameEvent_BotTippedOver;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1871,6 +3938,77 @@ export const GameEvent_BotTippedOver = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotTippedOver {
+    const message = {
+      ...baseGameEvent_BotTippedOver,
+    } as GameEvent_BotTippedOver;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromJSON(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotTippedOver): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.ballLocation !== undefined &&
+      (obj.ballLocation = message.ballLocation
+        ? Vector2.toJSON(message.ballLocation)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotTippedOver>
+  ): GameEvent_BotTippedOver {
+    const message = {
+      ...baseGameEvent_BotTippedOver,
+    } as GameEvent_BotTippedOver;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromPartial(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_DefenderInDefenseArea: object = {
@@ -1882,8 +4020,8 @@ const baseGameEvent_DefenderInDefenseArea: object = {
 export const GameEvent_DefenderInDefenseArea = {
   encode(
     message: GameEvent_DefenderInDefenseArea,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1900,14 +4038,14 @@ export const GameEvent_DefenderInDefenseArea = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_DefenderInDefenseArea {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_DefenderInDefenseArea
-    ) as GameEvent_DefenderInDefenseArea;
+    const message = {
+      ...baseGameEvent_DefenderInDefenseArea,
+    } as GameEvent_DefenderInDefenseArea;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1930,6 +4068,74 @@ export const GameEvent_DefenderInDefenseArea = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_DefenderInDefenseArea {
+    const message = {
+      ...baseGameEvent_DefenderInDefenseArea,
+    } as GameEvent_DefenderInDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = Number(object.distance);
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_DefenderInDefenseArea): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.distance !== undefined && (obj.distance = message.distance);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_DefenderInDefenseArea>
+  ): GameEvent_DefenderInDefenseArea {
+    const message = {
+      ...baseGameEvent_DefenderInDefenseArea,
+    } as GameEvent_DefenderInDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = object.distance;
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_DefenderInDefenseAreaPartially: object = {
@@ -1941,8 +4147,8 @@ const baseGameEvent_DefenderInDefenseAreaPartially: object = {
 export const GameEvent_DefenderInDefenseAreaPartially = {
   encode(
     message: GameEvent_DefenderInDefenseAreaPartially,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -1962,14 +4168,14 @@ export const GameEvent_DefenderInDefenseAreaPartially = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_DefenderInDefenseAreaPartially {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_DefenderInDefenseAreaPartially
-    ) as GameEvent_DefenderInDefenseAreaPartially;
+    const message = {
+      ...baseGameEvent_DefenderInDefenseAreaPartially,
+    } as GameEvent_DefenderInDefenseAreaPartially;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1995,6 +4201,88 @@ export const GameEvent_DefenderInDefenseAreaPartially = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_DefenderInDefenseAreaPartially {
+    const message = {
+      ...baseGameEvent_DefenderInDefenseAreaPartially,
+    } as GameEvent_DefenderInDefenseAreaPartially;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = Number(object.distance);
+    } else {
+      message.distance = 0;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromJSON(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_DefenderInDefenseAreaPartially): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.distance !== undefined && (obj.distance = message.distance);
+    message.ballLocation !== undefined &&
+      (obj.ballLocation = message.ballLocation
+        ? Vector2.toJSON(message.ballLocation)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_DefenderInDefenseAreaPartially>
+  ): GameEvent_DefenderInDefenseAreaPartially {
+    const message = {
+      ...baseGameEvent_DefenderInDefenseAreaPartially,
+    } as GameEvent_DefenderInDefenseAreaPartially;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = object.distance;
+    } else {
+      message.distance = 0;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromPartial(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_AttackerTouchedBallInDefenseArea: object = {
@@ -2006,8 +4294,8 @@ const baseGameEvent_AttackerTouchedBallInDefenseArea: object = {
 export const GameEvent_AttackerTouchedBallInDefenseArea = {
   encode(
     message: GameEvent_AttackerTouchedBallInDefenseArea,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2024,14 +4312,14 @@ export const GameEvent_AttackerTouchedBallInDefenseArea = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerTouchedBallInDefenseArea {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_AttackerTouchedBallInDefenseArea
-    ) as GameEvent_AttackerTouchedBallInDefenseArea;
+    const message = {
+      ...baseGameEvent_AttackerTouchedBallInDefenseArea,
+    } as GameEvent_AttackerTouchedBallInDefenseArea;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2054,6 +4342,74 @@ export const GameEvent_AttackerTouchedBallInDefenseArea = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_AttackerTouchedBallInDefenseArea {
+    const message = {
+      ...baseGameEvent_AttackerTouchedBallInDefenseArea,
+    } as GameEvent_AttackerTouchedBallInDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = Number(object.distance);
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_AttackerTouchedBallInDefenseArea): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.distance !== undefined && (obj.distance = message.distance);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_AttackerTouchedBallInDefenseArea>
+  ): GameEvent_AttackerTouchedBallInDefenseArea {
+    const message = {
+      ...baseGameEvent_AttackerTouchedBallInDefenseArea,
+    } as GameEvent_AttackerTouchedBallInDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = object.distance;
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotKickedBallTooFast: object = {
@@ -2066,8 +4422,8 @@ const baseGameEvent_BotKickedBallTooFast: object = {
 export const GameEvent_BotKickedBallTooFast = {
   encode(
     message: GameEvent_BotKickedBallTooFast,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2087,14 +4443,14 @@ export const GameEvent_BotKickedBallTooFast = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotKickedBallTooFast {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotKickedBallTooFast
-    ) as GameEvent_BotKickedBallTooFast;
+    const message = {
+      ...baseGameEvent_BotKickedBallTooFast,
+    } as GameEvent_BotKickedBallTooFast;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2120,6 +4476,92 @@ export const GameEvent_BotKickedBallTooFast = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotKickedBallTooFast {
+    const message = {
+      ...baseGameEvent_BotKickedBallTooFast,
+    } as GameEvent_BotKickedBallTooFast;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (
+      object.initialBallSpeed !== undefined &&
+      object.initialBallSpeed !== null
+    ) {
+      message.initialBallSpeed = Number(object.initialBallSpeed);
+    } else {
+      message.initialBallSpeed = 0;
+    }
+    if (object.chipped !== undefined && object.chipped !== null) {
+      message.chipped = Boolean(object.chipped);
+    } else {
+      message.chipped = false;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotKickedBallTooFast): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.initialBallSpeed !== undefined &&
+      (obj.initialBallSpeed = message.initialBallSpeed);
+    message.chipped !== undefined && (obj.chipped = message.chipped);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotKickedBallTooFast>
+  ): GameEvent_BotKickedBallTooFast {
+    const message = {
+      ...baseGameEvent_BotKickedBallTooFast,
+    } as GameEvent_BotKickedBallTooFast;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (
+      object.initialBallSpeed !== undefined &&
+      object.initialBallSpeed !== null
+    ) {
+      message.initialBallSpeed = object.initialBallSpeed;
+    } else {
+      message.initialBallSpeed = 0;
+    }
+    if (object.chipped !== undefined && object.chipped !== null) {
+      message.chipped = object.chipped;
+    } else {
+      message.chipped = false;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotDribbledBallTooFar: object = { byTeam: 0, byBot: 0 };
@@ -2127,8 +4569,8 @@ const baseGameEvent_BotDribbledBallTooFar: object = { byTeam: 0, byBot: 0 };
 export const GameEvent_BotDribbledBallTooFar = {
   encode(
     message: GameEvent_BotDribbledBallTooFar,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2145,14 +4587,14 @@ export const GameEvent_BotDribbledBallTooFar = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotDribbledBallTooFar {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotDribbledBallTooFar
-    ) as GameEvent_BotDribbledBallTooFar;
+    const message = {
+      ...baseGameEvent_BotDribbledBallTooFar,
+    } as GameEvent_BotDribbledBallTooFar;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2175,6 +4617,73 @@ export const GameEvent_BotDribbledBallTooFar = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotDribbledBallTooFar {
+    const message = {
+      ...baseGameEvent_BotDribbledBallTooFar,
+    } as GameEvent_BotDribbledBallTooFar;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.start !== undefined && object.start !== null) {
+      message.start = Vector2.fromJSON(object.start);
+    } else {
+      message.start = undefined;
+    }
+    if (object.end !== undefined && object.end !== null) {
+      message.end = Vector2.fromJSON(object.end);
+    } else {
+      message.end = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotDribbledBallTooFar): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.start !== undefined &&
+      (obj.start = message.start ? Vector2.toJSON(message.start) : undefined);
+    message.end !== undefined &&
+      (obj.end = message.end ? Vector2.toJSON(message.end) : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotDribbledBallTooFar>
+  ): GameEvent_BotDribbledBallTooFar {
+    const message = {
+      ...baseGameEvent_BotDribbledBallTooFar,
+    } as GameEvent_BotDribbledBallTooFar;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.start !== undefined && object.start !== null) {
+      message.start = Vector2.fromPartial(object.start);
+    } else {
+      message.start = undefined;
+    }
+    if (object.end !== undefined && object.end !== null) {
+      message.end = Vector2.fromPartial(object.end);
+    } else {
+      message.end = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_AttackerTouchedOpponentInDefenseArea: object = {
@@ -2186,8 +4695,8 @@ const baseGameEvent_AttackerTouchedOpponentInDefenseArea: object = {
 export const GameEvent_AttackerTouchedOpponentInDefenseArea = {
   encode(
     message: GameEvent_AttackerTouchedOpponentInDefenseArea,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2204,14 +4713,14 @@ export const GameEvent_AttackerTouchedOpponentInDefenseArea = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerTouchedOpponentInDefenseArea {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_AttackerTouchedOpponentInDefenseArea
-    ) as GameEvent_AttackerTouchedOpponentInDefenseArea;
+    const message = {
+      ...baseGameEvent_AttackerTouchedOpponentInDefenseArea,
+    } as GameEvent_AttackerTouchedOpponentInDefenseArea;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2234,6 +4743,74 @@ export const GameEvent_AttackerTouchedOpponentInDefenseArea = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_AttackerTouchedOpponentInDefenseArea {
+    const message = {
+      ...baseGameEvent_AttackerTouchedOpponentInDefenseArea,
+    } as GameEvent_AttackerTouchedOpponentInDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.victim !== undefined && object.victim !== null) {
+      message.victim = Number(object.victim);
+    } else {
+      message.victim = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_AttackerTouchedOpponentInDefenseArea): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.victim !== undefined && (obj.victim = message.victim);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_AttackerTouchedOpponentInDefenseArea>
+  ): GameEvent_AttackerTouchedOpponentInDefenseArea {
+    const message = {
+      ...baseGameEvent_AttackerTouchedOpponentInDefenseArea,
+    } as GameEvent_AttackerTouchedOpponentInDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.victim !== undefined && object.victim !== null) {
+      message.victim = object.victim;
+    } else {
+      message.victim = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_AttackerDoubleTouchedBall: object = { byTeam: 0, byBot: 0 };
@@ -2241,8 +4818,8 @@ const baseGameEvent_AttackerDoubleTouchedBall: object = { byTeam: 0, byBot: 0 };
 export const GameEvent_AttackerDoubleTouchedBall = {
   encode(
     message: GameEvent_AttackerDoubleTouchedBall,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2256,14 +4833,14 @@ export const GameEvent_AttackerDoubleTouchedBall = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerDoubleTouchedBall {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_AttackerDoubleTouchedBall
-    ) as GameEvent_AttackerDoubleTouchedBall;
+    const message = {
+      ...baseGameEvent_AttackerDoubleTouchedBall,
+    } as GameEvent_AttackerDoubleTouchedBall;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2283,6 +4860,63 @@ export const GameEvent_AttackerDoubleTouchedBall = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_AttackerDoubleTouchedBall {
+    const message = {
+      ...baseGameEvent_AttackerDoubleTouchedBall,
+    } as GameEvent_AttackerDoubleTouchedBall;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_AttackerDoubleTouchedBall): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_AttackerDoubleTouchedBall>
+  ): GameEvent_AttackerDoubleTouchedBall {
+    const message = {
+      ...baseGameEvent_AttackerDoubleTouchedBall,
+    } as GameEvent_AttackerDoubleTouchedBall;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_AttackerTooCloseToDefenseArea: object = {
@@ -2294,8 +4928,8 @@ const baseGameEvent_AttackerTooCloseToDefenseArea: object = {
 export const GameEvent_AttackerTooCloseToDefenseArea = {
   encode(
     message: GameEvent_AttackerTooCloseToDefenseArea,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2315,14 +4949,14 @@ export const GameEvent_AttackerTooCloseToDefenseArea = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerTooCloseToDefenseArea {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_AttackerTooCloseToDefenseArea
-    ) as GameEvent_AttackerTooCloseToDefenseArea;
+    const message = {
+      ...baseGameEvent_AttackerTooCloseToDefenseArea,
+    } as GameEvent_AttackerTooCloseToDefenseArea;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2348,6 +4982,88 @@ export const GameEvent_AttackerTooCloseToDefenseArea = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_AttackerTooCloseToDefenseArea {
+    const message = {
+      ...baseGameEvent_AttackerTooCloseToDefenseArea,
+    } as GameEvent_AttackerTooCloseToDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = Number(object.distance);
+    } else {
+      message.distance = 0;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromJSON(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_AttackerTooCloseToDefenseArea): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.distance !== undefined && (obj.distance = message.distance);
+    message.ballLocation !== undefined &&
+      (obj.ballLocation = message.ballLocation
+        ? Vector2.toJSON(message.ballLocation)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_AttackerTooCloseToDefenseArea>
+  ): GameEvent_AttackerTooCloseToDefenseArea {
+    const message = {
+      ...baseGameEvent_AttackerTooCloseToDefenseArea,
+    } as GameEvent_AttackerTooCloseToDefenseArea;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = object.distance;
+    } else {
+      message.distance = 0;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromPartial(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotHeldBallDeliberately: object = {
@@ -2359,8 +5075,8 @@ const baseGameEvent_BotHeldBallDeliberately: object = {
 export const GameEvent_BotHeldBallDeliberately = {
   encode(
     message: GameEvent_BotHeldBallDeliberately,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2377,14 +5093,14 @@ export const GameEvent_BotHeldBallDeliberately = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotHeldBallDeliberately {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotHeldBallDeliberately
-    ) as GameEvent_BotHeldBallDeliberately;
+    const message = {
+      ...baseGameEvent_BotHeldBallDeliberately,
+    } as GameEvent_BotHeldBallDeliberately;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2407,6 +5123,74 @@ export const GameEvent_BotHeldBallDeliberately = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotHeldBallDeliberately {
+    const message = {
+      ...baseGameEvent_BotHeldBallDeliberately,
+    } as GameEvent_BotHeldBallDeliberately;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = Number(object.duration);
+    } else {
+      message.duration = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotHeldBallDeliberately): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.duration !== undefined && (obj.duration = message.duration);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotHeldBallDeliberately>
+  ): GameEvent_BotHeldBallDeliberately {
+    const message = {
+      ...baseGameEvent_BotHeldBallDeliberately,
+    } as GameEvent_BotHeldBallDeliberately;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = object.duration;
+    } else {
+      message.duration = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotInterferedPlacement: object = { byTeam: 0, byBot: 0 };
@@ -2414,8 +5198,8 @@ const baseGameEvent_BotInterferedPlacement: object = { byTeam: 0, byBot: 0 };
 export const GameEvent_BotInterferedPlacement = {
   encode(
     message: GameEvent_BotInterferedPlacement,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2429,14 +5213,14 @@ export const GameEvent_BotInterferedPlacement = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotInterferedPlacement {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotInterferedPlacement
-    ) as GameEvent_BotInterferedPlacement;
+    const message = {
+      ...baseGameEvent_BotInterferedPlacement,
+    } as GameEvent_BotInterferedPlacement;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2456,6 +5240,63 @@ export const GameEvent_BotInterferedPlacement = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_BotInterferedPlacement {
+    const message = {
+      ...baseGameEvent_BotInterferedPlacement,
+    } as GameEvent_BotInterferedPlacement;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = Number(object.byBot);
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotInterferedPlacement): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.byBot !== undefined && (obj.byBot = message.byBot);
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotInterferedPlacement>
+  ): GameEvent_BotInterferedPlacement {
+    const message = {
+      ...baseGameEvent_BotInterferedPlacement,
+    } as GameEvent_BotInterferedPlacement;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.byBot !== undefined && object.byBot !== null) {
+      message.byBot = object.byBot;
+    } else {
+      message.byBot = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_MultipleCards: object = { byTeam: 0 };
@@ -2463,20 +5304,23 @@ const baseGameEvent_MultipleCards: object = { byTeam: 0 };
 export const GameEvent_MultipleCards = {
   encode(
     message: GameEvent_MultipleCards,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_MultipleCards {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_MultipleCards {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_MultipleCards
-    ) as GameEvent_MultipleCards;
+    const message = {
+      ...baseGameEvent_MultipleCards,
+    } as GameEvent_MultipleCards;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2487,6 +5331,38 @@ export const GameEvent_MultipleCards = {
           reader.skipType(tag & 7);
           break;
       }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameEvent_MultipleCards {
+    const message = {
+      ...baseGameEvent_MultipleCards,
+    } as GameEvent_MultipleCards;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_MultipleCards): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_MultipleCards>
+  ): GameEvent_MultipleCards {
+    const message = {
+      ...baseGameEvent_MultipleCards,
+    } as GameEvent_MultipleCards;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
     }
     return message;
   },
@@ -2497,20 +5373,23 @@ const baseGameEvent_MultipleFouls: object = { byTeam: 0 };
 export const GameEvent_MultipleFouls = {
   encode(
     message: GameEvent_MultipleFouls,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_MultipleFouls {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_MultipleFouls {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_MultipleFouls
-    ) as GameEvent_MultipleFouls;
+    const message = {
+      ...baseGameEvent_MultipleFouls,
+    } as GameEvent_MultipleFouls;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2521,6 +5400,38 @@ export const GameEvent_MultipleFouls = {
           reader.skipType(tag & 7);
           break;
       }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameEvent_MultipleFouls {
+    const message = {
+      ...baseGameEvent_MultipleFouls,
+    } as GameEvent_MultipleFouls;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_MultipleFouls): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_MultipleFouls>
+  ): GameEvent_MultipleFouls {
+    const message = {
+      ...baseGameEvent_MultipleFouls,
+    } as GameEvent_MultipleFouls;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
     }
     return message;
   },
@@ -2531,8 +5442,8 @@ const baseGameEvent_MultiplePlacementFailures: object = { byTeam: 0 };
 export const GameEvent_MultiplePlacementFailures = {
   encode(
     message: GameEvent_MultiplePlacementFailures,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2540,14 +5451,14 @@ export const GameEvent_MultiplePlacementFailures = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_MultiplePlacementFailures {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_MultiplePlacementFailures
-    ) as GameEvent_MultiplePlacementFailures;
+    const message = {
+      ...baseGameEvent_MultiplePlacementFailures,
+    } as GameEvent_MultiplePlacementFailures;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2561,6 +5472,38 @@ export const GameEvent_MultiplePlacementFailures = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_MultiplePlacementFailures {
+    const message = {
+      ...baseGameEvent_MultiplePlacementFailures,
+    } as GameEvent_MultiplePlacementFailures;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_MultiplePlacementFailures): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_MultiplePlacementFailures>
+  ): GameEvent_MultiplePlacementFailures {
+    const message = {
+      ...baseGameEvent_MultiplePlacementFailures,
+    } as GameEvent_MultiplePlacementFailures;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_KickTimeout: object = { byTeam: 0, time: 0 };
@@ -2568,8 +5511,8 @@ const baseGameEvent_KickTimeout: object = { byTeam: 0, time: 0 };
 export const GameEvent_KickTimeout = {
   encode(
     message: GameEvent_KickTimeout,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2582,12 +5525,13 @@ export const GameEvent_KickTimeout = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_KickTimeout {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_KickTimeout {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_KickTimeout
-    ) as GameEvent_KickTimeout;
+    const message = { ...baseGameEvent_KickTimeout } as GameEvent_KickTimeout;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2607,6 +5551,59 @@ export const GameEvent_KickTimeout = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_KickTimeout {
+    const message = { ...baseGameEvent_KickTimeout } as GameEvent_KickTimeout;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.time !== undefined && object.time !== null) {
+      message.time = Number(object.time);
+    } else {
+      message.time = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_KickTimeout): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.time !== undefined && (obj.time = message.time);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_KickTimeout>
+  ): GameEvent_KickTimeout {
+    const message = { ...baseGameEvent_KickTimeout } as GameEvent_KickTimeout;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.time !== undefined && object.time !== null) {
+      message.time = object.time;
+    } else {
+      message.time = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_NoProgressInGame: object = { time: 0 };
@@ -2614,8 +5611,8 @@ const baseGameEvent_NoProgressInGame: object = { time: 0 };
 export const GameEvent_NoProgressInGame = {
   encode(
     message: GameEvent_NoProgressInGame,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.location !== undefined) {
       Vector2.encode(message.location, writer.uint32(10).fork()).ldelim();
     }
@@ -2626,14 +5623,14 @@ export const GameEvent_NoProgressInGame = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_NoProgressInGame {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_NoProgressInGame
-    ) as GameEvent_NoProgressInGame;
+    const message = {
+      ...baseGameEvent_NoProgressInGame,
+    } as GameEvent_NoProgressInGame;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2650,6 +5647,52 @@ export const GameEvent_NoProgressInGame = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_NoProgressInGame {
+    const message = {
+      ...baseGameEvent_NoProgressInGame,
+    } as GameEvent_NoProgressInGame;
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.time !== undefined && object.time !== null) {
+      message.time = Number(object.time);
+    } else {
+      message.time = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_NoProgressInGame): unknown {
+    const obj: any = {};
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.time !== undefined && (obj.time = message.time);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_NoProgressInGame>
+  ): GameEvent_NoProgressInGame {
+    const message = {
+      ...baseGameEvent_NoProgressInGame,
+    } as GameEvent_NoProgressInGame;
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.time !== undefined && object.time !== null) {
+      message.time = object.time;
+    } else {
+      message.time = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_PlacementFailed: object = {
@@ -2660,8 +5703,8 @@ const baseGameEvent_PlacementFailed: object = {
 export const GameEvent_PlacementFailed = {
   encode(
     message: GameEvent_PlacementFailed,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2672,14 +5715,14 @@ export const GameEvent_PlacementFailed = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_PlacementFailed {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_PlacementFailed
-    ) as GameEvent_PlacementFailed;
+    const message = {
+      ...baseGameEvent_PlacementFailed,
+    } as GameEvent_PlacementFailed;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2696,6 +5739,56 @@ export const GameEvent_PlacementFailed = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_PlacementFailed {
+    const message = {
+      ...baseGameEvent_PlacementFailed,
+    } as GameEvent_PlacementFailed;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (
+      object.remainingDistance !== undefined &&
+      object.remainingDistance !== null
+    ) {
+      message.remainingDistance = Number(object.remainingDistance);
+    } else {
+      message.remainingDistance = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_PlacementFailed): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.remainingDistance !== undefined &&
+      (obj.remainingDistance = message.remainingDistance);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_PlacementFailed>
+  ): GameEvent_PlacementFailed {
+    const message = {
+      ...baseGameEvent_PlacementFailed,
+    } as GameEvent_PlacementFailed;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (
+      object.remainingDistance !== undefined &&
+      object.remainingDistance !== null
+    ) {
+      message.remainingDistance = object.remainingDistance;
+    } else {
+      message.remainingDistance = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_UnsportingBehaviorMinor: object = { byTeam: 0, reason: "" };
@@ -2703,8 +5796,8 @@ const baseGameEvent_UnsportingBehaviorMinor: object = { byTeam: 0, reason: "" };
 export const GameEvent_UnsportingBehaviorMinor = {
   encode(
     message: GameEvent_UnsportingBehaviorMinor,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2715,14 +5808,14 @@ export const GameEvent_UnsportingBehaviorMinor = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_UnsportingBehaviorMinor {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_UnsportingBehaviorMinor
-    ) as GameEvent_UnsportingBehaviorMinor;
+    const message = {
+      ...baseGameEvent_UnsportingBehaviorMinor,
+    } as GameEvent_UnsportingBehaviorMinor;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2736,6 +5829,49 @@ export const GameEvent_UnsportingBehaviorMinor = {
           reader.skipType(tag & 7);
           break;
       }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameEvent_UnsportingBehaviorMinor {
+    const message = {
+      ...baseGameEvent_UnsportingBehaviorMinor,
+    } as GameEvent_UnsportingBehaviorMinor;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.reason !== undefined && object.reason !== null) {
+      message.reason = String(object.reason);
+    } else {
+      message.reason = "";
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_UnsportingBehaviorMinor): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.reason !== undefined && (obj.reason = message.reason);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_UnsportingBehaviorMinor>
+  ): GameEvent_UnsportingBehaviorMinor {
+    const message = {
+      ...baseGameEvent_UnsportingBehaviorMinor,
+    } as GameEvent_UnsportingBehaviorMinor;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.reason !== undefined && object.reason !== null) {
+      message.reason = object.reason;
+    } else {
+      message.reason = "";
     }
     return message;
   },
@@ -2746,8 +5882,8 @@ const baseGameEvent_UnsportingBehaviorMajor: object = { byTeam: 0, reason: "" };
 export const GameEvent_UnsportingBehaviorMajor = {
   encode(
     message: GameEvent_UnsportingBehaviorMajor,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2758,14 +5894,14 @@ export const GameEvent_UnsportingBehaviorMajor = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_UnsportingBehaviorMajor {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_UnsportingBehaviorMajor
-    ) as GameEvent_UnsportingBehaviorMajor;
+    const message = {
+      ...baseGameEvent_UnsportingBehaviorMajor,
+    } as GameEvent_UnsportingBehaviorMajor;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2782,6 +5918,49 @@ export const GameEvent_UnsportingBehaviorMajor = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_UnsportingBehaviorMajor {
+    const message = {
+      ...baseGameEvent_UnsportingBehaviorMajor,
+    } as GameEvent_UnsportingBehaviorMajor;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.reason !== undefined && object.reason !== null) {
+      message.reason = String(object.reason);
+    } else {
+      message.reason = "";
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_UnsportingBehaviorMajor): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.reason !== undefined && (obj.reason = message.reason);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_UnsportingBehaviorMajor>
+  ): GameEvent_UnsportingBehaviorMajor {
+    const message = {
+      ...baseGameEvent_UnsportingBehaviorMajor,
+    } as GameEvent_UnsportingBehaviorMajor;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.reason !== undefined && object.reason !== null) {
+      message.reason = object.reason;
+    } else {
+      message.reason = "";
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_KeeperHeldBall: object = { byTeam: 0, duration: 0 };
@@ -2789,8 +5968,8 @@ const baseGameEvent_KeeperHeldBall: object = { byTeam: 0, duration: 0 };
 export const GameEvent_KeeperHeldBall = {
   encode(
     message: GameEvent_KeeperHeldBall,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2804,14 +5983,14 @@ export const GameEvent_KeeperHeldBall = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_KeeperHeldBall {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_KeeperHeldBall
-    ) as GameEvent_KeeperHeldBall;
+    const message = {
+      ...baseGameEvent_KeeperHeldBall,
+    } as GameEvent_KeeperHeldBall;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2831,6 +6010,63 @@ export const GameEvent_KeeperHeldBall = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_KeeperHeldBall {
+    const message = {
+      ...baseGameEvent_KeeperHeldBall,
+    } as GameEvent_KeeperHeldBall;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = Number(object.duration);
+    } else {
+      message.duration = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_KeeperHeldBall): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    message.duration !== undefined && (obj.duration = message.duration);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_KeeperHeldBall>
+  ): GameEvent_KeeperHeldBall {
+    const message = {
+      ...baseGameEvent_KeeperHeldBall,
+    } as GameEvent_KeeperHeldBall;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    if (object.duration !== undefined && object.duration !== null) {
+      message.duration = object.duration;
+    } else {
+      message.duration = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_PlacementSucceeded: object = {
@@ -2843,8 +6079,8 @@ const baseGameEvent_PlacementSucceeded: object = {
 export const GameEvent_PlacementSucceeded = {
   encode(
     message: GameEvent_PlacementSucceeded,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2861,14 +6097,14 @@ export const GameEvent_PlacementSucceeded = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_PlacementSucceeded {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_PlacementSucceeded
-    ) as GameEvent_PlacementSucceeded;
+    const message = {
+      ...baseGameEvent_PlacementSucceeded,
+    } as GameEvent_PlacementSucceeded;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2891,6 +6127,71 @@ export const GameEvent_PlacementSucceeded = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_PlacementSucceeded {
+    const message = {
+      ...baseGameEvent_PlacementSucceeded,
+    } as GameEvent_PlacementSucceeded;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.timeTaken !== undefined && object.timeTaken !== null) {
+      message.timeTaken = Number(object.timeTaken);
+    } else {
+      message.timeTaken = 0;
+    }
+    if (object.precision !== undefined && object.precision !== null) {
+      message.precision = Number(object.precision);
+    } else {
+      message.precision = 0;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = Number(object.distance);
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_PlacementSucceeded): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.timeTaken !== undefined && (obj.timeTaken = message.timeTaken);
+    message.precision !== undefined && (obj.precision = message.precision);
+    message.distance !== undefined && (obj.distance = message.distance);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_PlacementSucceeded>
+  ): GameEvent_PlacementSucceeded {
+    const message = {
+      ...baseGameEvent_PlacementSucceeded,
+    } as GameEvent_PlacementSucceeded;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.timeTaken !== undefined && object.timeTaken !== null) {
+      message.timeTaken = object.timeTaken;
+    } else {
+      message.timeTaken = 0;
+    }
+    if (object.precision !== undefined && object.precision !== null) {
+      message.precision = object.precision;
+    } else {
+      message.precision = 0;
+    }
+    if (object.distance !== undefined && object.distance !== null) {
+      message.distance = object.distance;
+    } else {
+      message.distance = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_Prepared: object = { timeTaken: 0 };
@@ -2898,20 +6199,18 @@ const baseGameEvent_Prepared: object = { timeTaken: 0 };
 export const GameEvent_Prepared = {
   encode(
     message: GameEvent_Prepared,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.timeTaken !== 0) {
       writer.uint32(13).float(message.timeTaken);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_Prepared {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): GameEvent_Prepared {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_Prepared
-    ) as GameEvent_Prepared;
+    const message = { ...baseGameEvent_Prepared } as GameEvent_Prepared;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2925,6 +6224,32 @@ export const GameEvent_Prepared = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_Prepared {
+    const message = { ...baseGameEvent_Prepared } as GameEvent_Prepared;
+    if (object.timeTaken !== undefined && object.timeTaken !== null) {
+      message.timeTaken = Number(object.timeTaken);
+    } else {
+      message.timeTaken = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_Prepared): unknown {
+    const obj: any = {};
+    message.timeTaken !== undefined && (obj.timeTaken = message.timeTaken);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<GameEvent_Prepared>): GameEvent_Prepared {
+    const message = { ...baseGameEvent_Prepared } as GameEvent_Prepared;
+    if (object.timeTaken !== undefined && object.timeTaken !== null) {
+      message.timeTaken = object.timeTaken;
+    } else {
+      message.timeTaken = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BotSubstitution: object = { byTeam: 0 };
@@ -2932,8 +6257,8 @@ const baseGameEvent_BotSubstitution: object = { byTeam: 0 };
 export const GameEvent_BotSubstitution = {
   encode(
     message: GameEvent_BotSubstitution,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -2941,14 +6266,14 @@ export const GameEvent_BotSubstitution = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotSubstitution {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BotSubstitution
-    ) as GameEvent_BotSubstitution;
+    const message = {
+      ...baseGameEvent_BotSubstitution,
+    } as GameEvent_BotSubstitution;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2959,6 +6284,38 @@ export const GameEvent_BotSubstitution = {
           reader.skipType(tag & 7);
           break;
       }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameEvent_BotSubstitution {
+    const message = {
+      ...baseGameEvent_BotSubstitution,
+    } as GameEvent_BotSubstitution;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BotSubstitution): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BotSubstitution>
+  ): GameEvent_BotSubstitution {
+    const message = {
+      ...baseGameEvent_BotSubstitution,
+    } as GameEvent_BotSubstitution;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
     }
     return message;
   },
@@ -2969,20 +6326,23 @@ const baseGameEvent_ChallengeFlag: object = { byTeam: 0 };
 export const GameEvent_ChallengeFlag = {
   encode(
     message: GameEvent_ChallengeFlag,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_ChallengeFlag {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_ChallengeFlag {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_ChallengeFlag
-    ) as GameEvent_ChallengeFlag;
+    const message = {
+      ...baseGameEvent_ChallengeFlag,
+    } as GameEvent_ChallengeFlag;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2996,6 +6356,38 @@ export const GameEvent_ChallengeFlag = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_ChallengeFlag {
+    const message = {
+      ...baseGameEvent_ChallengeFlag,
+    } as GameEvent_ChallengeFlag;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_ChallengeFlag): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_ChallengeFlag>
+  ): GameEvent_ChallengeFlag {
+    const message = {
+      ...baseGameEvent_ChallengeFlag,
+    } as GameEvent_ChallengeFlag;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_EmergencyStop: object = { byTeam: 0 };
@@ -3003,20 +6395,23 @@ const baseGameEvent_EmergencyStop: object = { byTeam: 0 };
 export const GameEvent_EmergencyStop = {
   encode(
     message: GameEvent_EmergencyStop,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_EmergencyStop {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_EmergencyStop {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_EmergencyStop
-    ) as GameEvent_EmergencyStop;
+    const message = {
+      ...baseGameEvent_EmergencyStop,
+    } as GameEvent_EmergencyStop;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3027,6 +6422,38 @@ export const GameEvent_EmergencyStop = {
           reader.skipType(tag & 7);
           break;
       }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameEvent_EmergencyStop {
+    const message = {
+      ...baseGameEvent_EmergencyStop,
+    } as GameEvent_EmergencyStop;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_EmergencyStop): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_EmergencyStop>
+  ): GameEvent_EmergencyStop {
+    const message = {
+      ...baseGameEvent_EmergencyStop,
+    } as GameEvent_EmergencyStop;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
     }
     return message;
   },
@@ -3041,8 +6468,8 @@ const baseGameEvent_TooManyRobots: object = {
 export const GameEvent_TooManyRobots = {
   encode(
     message: GameEvent_TooManyRobots,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -3058,12 +6485,15 @@ export const GameEvent_TooManyRobots = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEvent_TooManyRobots {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEvent_TooManyRobots {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_TooManyRobots
-    ) as GameEvent_TooManyRobots;
+    const message = {
+      ...baseGameEvent_TooManyRobots,
+    } as GameEvent_TooManyRobots;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3086,6 +6516,88 @@ export const GameEvent_TooManyRobots = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_TooManyRobots {
+    const message = {
+      ...baseGameEvent_TooManyRobots,
+    } as GameEvent_TooManyRobots;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (
+      object.numRobotsAllowed !== undefined &&
+      object.numRobotsAllowed !== null
+    ) {
+      message.numRobotsAllowed = Number(object.numRobotsAllowed);
+    } else {
+      message.numRobotsAllowed = 0;
+    }
+    if (
+      object.numRobotsOnField !== undefined &&
+      object.numRobotsOnField !== null
+    ) {
+      message.numRobotsOnField = Number(object.numRobotsOnField);
+    } else {
+      message.numRobotsOnField = 0;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromJSON(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_TooManyRobots): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.numRobotsAllowed !== undefined &&
+      (obj.numRobotsAllowed = message.numRobotsAllowed);
+    message.numRobotsOnField !== undefined &&
+      (obj.numRobotsOnField = message.numRobotsOnField);
+    message.ballLocation !== undefined &&
+      (obj.ballLocation = message.ballLocation
+        ? Vector2.toJSON(message.ballLocation)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_TooManyRobots>
+  ): GameEvent_TooManyRobots {
+    const message = {
+      ...baseGameEvent_TooManyRobots,
+    } as GameEvent_TooManyRobots;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (
+      object.numRobotsAllowed !== undefined &&
+      object.numRobotsAllowed !== null
+    ) {
+      message.numRobotsAllowed = object.numRobotsAllowed;
+    } else {
+      message.numRobotsAllowed = 0;
+    }
+    if (
+      object.numRobotsOnField !== undefined &&
+      object.numRobotsOnField !== null
+    ) {
+      message.numRobotsOnField = object.numRobotsOnField;
+    } else {
+      message.numRobotsOnField = 0;
+    }
+    if (object.ballLocation !== undefined && object.ballLocation !== null) {
+      message.ballLocation = Vector2.fromPartial(object.ballLocation);
+    } else {
+      message.ballLocation = undefined;
+    }
+    return message;
+  },
 };
 
 const baseGameEvent_BoundaryCrossing: object = { byTeam: 0 };
@@ -3093,8 +6605,8 @@ const baseGameEvent_BoundaryCrossing: object = { byTeam: 0 };
 export const GameEvent_BoundaryCrossing = {
   encode(
     message: GameEvent_BoundaryCrossing,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -3105,14 +6617,14 @@ export const GameEvent_BoundaryCrossing = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BoundaryCrossing {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_BoundaryCrossing
-    ) as GameEvent_BoundaryCrossing;
+    const message = {
+      ...baseGameEvent_BoundaryCrossing,
+    } as GameEvent_BoundaryCrossing;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3126,6 +6638,52 @@ export const GameEvent_BoundaryCrossing = {
           reader.skipType(tag & 7);
           break;
       }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GameEvent_BoundaryCrossing {
+    const message = {
+      ...baseGameEvent_BoundaryCrossing,
+    } as GameEvent_BoundaryCrossing;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_BoundaryCrossing): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_BoundaryCrossing>
+  ): GameEvent_BoundaryCrossing {
+    const message = {
+      ...baseGameEvent_BoundaryCrossing,
+    } as GameEvent_BoundaryCrossing;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
     }
     return message;
   },
@@ -3136,8 +6694,8 @@ const baseGameEvent_PenaltyKickFailed: object = { byTeam: 0 };
 export const GameEvent_PenaltyKickFailed = {
   encode(
     message: GameEvent_PenaltyKickFailed,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.byTeam !== 0) {
       writer.uint32(8).int32(message.byTeam);
     }
@@ -3148,14 +6706,14 @@ export const GameEvent_PenaltyKickFailed = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_PenaltyKickFailed {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEvent_PenaltyKickFailed
-    ) as GameEvent_PenaltyKickFailed;
+    const message = {
+      ...baseGameEvent_PenaltyKickFailed,
+    } as GameEvent_PenaltyKickFailed;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -3172,14 +6730,68 @@ export const GameEvent_PenaltyKickFailed = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEvent_PenaltyKickFailed {
+    const message = {
+      ...baseGameEvent_PenaltyKickFailed,
+    } as GameEvent_PenaltyKickFailed;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = teamFromJSON(object.byTeam);
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromJSON(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEvent_PenaltyKickFailed): unknown {
+    const obj: any = {};
+    message.byTeam !== undefined && (obj.byTeam = teamToJSON(message.byTeam));
+    message.location !== undefined &&
+      (obj.location = message.location
+        ? Vector2.toJSON(message.location)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEvent_PenaltyKickFailed>
+  ): GameEvent_PenaltyKickFailed {
+    const message = {
+      ...baseGameEvent_PenaltyKickFailed,
+    } as GameEvent_PenaltyKickFailed;
+    if (object.byTeam !== undefined && object.byTeam !== null) {
+      message.byTeam = object.byTeam;
+    } else {
+      message.byTeam = 0;
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = Vector2.fromPartial(object.location);
+    } else {
+      message.location = undefined;
+    }
+    return message;
+  },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | undefined
+  | Long;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;

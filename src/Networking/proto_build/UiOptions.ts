@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
@@ -67,7 +67,10 @@ const baseSlider: object = {
 };
 
 export const Slider = {
-  encode(message: Slider, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Slider,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.text !== "") {
       writer.uint32(10).string(message.text);
     }
@@ -86,10 +89,10 @@ export const Slider = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Slider {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Slider {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseSlider) as Slider;
+    const message = { ...baseSlider } as Slider;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -115,12 +118,85 @@ export const Slider = {
     }
     return message;
   },
+
+  fromJSON(object: any): Slider {
+    const message = { ...baseSlider } as Slider;
+    if (object.text !== undefined && object.text !== null) {
+      message.text = String(object.text);
+    } else {
+      message.text = "";
+    }
+    if (object.min !== undefined && object.min !== null) {
+      message.min = Number(object.min);
+    } else {
+      message.min = 0;
+    }
+    if (object.max !== undefined && object.max !== null) {
+      message.max = Number(object.max);
+    } else {
+      message.max = 0;
+    }
+    if (object.interval !== undefined && object.interval !== null) {
+      message.interval = Number(object.interval);
+    } else {
+      message.interval = 0;
+    }
+    if (object.default !== undefined && object.default !== null) {
+      message.default = Number(object.default);
+    } else {
+      message.default = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: Slider): unknown {
+    const obj: any = {};
+    message.text !== undefined && (obj.text = message.text);
+    message.min !== undefined && (obj.min = message.min);
+    message.max !== undefined && (obj.max = message.max);
+    message.interval !== undefined && (obj.interval = message.interval);
+    message.default !== undefined && (obj.default = message.default);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<Slider>): Slider {
+    const message = { ...baseSlider } as Slider;
+    if (object.text !== undefined && object.text !== null) {
+      message.text = object.text;
+    } else {
+      message.text = "";
+    }
+    if (object.min !== undefined && object.min !== null) {
+      message.min = object.min;
+    } else {
+      message.min = 0;
+    }
+    if (object.max !== undefined && object.max !== null) {
+      message.max = object.max;
+    } else {
+      message.max = 0;
+    }
+    if (object.interval !== undefined && object.interval !== null) {
+      message.interval = object.interval;
+    } else {
+      message.interval = 0;
+    }
+    if (object.default !== undefined && object.default !== null) {
+      message.default = object.default;
+    } else {
+      message.default = 0;
+    }
+    return message;
+  },
 };
 
 const baseCheckbox: object = { text: "", default: false };
 
 export const Checkbox = {
-  encode(message: Checkbox, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Checkbox,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.text !== "") {
       writer.uint32(10).string(message.text);
     }
@@ -130,10 +206,10 @@ export const Checkbox = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Checkbox {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Checkbox {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseCheckbox) as Checkbox;
+    const message = { ...baseCheckbox } as Checkbox;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -150,12 +226,52 @@ export const Checkbox = {
     }
     return message;
   },
+
+  fromJSON(object: any): Checkbox {
+    const message = { ...baseCheckbox } as Checkbox;
+    if (object.text !== undefined && object.text !== null) {
+      message.text = String(object.text);
+    } else {
+      message.text = "";
+    }
+    if (object.default !== undefined && object.default !== null) {
+      message.default = Boolean(object.default);
+    } else {
+      message.default = false;
+    }
+    return message;
+  },
+
+  toJSON(message: Checkbox): unknown {
+    const obj: any = {};
+    message.text !== undefined && (obj.text = message.text);
+    message.default !== undefined && (obj.default = message.default);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<Checkbox>): Checkbox {
+    const message = { ...baseCheckbox } as Checkbox;
+    if (object.text !== undefined && object.text !== null) {
+      message.text = object.text;
+    } else {
+      message.text = "";
+    }
+    if (object.default !== undefined && object.default !== null) {
+      message.default = object.default;
+    } else {
+      message.default = false;
+    }
+    return message;
+  },
 };
 
 const baseDropdown: object = { text: "", default: Long.ZERO, options: "" };
 
 export const Dropdown = {
-  encode(message: Dropdown, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: Dropdown,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.text !== "") {
       writer.uint32(10).string(message.text);
     }
@@ -168,10 +284,10 @@ export const Dropdown = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Dropdown {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Dropdown {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseDropdown) as Dropdown;
+    const message = { ...baseDropdown } as Dropdown;
     message.options = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -192,12 +308,70 @@ export const Dropdown = {
     }
     return message;
   },
+
+  fromJSON(object: any): Dropdown {
+    const message = { ...baseDropdown } as Dropdown;
+    message.options = [];
+    if (object.text !== undefined && object.text !== null) {
+      message.text = String(object.text);
+    } else {
+      message.text = "";
+    }
+    if (object.default !== undefined && object.default !== null) {
+      message.default = Long.fromString(object.default);
+    } else {
+      message.default = Long.ZERO;
+    }
+    if (object.options !== undefined && object.options !== null) {
+      for (const e of object.options) {
+        message.options.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: Dropdown): unknown {
+    const obj: any = {};
+    message.text !== undefined && (obj.text = message.text);
+    message.default !== undefined &&
+      (obj.default = (message.default || Long.ZERO).toString());
+    if (message.options) {
+      obj.options = message.options.map((e) => e);
+    } else {
+      obj.options = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<Dropdown>): Dropdown {
+    const message = { ...baseDropdown } as Dropdown;
+    message.options = [];
+    if (object.text !== undefined && object.text !== null) {
+      message.text = object.text;
+    } else {
+      message.text = "";
+    }
+    if (object.default !== undefined && object.default !== null) {
+      message.default = object.default as Long;
+    } else {
+      message.default = Long.ZERO;
+    }
+    if (object.options !== undefined && object.options !== null) {
+      for (const e of object.options) {
+        message.options.push(e);
+      }
+    }
+    return message;
+  },
 };
 
 const baseRadioButton: object = { default: Long.ZERO, options: "" };
 
 export const RadioButton = {
-  encode(message: RadioButton, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: RadioButton,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (!message.default.isZero()) {
       writer.uint32(8).int64(message.default);
     }
@@ -207,10 +381,10 @@ export const RadioButton = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): RadioButton {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): RadioButton {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseRadioButton) as RadioButton;
+    const message = { ...baseRadioButton } as RadioButton;
     message.options = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -228,22 +402,69 @@ export const RadioButton = {
     }
     return message;
   },
+
+  fromJSON(object: any): RadioButton {
+    const message = { ...baseRadioButton } as RadioButton;
+    message.options = [];
+    if (object.default !== undefined && object.default !== null) {
+      message.default = Long.fromString(object.default);
+    } else {
+      message.default = Long.ZERO;
+    }
+    if (object.options !== undefined && object.options !== null) {
+      for (const e of object.options) {
+        message.options.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: RadioButton): unknown {
+    const obj: any = {};
+    message.default !== undefined &&
+      (obj.default = (message.default || Long.ZERO).toString());
+    if (message.options) {
+      obj.options = message.options.map((e) => e);
+    } else {
+      obj.options = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<RadioButton>): RadioButton {
+    const message = { ...baseRadioButton } as RadioButton;
+    message.options = [];
+    if (object.default !== undefined && object.default !== null) {
+      message.default = object.default as Long;
+    } else {
+      message.default = Long.ZERO;
+    }
+    if (object.options !== undefined && object.options !== null) {
+      for (const e of object.options) {
+        message.options.push(e);
+      }
+    }
+    return message;
+  },
 };
 
 const baseTextField: object = { text: "" };
 
 export const TextField = {
-  encode(message: TextField, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: TextField,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.text !== "") {
       writer.uint32(10).string(message.text);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TextField {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): TextField {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseTextField) as TextField;
+    const message = { ...baseTextField } as TextField;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -257,12 +478,41 @@ export const TextField = {
     }
     return message;
   },
+
+  fromJSON(object: any): TextField {
+    const message = { ...baseTextField } as TextField;
+    if (object.text !== undefined && object.text !== null) {
+      message.text = String(object.text);
+    } else {
+      message.text = "";
+    }
+    return message;
+  },
+
+  toJSON(message: TextField): unknown {
+    const obj: any = {};
+    message.text !== undefined && (obj.text = message.text);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<TextField>): TextField {
+    const message = { ...baseTextField } as TextField;
+    if (object.text !== undefined && object.text !== null) {
+      message.text = object.text;
+    } else {
+      message.text = "";
+    }
+    return message;
+  },
 };
 
 const baseUiOption: object = { name: "" };
 
 export const UiOption = {
-  encode(message: UiOption, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: UiOption,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -287,10 +537,10 @@ export const UiOption = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): UiOption {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): UiOption {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseUiOption) as UiOption;
+    const message = { ...baseUiOption } as UiOption;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -319,12 +569,109 @@ export const UiOption = {
     }
     return message;
   },
+
+  fromJSON(object: any): UiOption {
+    const message = { ...baseUiOption } as UiOption;
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    } else {
+      message.name = "";
+    }
+    if (object.slider !== undefined && object.slider !== null) {
+      message.slider = Slider.fromJSON(object.slider);
+    } else {
+      message.slider = undefined;
+    }
+    if (object.checkbox !== undefined && object.checkbox !== null) {
+      message.checkbox = Checkbox.fromJSON(object.checkbox);
+    } else {
+      message.checkbox = undefined;
+    }
+    if (object.dropdown !== undefined && object.dropdown !== null) {
+      message.dropdown = Dropdown.fromJSON(object.dropdown);
+    } else {
+      message.dropdown = undefined;
+    }
+    if (object.radiobutton !== undefined && object.radiobutton !== null) {
+      message.radiobutton = RadioButton.fromJSON(object.radiobutton);
+    } else {
+      message.radiobutton = undefined;
+    }
+    if (object.textfield !== undefined && object.textfield !== null) {
+      message.textfield = TextField.fromJSON(object.textfield);
+    } else {
+      message.textfield = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: UiOption): unknown {
+    const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.slider !== undefined &&
+      (obj.slider = message.slider ? Slider.toJSON(message.slider) : undefined);
+    message.checkbox !== undefined &&
+      (obj.checkbox = message.checkbox
+        ? Checkbox.toJSON(message.checkbox)
+        : undefined);
+    message.dropdown !== undefined &&
+      (obj.dropdown = message.dropdown
+        ? Dropdown.toJSON(message.dropdown)
+        : undefined);
+    message.radiobutton !== undefined &&
+      (obj.radiobutton = message.radiobutton
+        ? RadioButton.toJSON(message.radiobutton)
+        : undefined);
+    message.textfield !== undefined &&
+      (obj.textfield = message.textfield
+        ? TextField.toJSON(message.textfield)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<UiOption>): UiOption {
+    const message = { ...baseUiOption } as UiOption;
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    } else {
+      message.name = "";
+    }
+    if (object.slider !== undefined && object.slider !== null) {
+      message.slider = Slider.fromPartial(object.slider);
+    } else {
+      message.slider = undefined;
+    }
+    if (object.checkbox !== undefined && object.checkbox !== null) {
+      message.checkbox = Checkbox.fromPartial(object.checkbox);
+    } else {
+      message.checkbox = undefined;
+    }
+    if (object.dropdown !== undefined && object.dropdown !== null) {
+      message.dropdown = Dropdown.fromPartial(object.dropdown);
+    } else {
+      message.dropdown = undefined;
+    }
+    if (object.radiobutton !== undefined && object.radiobutton !== null) {
+      message.radiobutton = RadioButton.fromPartial(object.radiobutton);
+    } else {
+      message.radiobutton = undefined;
+    }
+    if (object.textfield !== undefined && object.textfield !== null) {
+      message.textfield = TextField.fromPartial(object.textfield);
+    } else {
+      message.textfield = undefined;
+    }
+    return message;
+  },
 };
 
 const basePossibleUiValue: object = {};
 
 export const PossibleUiValue = {
-  encode(message: PossibleUiValue, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: PossibleUiValue,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.floatValue !== undefined) {
       writer.uint32(13).float(message.floatValue);
     }
@@ -340,12 +687,10 @@ export const PossibleUiValue = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): PossibleUiValue {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): PossibleUiValue {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      basePossibleUiValue
-    ) as PossibleUiValue;
+    const message = { ...basePossibleUiValue } as PossibleUiValue;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -368,12 +713,75 @@ export const PossibleUiValue = {
     }
     return message;
   },
+
+  fromJSON(object: any): PossibleUiValue {
+    const message = { ...basePossibleUiValue } as PossibleUiValue;
+    if (object.floatValue !== undefined && object.floatValue !== null) {
+      message.floatValue = Number(object.floatValue);
+    } else {
+      message.floatValue = undefined;
+    }
+    if (object.boolValue !== undefined && object.boolValue !== null) {
+      message.boolValue = Boolean(object.boolValue);
+    } else {
+      message.boolValue = undefined;
+    }
+    if (object.integerValue !== undefined && object.integerValue !== null) {
+      message.integerValue = Long.fromString(object.integerValue);
+    } else {
+      message.integerValue = undefined;
+    }
+    if (object.textValue !== undefined && object.textValue !== null) {
+      message.textValue = String(object.textValue);
+    } else {
+      message.textValue = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: PossibleUiValue): unknown {
+    const obj: any = {};
+    message.floatValue !== undefined && (obj.floatValue = message.floatValue);
+    message.boolValue !== undefined && (obj.boolValue = message.boolValue);
+    message.integerValue !== undefined &&
+      (obj.integerValue = (message.integerValue || undefined).toString());
+    message.textValue !== undefined && (obj.textValue = message.textValue);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<PossibleUiValue>): PossibleUiValue {
+    const message = { ...basePossibleUiValue } as PossibleUiValue;
+    if (object.floatValue !== undefined && object.floatValue !== null) {
+      message.floatValue = object.floatValue;
+    } else {
+      message.floatValue = undefined;
+    }
+    if (object.boolValue !== undefined && object.boolValue !== null) {
+      message.boolValue = object.boolValue;
+    } else {
+      message.boolValue = undefined;
+    }
+    if (object.integerValue !== undefined && object.integerValue !== null) {
+      message.integerValue = object.integerValue as Long;
+    } else {
+      message.integerValue = undefined;
+    }
+    if (object.textValue !== undefined && object.textValue !== null) {
+      message.textValue = object.textValue;
+    } else {
+      message.textValue = undefined;
+    }
+    return message;
+  },
 };
 
 const baseUiSettings: object = {};
 
 export const UiSettings = {
-  encode(message: UiSettings, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: UiSettings,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     Object.entries(message.uiValues).forEach(([key, value]) => {
       UiSettings_UiValuesEntry.encode(
         { key: key as any, value },
@@ -383,10 +791,10 @@ export const UiSettings = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): UiSettings {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): UiSettings {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseUiSettings) as UiSettings;
+    const message = { ...baseUiSettings } as UiSettings;
     message.uiValues = {};
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -407,6 +815,41 @@ export const UiSettings = {
     }
     return message;
   },
+
+  fromJSON(object: any): UiSettings {
+    const message = { ...baseUiSettings } as UiSettings;
+    message.uiValues = {};
+    if (object.uiValues !== undefined && object.uiValues !== null) {
+      Object.entries(object.uiValues).forEach(([key, value]) => {
+        message.uiValues[key] = PossibleUiValue.fromJSON(value);
+      });
+    }
+    return message;
+  },
+
+  toJSON(message: UiSettings): unknown {
+    const obj: any = {};
+    obj.uiValues = {};
+    if (message.uiValues) {
+      Object.entries(message.uiValues).forEach(([k, v]) => {
+        obj.uiValues[k] = PossibleUiValue.toJSON(v);
+      });
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<UiSettings>): UiSettings {
+    const message = { ...baseUiSettings } as UiSettings;
+    message.uiValues = {};
+    if (object.uiValues !== undefined && object.uiValues !== null) {
+      Object.entries(object.uiValues).forEach(([key, value]) => {
+        if (value !== undefined) {
+          message.uiValues[key] = PossibleUiValue.fromPartial(value);
+        }
+      });
+    }
+    return message;
+  },
 };
 
 const baseUiSettings_UiValuesEntry: object = { key: "" };
@@ -414,8 +857,8 @@ const baseUiSettings_UiValuesEntry: object = { key: "" };
 export const UiSettings_UiValuesEntry = {
   encode(
     message: UiSettings_UiValuesEntry,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -426,14 +869,14 @@ export const UiSettings_UiValuesEntry = {
   },
 
   decode(
-    input: Reader | Uint8Array,
+    input: _m0.Reader | Uint8Array,
     length?: number
   ): UiSettings_UiValuesEntry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseUiSettings_UiValuesEntry
-    ) as UiSettings_UiValuesEntry;
+    const message = {
+      ...baseUiSettings_UiValuesEntry,
+    } as UiSettings_UiValuesEntry;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -450,14 +893,68 @@ export const UiSettings_UiValuesEntry = {
     }
     return message;
   },
+
+  fromJSON(object: any): UiSettings_UiValuesEntry {
+    const message = {
+      ...baseUiSettings_UiValuesEntry,
+    } as UiSettings_UiValuesEntry;
+    if (object.key !== undefined && object.key !== null) {
+      message.key = String(object.key);
+    } else {
+      message.key = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = PossibleUiValue.fromJSON(object.value);
+    } else {
+      message.value = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: UiSettings_UiValuesEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined &&
+      (obj.value = message.value
+        ? PossibleUiValue.toJSON(message.value)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<UiSettings_UiValuesEntry>
+  ): UiSettings_UiValuesEntry {
+    const message = {
+      ...baseUiSettings_UiValuesEntry,
+    } as UiSettings_UiValuesEntry;
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    } else {
+      message.key = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = PossibleUiValue.fromPartial(object.value);
+    } else {
+      message.value = undefined;
+    }
+    return message;
+  },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | undefined
+  | Long;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;

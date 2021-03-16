@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Vector2f } from "./Vector2f";
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
@@ -15,7 +16,10 @@ export interface WorldRobot {
 const baseWorldRobot: object = { id: 0, angle: 0, w: 0 };
 
 export const WorldRobot = {
-  encode(message: WorldRobot, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: WorldRobot,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.id !== 0) {
       writer.uint32(8).uint32(message.id);
     }
@@ -34,10 +38,10 @@ export const WorldRobot = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): WorldRobot {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): WorldRobot {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseWorldRobot) as WorldRobot;
+    const message = { ...baseWorldRobot } as WorldRobot;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -63,14 +67,94 @@ export const WorldRobot = {
     }
     return message;
   },
+
+  fromJSON(object: any): WorldRobot {
+    const message = { ...baseWorldRobot } as WorldRobot;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.pos !== undefined && object.pos !== null) {
+      message.pos = Vector2f.fromJSON(object.pos);
+    } else {
+      message.pos = undefined;
+    }
+    if (object.angle !== undefined && object.angle !== null) {
+      message.angle = Number(object.angle);
+    } else {
+      message.angle = 0;
+    }
+    if (object.vel !== undefined && object.vel !== null) {
+      message.vel = Vector2f.fromJSON(object.vel);
+    } else {
+      message.vel = undefined;
+    }
+    if (object.w !== undefined && object.w !== null) {
+      message.w = Number(object.w);
+    } else {
+      message.w = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: WorldRobot): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.pos !== undefined &&
+      (obj.pos = message.pos ? Vector2f.toJSON(message.pos) : undefined);
+    message.angle !== undefined && (obj.angle = message.angle);
+    message.vel !== undefined &&
+      (obj.vel = message.vel ? Vector2f.toJSON(message.vel) : undefined);
+    message.w !== undefined && (obj.w = message.w);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<WorldRobot>): WorldRobot {
+    const message = { ...baseWorldRobot } as WorldRobot;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.pos !== undefined && object.pos !== null) {
+      message.pos = Vector2f.fromPartial(object.pos);
+    } else {
+      message.pos = undefined;
+    }
+    if (object.angle !== undefined && object.angle !== null) {
+      message.angle = object.angle;
+    } else {
+      message.angle = 0;
+    }
+    if (object.vel !== undefined && object.vel !== null) {
+      message.vel = Vector2f.fromPartial(object.vel);
+    } else {
+      message.vel = undefined;
+    }
+    if (object.w !== undefined && object.w !== null) {
+      message.w = object.w;
+    } else {
+      message.w = 0;
+    }
+    return message;
+  },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | undefined
+  | Long;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;

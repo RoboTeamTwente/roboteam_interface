@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as Long from "long";
+import Long from "long";
 import { GameEvent } from "./messages_robocup_ssl_game_event";
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
@@ -112,6 +112,92 @@ export enum SSLReferee_Stage {
   UNRECOGNIZED = -1,
 }
 
+export function sSLReferee_StageFromJSON(object: any): SSLReferee_Stage {
+  switch (object) {
+    case 0:
+    case "NORMAL_FIRST_HALF_PRE":
+      return SSLReferee_Stage.NORMAL_FIRST_HALF_PRE;
+    case 1:
+    case "NORMAL_FIRST_HALF":
+      return SSLReferee_Stage.NORMAL_FIRST_HALF;
+    case 2:
+    case "NORMAL_HALF_TIME":
+      return SSLReferee_Stage.NORMAL_HALF_TIME;
+    case 3:
+    case "NORMAL_SECOND_HALF_PRE":
+      return SSLReferee_Stage.NORMAL_SECOND_HALF_PRE;
+    case 4:
+    case "NORMAL_SECOND_HALF":
+      return SSLReferee_Stage.NORMAL_SECOND_HALF;
+    case 5:
+    case "EXTRA_TIME_BREAK":
+      return SSLReferee_Stage.EXTRA_TIME_BREAK;
+    case 6:
+    case "EXTRA_FIRST_HALF_PRE":
+      return SSLReferee_Stage.EXTRA_FIRST_HALF_PRE;
+    case 7:
+    case "EXTRA_FIRST_HALF":
+      return SSLReferee_Stage.EXTRA_FIRST_HALF;
+    case 8:
+    case "EXTRA_HALF_TIME":
+      return SSLReferee_Stage.EXTRA_HALF_TIME;
+    case 9:
+    case "EXTRA_SECOND_HALF_PRE":
+      return SSLReferee_Stage.EXTRA_SECOND_HALF_PRE;
+    case 10:
+    case "EXTRA_SECOND_HALF":
+      return SSLReferee_Stage.EXTRA_SECOND_HALF;
+    case 11:
+    case "PENALTY_SHOOTOUT_BREAK":
+      return SSLReferee_Stage.PENALTY_SHOOTOUT_BREAK;
+    case 12:
+    case "PENALTY_SHOOTOUT":
+      return SSLReferee_Stage.PENALTY_SHOOTOUT;
+    case 13:
+    case "POST_GAME":
+      return SSLReferee_Stage.POST_GAME;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SSLReferee_Stage.UNRECOGNIZED;
+  }
+}
+
+export function sSLReferee_StageToJSON(object: SSLReferee_Stage): string {
+  switch (object) {
+    case SSLReferee_Stage.NORMAL_FIRST_HALF_PRE:
+      return "NORMAL_FIRST_HALF_PRE";
+    case SSLReferee_Stage.NORMAL_FIRST_HALF:
+      return "NORMAL_FIRST_HALF";
+    case SSLReferee_Stage.NORMAL_HALF_TIME:
+      return "NORMAL_HALF_TIME";
+    case SSLReferee_Stage.NORMAL_SECOND_HALF_PRE:
+      return "NORMAL_SECOND_HALF_PRE";
+    case SSLReferee_Stage.NORMAL_SECOND_HALF:
+      return "NORMAL_SECOND_HALF";
+    case SSLReferee_Stage.EXTRA_TIME_BREAK:
+      return "EXTRA_TIME_BREAK";
+    case SSLReferee_Stage.EXTRA_FIRST_HALF_PRE:
+      return "EXTRA_FIRST_HALF_PRE";
+    case SSLReferee_Stage.EXTRA_FIRST_HALF:
+      return "EXTRA_FIRST_HALF";
+    case SSLReferee_Stage.EXTRA_HALF_TIME:
+      return "EXTRA_HALF_TIME";
+    case SSLReferee_Stage.EXTRA_SECOND_HALF_PRE:
+      return "EXTRA_SECOND_HALF_PRE";
+    case SSLReferee_Stage.EXTRA_SECOND_HALF:
+      return "EXTRA_SECOND_HALF";
+    case SSLReferee_Stage.PENALTY_SHOOTOUT_BREAK:
+      return "PENALTY_SHOOTOUT_BREAK";
+    case SSLReferee_Stage.PENALTY_SHOOTOUT:
+      return "PENALTY_SHOOTOUT";
+    case SSLReferee_Stage.POST_GAME:
+      return "POST_GAME";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 /** These are the "fine" states of play on the field. */
 export enum SSLReferee_Command {
   /** HALT - All robots should completely stop moving. */
@@ -168,6 +254,112 @@ export enum SSLReferee_Command {
    */
   BALL_PLACEMENT_BLUE = 17,
   UNRECOGNIZED = -1,
+}
+
+export function sSLReferee_CommandFromJSON(object: any): SSLReferee_Command {
+  switch (object) {
+    case 0:
+    case "HALT":
+      return SSLReferee_Command.HALT;
+    case 1:
+    case "STOP":
+      return SSLReferee_Command.STOP;
+    case 2:
+    case "NORMAL_START":
+      return SSLReferee_Command.NORMAL_START;
+    case 3:
+    case "FORCE_START":
+      return SSLReferee_Command.FORCE_START;
+    case 4:
+    case "PREPARE_KICKOFF_YELLOW":
+      return SSLReferee_Command.PREPARE_KICKOFF_YELLOW;
+    case 5:
+    case "PREPARE_KICKOFF_BLUE":
+      return SSLReferee_Command.PREPARE_KICKOFF_BLUE;
+    case 6:
+    case "PREPARE_PENALTY_YELLOW":
+      return SSLReferee_Command.PREPARE_PENALTY_YELLOW;
+    case 7:
+    case "PREPARE_PENALTY_BLUE":
+      return SSLReferee_Command.PREPARE_PENALTY_BLUE;
+    case 8:
+    case "DIRECT_FREE_YELLOW":
+      return SSLReferee_Command.DIRECT_FREE_YELLOW;
+    case 9:
+    case "DIRECT_FREE_BLUE":
+      return SSLReferee_Command.DIRECT_FREE_BLUE;
+    case 10:
+    case "INDIRECT_FREE_YELLOW":
+      return SSLReferee_Command.INDIRECT_FREE_YELLOW;
+    case 11:
+    case "INDIRECT_FREE_BLUE":
+      return SSLReferee_Command.INDIRECT_FREE_BLUE;
+    case 12:
+    case "TIMEOUT_YELLOW":
+      return SSLReferee_Command.TIMEOUT_YELLOW;
+    case 13:
+    case "TIMEOUT_BLUE":
+      return SSLReferee_Command.TIMEOUT_BLUE;
+    case 14:
+    case "GOAL_YELLOW":
+      return SSLReferee_Command.GOAL_YELLOW;
+    case 15:
+    case "GOAL_BLUE":
+      return SSLReferee_Command.GOAL_BLUE;
+    case 16:
+    case "BALL_PLACEMENT_YELLOW":
+      return SSLReferee_Command.BALL_PLACEMENT_YELLOW;
+    case 17:
+    case "BALL_PLACEMENT_BLUE":
+      return SSLReferee_Command.BALL_PLACEMENT_BLUE;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SSLReferee_Command.UNRECOGNIZED;
+  }
+}
+
+export function sSLReferee_CommandToJSON(object: SSLReferee_Command): string {
+  switch (object) {
+    case SSLReferee_Command.HALT:
+      return "HALT";
+    case SSLReferee_Command.STOP:
+      return "STOP";
+    case SSLReferee_Command.NORMAL_START:
+      return "NORMAL_START";
+    case SSLReferee_Command.FORCE_START:
+      return "FORCE_START";
+    case SSLReferee_Command.PREPARE_KICKOFF_YELLOW:
+      return "PREPARE_KICKOFF_YELLOW";
+    case SSLReferee_Command.PREPARE_KICKOFF_BLUE:
+      return "PREPARE_KICKOFF_BLUE";
+    case SSLReferee_Command.PREPARE_PENALTY_YELLOW:
+      return "PREPARE_PENALTY_YELLOW";
+    case SSLReferee_Command.PREPARE_PENALTY_BLUE:
+      return "PREPARE_PENALTY_BLUE";
+    case SSLReferee_Command.DIRECT_FREE_YELLOW:
+      return "DIRECT_FREE_YELLOW";
+    case SSLReferee_Command.DIRECT_FREE_BLUE:
+      return "DIRECT_FREE_BLUE";
+    case SSLReferee_Command.INDIRECT_FREE_YELLOW:
+      return "INDIRECT_FREE_YELLOW";
+    case SSLReferee_Command.INDIRECT_FREE_BLUE:
+      return "INDIRECT_FREE_BLUE";
+    case SSLReferee_Command.TIMEOUT_YELLOW:
+      return "TIMEOUT_YELLOW";
+    case SSLReferee_Command.TIMEOUT_BLUE:
+      return "TIMEOUT_BLUE";
+    case SSLReferee_Command.GOAL_YELLOW:
+      return "GOAL_YELLOW";
+    case SSLReferee_Command.GOAL_BLUE:
+      return "GOAL_BLUE";
+    case SSLReferee_Command.BALL_PLACEMENT_YELLOW:
+      return "BALL_PLACEMENT_YELLOW";
+    case SSLReferee_Command.BALL_PLACEMENT_BLUE:
+      return "BALL_PLACEMENT_BLUE";
+    default:
+      return "UNKNOWN";
+  }
 }
 
 /** Information about a single team. */
@@ -241,7 +433,10 @@ const baseSSLReferee: object = {
 };
 
 export const SSLReferee = {
-  encode(message: SSLReferee, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: SSLReferee,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (!message.packetTimestamp.isZero()) {
       writer.uint32(8).uint64(message.packetTimestamp);
     }
@@ -296,10 +491,10 @@ export const SSLReferee = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SSLReferee {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SSLReferee {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(baseSSLReferee) as SSLReferee;
+    const message = { ...baseSSLReferee } as SSLReferee;
     message.gameEvents = [];
     message.gameEventProposals = [];
     while (reader.pos < end) {
@@ -359,6 +554,255 @@ export const SSLReferee = {
     }
     return message;
   },
+
+  fromJSON(object: any): SSLReferee {
+    const message = { ...baseSSLReferee } as SSLReferee;
+    message.gameEvents = [];
+    message.gameEventProposals = [];
+    if (
+      object.packetTimestamp !== undefined &&
+      object.packetTimestamp !== null
+    ) {
+      message.packetTimestamp = Long.fromString(object.packetTimestamp);
+    } else {
+      message.packetTimestamp = Long.UZERO;
+    }
+    if (object.stage !== undefined && object.stage !== null) {
+      message.stage = sSLReferee_StageFromJSON(object.stage);
+    } else {
+      message.stage = 0;
+    }
+    if (object.stageTimeLeft !== undefined && object.stageTimeLeft !== null) {
+      message.stageTimeLeft = Number(object.stageTimeLeft);
+    } else {
+      message.stageTimeLeft = 0;
+    }
+    if (object.command !== undefined && object.command !== null) {
+      message.command = sSLReferee_CommandFromJSON(object.command);
+    } else {
+      message.command = 0;
+    }
+    if (object.commandCounter !== undefined && object.commandCounter !== null) {
+      message.commandCounter = Number(object.commandCounter);
+    } else {
+      message.commandCounter = 0;
+    }
+    if (
+      object.commandTimestamp !== undefined &&
+      object.commandTimestamp !== null
+    ) {
+      message.commandTimestamp = Long.fromString(object.commandTimestamp);
+    } else {
+      message.commandTimestamp = Long.UZERO;
+    }
+    if (object.yellow !== undefined && object.yellow !== null) {
+      message.yellow = SSLReferee_TeamInfo.fromJSON(object.yellow);
+    } else {
+      message.yellow = undefined;
+    }
+    if (object.blue !== undefined && object.blue !== null) {
+      message.blue = SSLReferee_TeamInfo.fromJSON(object.blue);
+    } else {
+      message.blue = undefined;
+    }
+    if (
+      object.designatedPosition !== undefined &&
+      object.designatedPosition !== null
+    ) {
+      message.designatedPosition = SSLReferee_Point.fromJSON(
+        object.designatedPosition
+      );
+    } else {
+      message.designatedPosition = undefined;
+    }
+    if (
+      object.blueTeamOnPositiveHalf !== undefined &&
+      object.blueTeamOnPositiveHalf !== null
+    ) {
+      message.blueTeamOnPositiveHalf = Boolean(object.blueTeamOnPositiveHalf);
+    } else {
+      message.blueTeamOnPositiveHalf = false;
+    }
+    if (object.nextCommand !== undefined && object.nextCommand !== null) {
+      message.nextCommand = sSLReferee_CommandFromJSON(object.nextCommand);
+    } else {
+      message.nextCommand = 0;
+    }
+    if (object.gameEvents !== undefined && object.gameEvents !== null) {
+      for (const e of object.gameEvents) {
+        message.gameEvents.push(GameEvent.fromJSON(e));
+      }
+    }
+    if (
+      object.gameEventProposals !== undefined &&
+      object.gameEventProposals !== null
+    ) {
+      for (const e of object.gameEventProposals) {
+        message.gameEventProposals.push(GameEventProposalGroup.fromJSON(e));
+      }
+    }
+    if (
+      object.currentActionTimeRemaining !== undefined &&
+      object.currentActionTimeRemaining !== null
+    ) {
+      message.currentActionTimeRemaining = Number(
+        object.currentActionTimeRemaining
+      );
+    } else {
+      message.currentActionTimeRemaining = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: SSLReferee): unknown {
+    const obj: any = {};
+    message.packetTimestamp !== undefined &&
+      (obj.packetTimestamp = (
+        message.packetTimestamp || Long.UZERO
+      ).toString());
+    message.stage !== undefined &&
+      (obj.stage = sSLReferee_StageToJSON(message.stage));
+    message.stageTimeLeft !== undefined &&
+      (obj.stageTimeLeft = message.stageTimeLeft);
+    message.command !== undefined &&
+      (obj.command = sSLReferee_CommandToJSON(message.command));
+    message.commandCounter !== undefined &&
+      (obj.commandCounter = message.commandCounter);
+    message.commandTimestamp !== undefined &&
+      (obj.commandTimestamp = (
+        message.commandTimestamp || Long.UZERO
+      ).toString());
+    message.yellow !== undefined &&
+      (obj.yellow = message.yellow
+        ? SSLReferee_TeamInfo.toJSON(message.yellow)
+        : undefined);
+    message.blue !== undefined &&
+      (obj.blue = message.blue
+        ? SSLReferee_TeamInfo.toJSON(message.blue)
+        : undefined);
+    message.designatedPosition !== undefined &&
+      (obj.designatedPosition = message.designatedPosition
+        ? SSLReferee_Point.toJSON(message.designatedPosition)
+        : undefined);
+    message.blueTeamOnPositiveHalf !== undefined &&
+      (obj.blueTeamOnPositiveHalf = message.blueTeamOnPositiveHalf);
+    message.nextCommand !== undefined &&
+      (obj.nextCommand = sSLReferee_CommandToJSON(message.nextCommand));
+    if (message.gameEvents) {
+      obj.gameEvents = message.gameEvents.map((e) =>
+        e ? GameEvent.toJSON(e) : undefined
+      );
+    } else {
+      obj.gameEvents = [];
+    }
+    if (message.gameEventProposals) {
+      obj.gameEventProposals = message.gameEventProposals.map((e) =>
+        e ? GameEventProposalGroup.toJSON(e) : undefined
+      );
+    } else {
+      obj.gameEventProposals = [];
+    }
+    message.currentActionTimeRemaining !== undefined &&
+      (obj.currentActionTimeRemaining = message.currentActionTimeRemaining);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<SSLReferee>): SSLReferee {
+    const message = { ...baseSSLReferee } as SSLReferee;
+    message.gameEvents = [];
+    message.gameEventProposals = [];
+    if (
+      object.packetTimestamp !== undefined &&
+      object.packetTimestamp !== null
+    ) {
+      message.packetTimestamp = object.packetTimestamp as Long;
+    } else {
+      message.packetTimestamp = Long.UZERO;
+    }
+    if (object.stage !== undefined && object.stage !== null) {
+      message.stage = object.stage;
+    } else {
+      message.stage = 0;
+    }
+    if (object.stageTimeLeft !== undefined && object.stageTimeLeft !== null) {
+      message.stageTimeLeft = object.stageTimeLeft;
+    } else {
+      message.stageTimeLeft = 0;
+    }
+    if (object.command !== undefined && object.command !== null) {
+      message.command = object.command;
+    } else {
+      message.command = 0;
+    }
+    if (object.commandCounter !== undefined && object.commandCounter !== null) {
+      message.commandCounter = object.commandCounter;
+    } else {
+      message.commandCounter = 0;
+    }
+    if (
+      object.commandTimestamp !== undefined &&
+      object.commandTimestamp !== null
+    ) {
+      message.commandTimestamp = object.commandTimestamp as Long;
+    } else {
+      message.commandTimestamp = Long.UZERO;
+    }
+    if (object.yellow !== undefined && object.yellow !== null) {
+      message.yellow = SSLReferee_TeamInfo.fromPartial(object.yellow);
+    } else {
+      message.yellow = undefined;
+    }
+    if (object.blue !== undefined && object.blue !== null) {
+      message.blue = SSLReferee_TeamInfo.fromPartial(object.blue);
+    } else {
+      message.blue = undefined;
+    }
+    if (
+      object.designatedPosition !== undefined &&
+      object.designatedPosition !== null
+    ) {
+      message.designatedPosition = SSLReferee_Point.fromPartial(
+        object.designatedPosition
+      );
+    } else {
+      message.designatedPosition = undefined;
+    }
+    if (
+      object.blueTeamOnPositiveHalf !== undefined &&
+      object.blueTeamOnPositiveHalf !== null
+    ) {
+      message.blueTeamOnPositiveHalf = object.blueTeamOnPositiveHalf;
+    } else {
+      message.blueTeamOnPositiveHalf = false;
+    }
+    if (object.nextCommand !== undefined && object.nextCommand !== null) {
+      message.nextCommand = object.nextCommand;
+    } else {
+      message.nextCommand = 0;
+    }
+    if (object.gameEvents !== undefined && object.gameEvents !== null) {
+      for (const e of object.gameEvents) {
+        message.gameEvents.push(GameEvent.fromPartial(e));
+      }
+    }
+    if (
+      object.gameEventProposals !== undefined &&
+      object.gameEventProposals !== null
+    ) {
+      for (const e of object.gameEventProposals) {
+        message.gameEventProposals.push(GameEventProposalGroup.fromPartial(e));
+      }
+    }
+    if (
+      object.currentActionTimeRemaining !== undefined &&
+      object.currentActionTimeRemaining !== null
+    ) {
+      message.currentActionTimeRemaining = object.currentActionTimeRemaining;
+    } else {
+      message.currentActionTimeRemaining = 0;
+    }
+    return message;
+  },
 };
 
 const baseSSLReferee_TeamInfo: object = {
@@ -381,8 +825,8 @@ const baseSSLReferee_TeamInfo: object = {
 export const SSLReferee_TeamInfo = {
   encode(
     message: SSLReferee_TeamInfo,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -430,12 +874,10 @@ export const SSLReferee_TeamInfo = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SSLReferee_TeamInfo {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SSLReferee_TeamInfo {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseSSLReferee_TeamInfo
-    ) as SSLReferee_TeamInfo;
+    const message = { ...baseSSLReferee_TeamInfo } as SSLReferee_TeamInfo;
     message.yellowCardTimes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -496,12 +938,225 @@ export const SSLReferee_TeamInfo = {
     }
     return message;
   },
+
+  fromJSON(object: any): SSLReferee_TeamInfo {
+    const message = { ...baseSSLReferee_TeamInfo } as SSLReferee_TeamInfo;
+    message.yellowCardTimes = [];
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    } else {
+      message.name = "";
+    }
+    if (object.score !== undefined && object.score !== null) {
+      message.score = Number(object.score);
+    } else {
+      message.score = 0;
+    }
+    if (object.redCards !== undefined && object.redCards !== null) {
+      message.redCards = Number(object.redCards);
+    } else {
+      message.redCards = 0;
+    }
+    if (
+      object.yellowCardTimes !== undefined &&
+      object.yellowCardTimes !== null
+    ) {
+      for (const e of object.yellowCardTimes) {
+        message.yellowCardTimes.push(Number(e));
+      }
+    }
+    if (object.yellowCards !== undefined && object.yellowCards !== null) {
+      message.yellowCards = Number(object.yellowCards);
+    } else {
+      message.yellowCards = 0;
+    }
+    if (object.timeouts !== undefined && object.timeouts !== null) {
+      message.timeouts = Number(object.timeouts);
+    } else {
+      message.timeouts = 0;
+    }
+    if (object.timeoutTime !== undefined && object.timeoutTime !== null) {
+      message.timeoutTime = Number(object.timeoutTime);
+    } else {
+      message.timeoutTime = 0;
+    }
+    if (object.goalkeeper !== undefined && object.goalkeeper !== null) {
+      message.goalkeeper = Number(object.goalkeeper);
+    } else {
+      message.goalkeeper = 0;
+    }
+    if (object.foulCounter !== undefined && object.foulCounter !== null) {
+      message.foulCounter = Number(object.foulCounter);
+    } else {
+      message.foulCounter = 0;
+    }
+    if (
+      object.ballPlacementFailures !== undefined &&
+      object.ballPlacementFailures !== null
+    ) {
+      message.ballPlacementFailures = Number(object.ballPlacementFailures);
+    } else {
+      message.ballPlacementFailures = 0;
+    }
+    if (object.canPlaceBall !== undefined && object.canPlaceBall !== null) {
+      message.canPlaceBall = Boolean(object.canPlaceBall);
+    } else {
+      message.canPlaceBall = false;
+    }
+    if (object.maxAllowedBots !== undefined && object.maxAllowedBots !== null) {
+      message.maxAllowedBots = Number(object.maxAllowedBots);
+    } else {
+      message.maxAllowedBots = 0;
+    }
+    if (
+      object.botSubstitutionIntent !== undefined &&
+      object.botSubstitutionIntent !== null
+    ) {
+      message.botSubstitutionIntent = Boolean(object.botSubstitutionIntent);
+    } else {
+      message.botSubstitutionIntent = false;
+    }
+    if (
+      object.ballPlacementFailuresReached !== undefined &&
+      object.ballPlacementFailuresReached !== null
+    ) {
+      message.ballPlacementFailuresReached = Boolean(
+        object.ballPlacementFailuresReached
+      );
+    } else {
+      message.ballPlacementFailuresReached = false;
+    }
+    return message;
+  },
+
+  toJSON(message: SSLReferee_TeamInfo): unknown {
+    const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.score !== undefined && (obj.score = message.score);
+    message.redCards !== undefined && (obj.redCards = message.redCards);
+    if (message.yellowCardTimes) {
+      obj.yellowCardTimes = message.yellowCardTimes.map((e) => e);
+    } else {
+      obj.yellowCardTimes = [];
+    }
+    message.yellowCards !== undefined &&
+      (obj.yellowCards = message.yellowCards);
+    message.timeouts !== undefined && (obj.timeouts = message.timeouts);
+    message.timeoutTime !== undefined &&
+      (obj.timeoutTime = message.timeoutTime);
+    message.goalkeeper !== undefined && (obj.goalkeeper = message.goalkeeper);
+    message.foulCounter !== undefined &&
+      (obj.foulCounter = message.foulCounter);
+    message.ballPlacementFailures !== undefined &&
+      (obj.ballPlacementFailures = message.ballPlacementFailures);
+    message.canPlaceBall !== undefined &&
+      (obj.canPlaceBall = message.canPlaceBall);
+    message.maxAllowedBots !== undefined &&
+      (obj.maxAllowedBots = message.maxAllowedBots);
+    message.botSubstitutionIntent !== undefined &&
+      (obj.botSubstitutionIntent = message.botSubstitutionIntent);
+    message.ballPlacementFailuresReached !== undefined &&
+      (obj.ballPlacementFailuresReached = message.ballPlacementFailuresReached);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<SSLReferee_TeamInfo>): SSLReferee_TeamInfo {
+    const message = { ...baseSSLReferee_TeamInfo } as SSLReferee_TeamInfo;
+    message.yellowCardTimes = [];
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    } else {
+      message.name = "";
+    }
+    if (object.score !== undefined && object.score !== null) {
+      message.score = object.score;
+    } else {
+      message.score = 0;
+    }
+    if (object.redCards !== undefined && object.redCards !== null) {
+      message.redCards = object.redCards;
+    } else {
+      message.redCards = 0;
+    }
+    if (
+      object.yellowCardTimes !== undefined &&
+      object.yellowCardTimes !== null
+    ) {
+      for (const e of object.yellowCardTimes) {
+        message.yellowCardTimes.push(e);
+      }
+    }
+    if (object.yellowCards !== undefined && object.yellowCards !== null) {
+      message.yellowCards = object.yellowCards;
+    } else {
+      message.yellowCards = 0;
+    }
+    if (object.timeouts !== undefined && object.timeouts !== null) {
+      message.timeouts = object.timeouts;
+    } else {
+      message.timeouts = 0;
+    }
+    if (object.timeoutTime !== undefined && object.timeoutTime !== null) {
+      message.timeoutTime = object.timeoutTime;
+    } else {
+      message.timeoutTime = 0;
+    }
+    if (object.goalkeeper !== undefined && object.goalkeeper !== null) {
+      message.goalkeeper = object.goalkeeper;
+    } else {
+      message.goalkeeper = 0;
+    }
+    if (object.foulCounter !== undefined && object.foulCounter !== null) {
+      message.foulCounter = object.foulCounter;
+    } else {
+      message.foulCounter = 0;
+    }
+    if (
+      object.ballPlacementFailures !== undefined &&
+      object.ballPlacementFailures !== null
+    ) {
+      message.ballPlacementFailures = object.ballPlacementFailures;
+    } else {
+      message.ballPlacementFailures = 0;
+    }
+    if (object.canPlaceBall !== undefined && object.canPlaceBall !== null) {
+      message.canPlaceBall = object.canPlaceBall;
+    } else {
+      message.canPlaceBall = false;
+    }
+    if (object.maxAllowedBots !== undefined && object.maxAllowedBots !== null) {
+      message.maxAllowedBots = object.maxAllowedBots;
+    } else {
+      message.maxAllowedBots = 0;
+    }
+    if (
+      object.botSubstitutionIntent !== undefined &&
+      object.botSubstitutionIntent !== null
+    ) {
+      message.botSubstitutionIntent = object.botSubstitutionIntent;
+    } else {
+      message.botSubstitutionIntent = false;
+    }
+    if (
+      object.ballPlacementFailuresReached !== undefined &&
+      object.ballPlacementFailuresReached !== null
+    ) {
+      message.ballPlacementFailuresReached =
+        object.ballPlacementFailuresReached;
+    } else {
+      message.ballPlacementFailuresReached = false;
+    }
+    return message;
+  },
 };
 
 const baseSSLReferee_Point: object = { x: 0, y: 0 };
 
 export const SSLReferee_Point = {
-  encode(message: SSLReferee_Point, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: SSLReferee_Point,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.x !== 0) {
       writer.uint32(13).float(message.x);
     }
@@ -511,12 +1166,10 @@ export const SSLReferee_Point = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): SSLReferee_Point {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SSLReferee_Point {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseSSLReferee_Point
-    ) as SSLReferee_Point;
+    const message = { ...baseSSLReferee_Point } as SSLReferee_Point;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -533,6 +1186,43 @@ export const SSLReferee_Point = {
     }
     return message;
   },
+
+  fromJSON(object: any): SSLReferee_Point {
+    const message = { ...baseSSLReferee_Point } as SSLReferee_Point;
+    if (object.x !== undefined && object.x !== null) {
+      message.x = Number(object.x);
+    } else {
+      message.x = 0;
+    }
+    if (object.y !== undefined && object.y !== null) {
+      message.y = Number(object.y);
+    } else {
+      message.y = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: SSLReferee_Point): unknown {
+    const obj: any = {};
+    message.x !== undefined && (obj.x = message.x);
+    message.y !== undefined && (obj.y = message.y);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<SSLReferee_Point>): SSLReferee_Point {
+    const message = { ...baseSSLReferee_Point } as SSLReferee_Point;
+    if (object.x !== undefined && object.x !== null) {
+      message.x = object.x;
+    } else {
+      message.x = 0;
+    }
+    if (object.y !== undefined && object.y !== null) {
+      message.y = object.y;
+    } else {
+      message.y = 0;
+    }
+    return message;
+  },
 };
 
 const baseGameEventProposalGroup: object = { accepted: false };
@@ -540,8 +1230,8 @@ const baseGameEventProposalGroup: object = { accepted: false };
 export const GameEventProposalGroup = {
   encode(
     message: GameEventProposalGroup,
-    writer: Writer = Writer.create()
-  ): Writer {
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     for (const v of message.gameEvent) {
       GameEvent.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -551,12 +1241,13 @@ export const GameEventProposalGroup = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GameEventProposalGroup {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): GameEventProposalGroup {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseGameEventProposalGroup
-    ) as GameEventProposalGroup;
+    const message = { ...baseGameEventProposalGroup } as GameEventProposalGroup;
     message.gameEvent = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -574,14 +1265,69 @@ export const GameEventProposalGroup = {
     }
     return message;
   },
+
+  fromJSON(object: any): GameEventProposalGroup {
+    const message = { ...baseGameEventProposalGroup } as GameEventProposalGroup;
+    message.gameEvent = [];
+    if (object.gameEvent !== undefined && object.gameEvent !== null) {
+      for (const e of object.gameEvent) {
+        message.gameEvent.push(GameEvent.fromJSON(e));
+      }
+    }
+    if (object.accepted !== undefined && object.accepted !== null) {
+      message.accepted = Boolean(object.accepted);
+    } else {
+      message.accepted = false;
+    }
+    return message;
+  },
+
+  toJSON(message: GameEventProposalGroup): unknown {
+    const obj: any = {};
+    if (message.gameEvent) {
+      obj.gameEvent = message.gameEvent.map((e) =>
+        e ? GameEvent.toJSON(e) : undefined
+      );
+    } else {
+      obj.gameEvent = [];
+    }
+    message.accepted !== undefined && (obj.accepted = message.accepted);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<GameEventProposalGroup>
+  ): GameEventProposalGroup {
+    const message = { ...baseGameEventProposalGroup } as GameEventProposalGroup;
+    message.gameEvent = [];
+    if (object.gameEvent !== undefined && object.gameEvent !== null) {
+      for (const e of object.gameEvent) {
+        message.gameEvent.push(GameEvent.fromPartial(e));
+      }
+    }
+    if (object.accepted !== undefined && object.accepted !== null) {
+      message.accepted = object.accepted;
+    } else {
+      message.accepted = false;
+    }
+    return message;
+  },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | undefined
+  | Long;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;

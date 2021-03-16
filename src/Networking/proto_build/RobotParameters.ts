@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
@@ -25,7 +26,10 @@ const baseRobotParameters: object = {
 };
 
 export const RobotParameters = {
-  encode(message: RobotParameters, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: RobotParameters,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.radius !== 0) {
       writer.uint32(13).float(message.radius);
     }
@@ -44,12 +48,10 @@ export const RobotParameters = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): RobotParameters {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): RobotParameters {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseRobotParameters
-    ) as RobotParameters;
+    const message = { ...baseRobotParameters } as RobotParameters;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -75,12 +77,87 @@ export const RobotParameters = {
     }
     return message;
   },
+
+  fromJSON(object: any): RobotParameters {
+    const message = { ...baseRobotParameters } as RobotParameters;
+    if (object.radius !== undefined && object.radius !== null) {
+      message.radius = Number(object.radius);
+    } else {
+      message.radius = 0;
+    }
+    if (object.height !== undefined && object.height !== null) {
+      message.height = Number(object.height);
+    } else {
+      message.height = 0;
+    }
+    if (object.frontWidth !== undefined && object.frontWidth !== null) {
+      message.frontWidth = Number(object.frontWidth);
+    } else {
+      message.frontWidth = 0;
+    }
+    if (object.dribblerWidth !== undefined && object.dribblerWidth !== null) {
+      message.dribblerWidth = Number(object.dribblerWidth);
+    } else {
+      message.dribblerWidth = 0;
+    }
+    if (object.angleOffset !== undefined && object.angleOffset !== null) {
+      message.angleOffset = Number(object.angleOffset);
+    } else {
+      message.angleOffset = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: RobotParameters): unknown {
+    const obj: any = {};
+    message.radius !== undefined && (obj.radius = message.radius);
+    message.height !== undefined && (obj.height = message.height);
+    message.frontWidth !== undefined && (obj.frontWidth = message.frontWidth);
+    message.dribblerWidth !== undefined &&
+      (obj.dribblerWidth = message.dribblerWidth);
+    message.angleOffset !== undefined &&
+      (obj.angleOffset = message.angleOffset);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<RobotParameters>): RobotParameters {
+    const message = { ...baseRobotParameters } as RobotParameters;
+    if (object.radius !== undefined && object.radius !== null) {
+      message.radius = object.radius;
+    } else {
+      message.radius = 0;
+    }
+    if (object.height !== undefined && object.height !== null) {
+      message.height = object.height;
+    } else {
+      message.height = 0;
+    }
+    if (object.frontWidth !== undefined && object.frontWidth !== null) {
+      message.frontWidth = object.frontWidth;
+    } else {
+      message.frontWidth = 0;
+    }
+    if (object.dribblerWidth !== undefined && object.dribblerWidth !== null) {
+      message.dribblerWidth = object.dribblerWidth;
+    } else {
+      message.dribblerWidth = 0;
+    }
+    if (object.angleOffset !== undefined && object.angleOffset !== null) {
+      message.angleOffset = object.angleOffset;
+    } else {
+      message.angleOffset = 0;
+    }
+    return message;
+  },
 };
 
 const baseTeamParameters: object = { didChange: false };
 
 export const TeamParameters = {
-  encode(message: TeamParameters, writer: Writer = Writer.create()): Writer {
+  encode(
+    message: TeamParameters,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
     if (message.didChange === true) {
       writer.uint32(8).bool(message.didChange);
     }
@@ -93,12 +170,10 @@ export const TeamParameters = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): TeamParameters {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): TeamParameters {
+    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = globalThis.Object.create(
-      baseTeamParameters
-    ) as TeamParameters;
+    const message = { ...baseTeamParameters } as TeamParameters;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -115,14 +190,62 @@ export const TeamParameters = {
     }
     return message;
   },
+
+  fromJSON(object: any): TeamParameters {
+    const message = { ...baseTeamParameters } as TeamParameters;
+    if (object.didChange !== undefined && object.didChange !== null) {
+      message.didChange = Boolean(object.didChange);
+    } else {
+      message.didChange = false;
+    }
+    if (object.parameters !== undefined && object.parameters !== null) {
+      message.parameters = RobotParameters.fromJSON(object.parameters);
+    } else {
+      message.parameters = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: TeamParameters): unknown {
+    const obj: any = {};
+    message.didChange !== undefined && (obj.didChange = message.didChange);
+    message.parameters !== undefined &&
+      (obj.parameters = message.parameters
+        ? RobotParameters.toJSON(message.parameters)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<TeamParameters>): TeamParameters {
+    const message = { ...baseTeamParameters } as TeamParameters;
+    if (object.didChange !== undefined && object.didChange !== null) {
+      message.didChange = object.didChange;
+    } else {
+      message.didChange = false;
+    }
+    if (object.parameters !== undefined && object.parameters !== null) {
+      message.parameters = RobotParameters.fromPartial(object.parameters);
+    } else {
+      message.parameters = undefined;
+    }
+    return message;
+  },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
+type Builtin =
+  | Date
+  | Function
+  | Uint8Array
+  | string
+  | number
+  | undefined
+  | Long;
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
