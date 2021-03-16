@@ -39,7 +39,7 @@ class App extends React.Component {
                     <img className="roboteamLogoTop" src={logo} alt="Logo" />
                 </div> */}
                 <div>
-                    <Field transformation={180}></Field>
+                    <Field transformation={0}></Field>
                     <SettingsWidget />
                 </div>
             </>
