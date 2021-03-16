@@ -138,25 +138,24 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.stroke();
     }
 
-    // TODO: transformScale stuff
     drawRobot(ctx: CanvasRenderingContext2D, state: State, each: WorldRobot, yellow: boolean) {
         let robotParameters = yellow ? state.yellowRobotParameters! : state.blueRobotParameters!;
         let { vel, id, pos } = each;
-        let { x, y } = pos!;
-        let realX = scale(x * 1000);
-        let realY = scale(y * 1000);
+        let {x, y} = this.scaleTransformVector(pos!);
+        let realX = x * 1000;
+        let realY = y * 1000;
         let realRadius = scale(robotParameters.parameters!.radius! * 1000);
         this.drawCircleWithColor(ctx, realX, realY, realRadius, yellow ? "#ffff00" : "#9696ff");
         ctx.font = "15px Arial";
         ctx.fillText(id.toString(), realX + realRadius + 1, realY + realRadius + 1);
         ctx.moveTo(realX, realY);
-        let velX = scale(vel!.x! * 1000);
-        let velY = scale(vel!.y! * 1000);
+        let realVel = this.scaleTransformVector(vel!);
+        let velX = realVel.x * 1000;
+        let velY = realVel.y * 1000;
         ctx.lineTo(realX + velX, realY + velY);
         ctx.stroke();
     }
 
-    // TODO: transformScale stuff
     drawLines(ctx: CanvasRenderingContext2D, lines: SSLFieldLineSegment[]) {
         for (let line of lines) {
             let {
@@ -171,21 +170,18 @@ class Field extends React.Component<FieldProps, FieldState> {
         }
     }
 
-    // TODO: transformScale stuff
     drawCircle(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number) {
         ctx.moveTo(x + radius, y);
         this.drawCircleFromAngles(ctx, x, y, radius, 0, 2 * Math.PI);
         ctx.stroke();
     }
 
-    // TODO: transformScale stuff
     drawCircleFromAngles(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, a1: number, a2: number) {
         ctx.moveTo(x + radius, y);
         ctx.arc(x, y, radius, a1, a2, true);
         ctx.stroke();
     }
 
-    // TODO: transformScale stuff
     drawCircleWithColor(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) {
         let oldColor = ctx.fillStyle;
         ctx.fillStyle = color;
@@ -198,7 +194,6 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.fillStyle = oldColor;
     }
 
-    // TODO: transformScale stuff
     drawArcs(ctx: CanvasRenderingContext2D, arcs: SSLFieldCircularArc[]) {
         for (let arc of arcs) {
             let { center, radius, thickness } = arc;
