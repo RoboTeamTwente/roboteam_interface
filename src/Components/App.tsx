@@ -4,6 +4,12 @@ import ConnectionSettings from "./ConnectionSettings";
 import {CONSTANTS} from "./Constants";
 import {hostnamePortPairToWSURL, saveServerPreferences, getStartingPortHostnameCombination} from "./Util";
 import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
+import { getWidth } from '../Utils/Dimensions';
+import Field from './Field/Field';
+import SettingsWidget from './Settings/SettingsWidget';
+import "../Styles/main.css"
+import { createMuiTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
+import logo from '../Images/roboteam_logo_trans.png';
 
 type AppState = {
     readonly data: ModuleState
@@ -43,6 +49,9 @@ class App extends React.Component<{}, AppState> {
     render() {
         return (
             <div>
+                <div>
+                    <Field transformation={0}></Field>
+                </div>
                 <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws}
                                     defaultHostPortPair={getStartingPortHostnameCombination()}/>
             </div>);
