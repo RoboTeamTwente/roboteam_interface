@@ -4,25 +4,26 @@ import ConnectionSettings from "./ConnectionSettings";
 import {CONSTANTS} from "./Constants";
 import {hostnamePortPairToWSURL, saveServerPreferences, getStartingPortHostnameCombination} from "./Util";
 import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
-import RadioButtonField from "./BasicComponents/RemoteRadioButtonField";
 
 type AppState = {
-    readonly data: ModuleState | undefined
+    readonly data: ModuleState
     readonly ws: WebSocket | undefined
 }
 
 class App extends React.Component<{}, AppState> {
+    private readonly defaultStateData: ModuleState = {systemState: {state: undefined, uiSettings: {uiValues: {}}}, handshakes: []};
+
     constructor(props: any) {
         super(props);
 
         this.didChangeServer = this.didChangeServer.bind(this);
         this.coerceRefreshOnWebSocketEvent = this.coerceRefreshOnWebSocketEvent.bind(this);
         this.childWillUpdate = this.childWillUpdate.bind(this);
+        this.onWsMessage = this.onWsMessage.bind(this);
+        this.getEnsureNotEmpty = this.getEnsureNotEmpty.bind(this);
 
         const pastUIState = localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY);
-        const data = pastUIState == null ? undefined : ModuleState.fromJSON(JSON.parse(pastUIState!));
-
-        // const mod: ModuleState = {systemState: {state: undefined, uiSettings: {uiValues: {"testTextField": {floatValue: undefined, textValue: "aaaa", integerValue: undefined, boolValue: undefined}}}},handshakes: [{name: "aa", options: [{name: "testRadio", slider: undefined, dropdown: undefined, radiobutton: {default: new Long(1), options: ["Error1", "good", "error2"]}, textfield: undefined, checkbox: undefined}]}]}
+        const data = pastUIState == null ? this.defaultStateData: ModuleState.fromJSON(pastUIState!);
         this.state = {data: data, ws: undefined};
 
     }
@@ -44,9 +45,6 @@ class App extends React.Component<{}, AppState> {
             <div>
                 <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws}
                                     defaultHostPortPair={getStartingPortHostnameCombination()}/>
-                <RadioButtonField values={this.state.data?.systemState?.uiSettings ?? {uiValues: {}}}
-                                  options={this.state.data?.handshakes?.[0]?.options ?? []}
-                                  onChange={this.childWillUpdate} name={"testRadio"}/>
             </div>);
     }
 
@@ -54,22 +52,29 @@ class App extends React.Component<{}, AppState> {
         this.setState({...this.state, ws: this.state.ws});
     }
 
+    private onWsMessage(event: MessageEvent) {
+        let data: ModuleState | undefined = undefined;
+        try {
+            data = ModuleState.decode(new Uint8Array(event.data));
+        } catch(err) {
+            console.log("[-] Error when decoding data");
+            return;
+        }
+
+        data = this.getEnsureNotEmpty(data);
+
+        this.setState({...this.state, data});
+    }
+
     private installWebsocket(ws: WebSocket) {
         this.setState({...this.state, ws: ws});
-
-        ws.onmessage = (event: MessageEvent) => {
-            const data = ModuleState.decode(event.data);
-
-            if (data != null) {
-                this.setState({...this.state, data: data});
-            } else {
-                console.log("[-] Received corrupted proto message!");
-            }
-        }
 
         ws.onopen = this.coerceRefreshOnWebSocketEvent;
         ws.onclose = this.coerceRefreshOnWebSocketEvent
         ws.onerror = this.coerceRefreshOnWebSocketEvent
+
+        ws.binaryType = "arraybuffer";
+        ws.onmessage = this.onWsMessage;
     }
 
     private didChangeServer(hostname: string, port: number): void {
@@ -77,19 +82,31 @@ class App extends React.Component<{}, AppState> {
         saveServerPreferences(hostname, port);
     }
 
-    private childWillUpdate(name: string, newValue: PossibleUiValue): void {
-        const mod = this.state.data;
+    private getEnsureNotEmpty(current: ModuleState): ModuleState {
+        let mod = current;
 
-        if (mod?.systemState?.uiSettings?.uiValues != null) {
-            mod!.systemState!.uiSettings!.uiValues[name] = newValue;
-            this.setState({...this.state, data: mod});
-        } else {
-            console.log("[-] No values to manipulate!");
+        if (mod.systemState == null) {
+            mod.systemState = this.defaultStateData.systemState;
+        } else if(mod.systemState.uiSettings == null) {
+            mod.systemState.uiSettings = this.defaultStateData.systemState!.uiSettings!;
+        } else if(mod.systemState.uiSettings.uiValues == null) {
+            mod.systemState.uiSettings.uiValues = this.defaultStateData.systemState!.uiSettings?.uiValues!;
         }
 
+        return mod;
+    }
+
+    private childWillUpdate(name: string, newValue: PossibleUiValue): void {
+        const mod = this.getEnsureNotEmpty(this.state.data);
+
+        mod.systemState!.uiSettings!.uiValues[name] = newValue;
+
+        this.setState({...this.state, data: mod});
+
         if (this.state.ws != null && this.state.ws?.readyState === this.state.ws?.OPEN && this.state.data != null) {
-            const writer = ModuleState.encode(this.state.data!);
-            this.state.ws.send(writer.finish());
+            console.log(JSON.stringify(mod));
+            const writer = ModuleState.encode(mod).finish();
+            this.state.ws.send(writer);
         }
     }
 }

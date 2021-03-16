@@ -10,18 +10,23 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
     constructor(props: any) {
         super(props);
 
+        this.getOptions = this.getOptions.bind(this);
         const thisOption = findUIOptionByName(this.props.name, this.props.options!)?.slider ?? this.defaultValue;
-        this.state = {integerValue: thisOption.default, sliderOptions: thisOption}
+        this.state = {integerValue: thisOption.default}
 
         this.onChange = this.onChange.bind(this);
     }
 
+    private getOptions(): Slider {
+        return findUIOptionByName(this.props.name, this.props.options!)?.slider ?? this.defaultValue;
+    }
+
     render() {
         return (
-            <label>{this.state.sliderOptions.text}
+            <label>{this.getOptions().text}
                 <input type="range" id={this.props.name} className="remote sliderField"
-                       min={this.state.sliderOptions.min} max={this.state.sliderOptions.max}
-                       step={this.state.sliderOptions.interval} value={this.state.integerValue}
+                       min={this.getOptions().min} max={this.getOptions().max}
+                       step={this.getOptions().interval} value={this.state.integerValue}
                        onChange={this.onChange}/>
             </label>)
     }

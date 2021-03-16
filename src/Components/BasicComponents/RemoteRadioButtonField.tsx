@@ -1,23 +1,27 @@
 import AbstractRemoteSubscribedReactComponent from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
 import {findUIOptionByName} from "../Util";
-import Long from "long";
 import {RadioButton} from "../../Networking/proto_build/UiOptions";
+import Long from "long";
 
-class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
+class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
 
-    private readonly defaultValue: RadioButton = {default: new Long(0), options: ["Unknown"]};
+    private readonly defaultValue: RadioButton = {default: Long.ONE, options: ["Unknown"]};
 
     constructor(props: any) {
         super(props);
+        this.getOptions = this.getOptions.bind(this);
 
         const thisOption = findUIOptionByName(this.props.name, this.props.options!)?.radiobutton ?? this.defaultValue;
         const defaultIndex = thisOption.default;
-        const possibilities = thisOption.options;
 
-        this.state = {selection: defaultIndex, possibilities: possibilities};
+        this.state = {selection: defaultIndex};
 
         this.onChange = this.onChange.bind(this);
+    }
+
+    private getOptions(): RadioButton {
+        return findUIOptionByName(this.props.name, this.props.options!)?.radiobutton ?? this.defaultValue;
     }
 
     render() {
@@ -33,7 +37,7 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
 
         this.props.onChange(this.props.name, {
             boolValue: undefined,
-            integerValue: new Long(indexOfSelection),
+            integerValue: Long.fromNumber(indexOfSelection),
             floatValue: undefined,
             textValue: undefined
         });
@@ -42,10 +46,10 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
     private renderRadioButtons() {
         const options = [];
 
-        for (let i = 0; i < this.state.possibilities.length; i++) {
+        for (let i = 0; i < this.getOptions().options.length; i++) {
             options.push(
-                <label className="remote radioLabel">{this.state.possibilities[i]}
-                    <input type="radio" name={this.props.name} key={this.state.possibilities[i]}
+                <label className="remote radioLabel">{this.getOptions().options[i]}
+                    <input type="radio" name={this.props.name} key={this.getOptions().options[i]}
                            className="remote radioButton" value={i} checked={this.state.selection === i}/>
                 </label>
             );
@@ -55,4 +59,4 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
     }
 }
 
-export default RemoteTextField;
+export default RemoteRadioButtonField;

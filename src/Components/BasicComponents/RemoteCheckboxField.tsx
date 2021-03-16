@@ -4,10 +4,12 @@ import {findUIOptionByName} from "../Util";
 
 class RemoteCheckboxField extends AbstractRemoteSubscribedReactComponent {
 
+    private readonly defaultValue: boolean = false;
+
     constructor(props: any) {
         super(props);
 
-        const defaultValue = findUIOptionByName(this.props.name, this.props.options!)?.checkbox?.default;
+        const defaultValue = findUIOptionByName(this.props.name, this.props.options!)?.checkbox?.default ?? this.defaultValue;
         this.state = {booleanValue: defaultValue}
 
         this.onChange = this.onChange.bind(this);

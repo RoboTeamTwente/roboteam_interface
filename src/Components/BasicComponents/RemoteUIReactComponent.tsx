@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {PossibleUiValue, UiOption, UiSettings} from "../../Networking/proto_build/UiOptions";
+import {findUIOptionByName} from "../Util";
+import shallowequal from "shallowequal";
 
 type RemoteUIProps = {
     values: UiSettings;
@@ -19,13 +21,11 @@ class RemoteUIReactComponent extends React.Component<RemoteUIProps, any> {
             const nextValue = nextProps.values?.uiValues[value];
             const thisValue = this.props.values?.uiValues[value];
 
-            if (nextValue?.boolValue !== thisValue?.boolValue ||
-                nextValue?.floatValue !== thisValue?.floatValue ||
-                nextValue?.integerValue !== thisValue?.integerValue ||
-                nextValue?.textValue !== thisValue?.textValue) {
+            const thisDef = findUIOptionByName(value, this.props.options);
+            const nextDef = findUIOptionByName(value, nextProps.options);
 
-                return true;
-            }
+            if (!shallowequal(thisDef, nextDef)) return true;
+            if (!shallowequal(nextValue, thisValue)) return true;
         }
 
         return false;
