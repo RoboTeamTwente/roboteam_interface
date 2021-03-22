@@ -1,25 +1,15 @@
 import * as React from "react";
-import { getWidth } from "../Utils/Dimensions";
-import Field from "./Field/Field";
-import SettingsWidget from "./Settings/SettingsWidget";
 import "../Styles/main.css";
-import {
-  CssBaseline,
-  responsiveFontSizes,
-  ThemeProvider,
-} from "@material-ui/core";
-import logo from "../Images/roboteam_logo_trans.png";
-import * as React from 'react';
 import {ModuleState} from "../Networking/proto_build/State";
 import ConnectionSettings from "./ConnectionSettings";
 import {CONSTANTS} from "./Constants";
 import {hostnamePortPairToWSURL, saveServerPreferences, getStartingPortHostnameCombination} from "./Util";
 import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
-import { getWidth } from '../Utils/Dimensions';
-import Field from './Field/Field';
-import SettingsWidget from './Settings/SettingsWidget';
 import "../Styles/main.css"
 import logo from '../Images/roboteam_logo_trans.png';
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Field from "./Field/Field";
 
 type AppState = {
     readonly data: ModuleState
@@ -53,15 +43,6 @@ class App extends React.Component<{}, AppState> {
 
     componentDidMount() {
         const [host, port] = getStartingPortHostnameCombination();
-//materailsui imports
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import { createMuiTheme, makeStyles } from "@material-ui/core/styles";
-import { blue } from "@material-ui/core/colors";
-
-const useStyles = makeStyles((theme) => ({
-  paper: { backgroundColor: "blue" },
-}));
 
         this.installWebsocket(new WebSocket(hostnamePortPairToWSURL(host, port, "")));
 
@@ -75,6 +56,8 @@ const useStyles = makeStyles((theme) => ({
     render() {
         return (
             <body>
+            <Field transformation={0}/>
+            <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws} defaultHostPortPair={getStartingPortHostnameCombination()}/>
             <div className={this.root}>
               <Grid container spacing={3}>
                 <Grid item xs={7} container>
