@@ -1,7 +1,7 @@
-import AbstractRemoteSubscribedReactComponent from "./RemoteUIReactComponent";
+import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
 import Long from "long";
-import {findUIOptionByName} from "../Util";
+import {extractDataForComponent, findUIOptionByName} from "../Util";
 import {Dropdown} from "../../Networking/proto_build/UiOptions";
 
 class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
@@ -12,14 +12,31 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
         super(props);
 
         this.getOptions = this.getOptions.bind(this);
-        const thisOption = findUIOptionByName(this.props.name, this.props.options!)?.dropdown ?? this.defaultValue;
-        this.state = {selection: thisOption.default};
-
         this.onChange = this.onChange.bind(this);
+
+        const [definition, value] = extractDataForComponent(props.name, props.state);
+
+        // Decide on default value
+        if (value?.integerValue != null) {
+            this.state = {selection: value.integerValue};
+        } else {
+            this.state = {selection: definition?.dropdown?.default ?? this.defaultValue.default};
+        }
     }
 
     private getOptions(): Dropdown {
-        return findUIOptionByName(this.props.name, this.props.options!)?.dropdown ?? this.defaultValue;
+        const [definition,] = extractDataForComponent(this.props.name, this.props.state);
+        return definition?.dropdown ?? this.defaultValue;
+    }
+
+    componentDidUpdate(prevProps: Readonly<RemoteUIProps>, prevState: Readonly<any>, snapshot?: any) {
+        const [, oldPropValue] = extractDataForComponent(prevProps.name, prevProps.state);
+        const [, newPropValue] = extractDataForComponent(this.props.name, this.props.state);
+
+        // If we got a valid update from the server, set it as the current state
+        if (newPropValue?.integerValue != null && oldPropValue?.integerValue != newPropValue?.integerValue) {
+            this.setState({selection: newPropValue?.integerValue})
+        }
     }
 
     render() {

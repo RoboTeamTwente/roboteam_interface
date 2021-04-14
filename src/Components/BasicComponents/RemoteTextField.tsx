@@ -1,7 +1,7 @@
-import AbstractRemoteSubscribedReactComponent from "./RemoteUIReactComponent";
+import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
 import {TextField} from "../../Networking/proto_build/UiOptions";
-import {findUIOptionByName} from "../Util";
+import {extractDataForComponent, findUIOptionByName} from "../Util";
 
 class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
     private readonly defaultValue: TextField = {text: "unknown"};
@@ -9,11 +9,27 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
     constructor(props: any) {
         super(props);
 
-
-        const thisOption = findUIOptionByName(this.props.name, this.props.options!)?.textfield ?? this.defaultValue;
-        this.state = {textValue: thisOption.text};
-
         this.onChange = this.onChange.bind(this);
+
+        // TODO: How should the text in the text value definition be displayed?
+        const [definition, value] = extractDataForComponent(props.name, props.state);
+
+        // Decide on default value
+        if (value?.textValue != null) {
+            this.state = {selection: value.textValue};
+        } else {
+            this.state = {selection: definition?.textfield?.text ?? this.defaultValue.text};
+        }
+    }
+
+    componentDidUpdate(prevProps: Readonly<RemoteUIProps>, prevState: Readonly<any>, snapshot?: any) {
+        const [, oldPropValue] = extractDataForComponent(prevProps.name, prevProps.state);
+        const [, newPropValue] = extractDataForComponent(this.props.name, this.props.state);
+
+        // If we got a valid update from the server, set it as the current state
+        if (newPropValue?.textValue != null && oldPropValue?.textValue != newPropValue?.textValue) {
+            this.setState({textValue: newPropValue?.textValue})
+        }
     }
 
     render() {

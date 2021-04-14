@@ -2,10 +2,10 @@ import * as React from 'react';
 import {PossibleUiValue, UiOption, UiSettings} from "../../Networking/proto_build/UiOptions";
 import {findUIOptionByName} from "../Util";
 import shallowequal from "shallowequal";
+import {ModuleState} from "../../Networking/proto_build/State";
 
-type RemoteUIProps = {
-    values: UiSettings;
-    options: UiOption[];
+export type RemoteUIProps = {
+    state: ModuleState
     onChange: (name: string, newValue: PossibleUiValue) => void;
 
     name: string;
@@ -18,11 +18,11 @@ class RemoteUIReactComponent extends React.Component<RemoteUIProps, any> {
         if (this.state !== nextState) return true;
 
         for (const value of valuesToCheck) {
-            const nextValue = nextProps.values?.uiValues[value];
-            const thisValue = this.props.values?.uiValues[value];
+            const nextValue = nextProps.state.systemState?.uiSettings?.uiValues?.[value];
+            const thisValue = this.props.state.systemState?.uiSettings?.uiValues?.[value];
 
-            const thisDef = findUIOptionByName(value, this.props.options);
-            const nextDef = findUIOptionByName(value, nextProps.options);
+            const thisDef = findUIOptionByName(value, this.props.state.handshakes?.[0]?.options);
+            const nextDef = findUIOptionByName(value, this.props.state.handshakes?.[0]?.options);
 
             if (!shallowequal(thisDef, nextDef)) return true;
             if (!shallowequal(nextValue, thisValue)) return true;

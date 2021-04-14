@@ -6,10 +6,11 @@ import { World } from '../../Networking/proto_build/World';
 import { WorldBall } from '../../Networking/proto_build/WorldBall';
 import { WorldRobot } from '../../Networking/proto_build/WorldRobot';
 import { calculateScaling, scale } from '../../Utils/Dimensions';
-import { getPhantomModuleState } from '../PhantomData/State';
+import shallowequal from "shallowequal";
 
 interface FieldProps {
     transformation: number; // degrees, valid values are 0, 90, 180, 270
+    field: State | null;
 }
 
 interface FieldState {
@@ -20,6 +21,7 @@ interface FieldState {
 class Field extends React.Component<FieldProps, FieldState> {
     fieldWidthOffset: number;
     fieldHeightOffset: number;
+
     constructor(props: FieldProps) {
         super(props);
         this.state = {
@@ -50,11 +52,11 @@ class Field extends React.Component<FieldProps, FieldState> {
         return this.scaleTransform(vec.x, vec.y);
     }
 
-    public update(state: ModuleState | null) {
+    public update(state: State | null) {
         let canvas = document.querySelector(".fieldCanvas")! as HTMLCanvasElement;
         let ctx = canvas.getContext("2d");
 
-        let lastState = state!.systemState!.state!;
+        let lastState = state!;
         let {
             fieldLength,
             fieldWidth,
@@ -86,12 +88,18 @@ class Field extends React.Component<FieldProps, FieldState> {
     // TODO: Comment this out when we get actual data,
     // Instead just call update() from wherever.
     componentDidMount() {
-        let data = getPhantomModuleState();
-        this.update(data);
+        // let data = getPhantomModuleState();
+        // this.update(data);
     }
 
-    drawField(ctx: CanvasRenderingContext2D, state: ModuleState) {
-        let data = state.systemState!.state!.field!.field!;
+    componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<FieldState>, snapshot?: any) {
+        if (this.props.field != null) {
+            this.update(this.props.field) // TODO: Don't have to update on every render - should do a shallow equality check
+        }
+    }
+
+    drawField(ctx: CanvasRenderingContext2D, state: State) {
+        let data = state.field!.field!;
         let {
             // goalWidth,
             // goalDepth,

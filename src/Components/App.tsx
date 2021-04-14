@@ -10,6 +10,9 @@ import SettingsWidget from './Settings/SettingsWidget';
 import "../Styles/main.css"
 import { createMuiTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import logo from '../Images/roboteam_logo_trans.png';
+import {getPhantomModuleState} from "./PhantomData/State";
+import RemoteSliderField from "./BasicComponents/RemoteSliderField";
+import RemoteRadioButtonField from "./BasicComponents/RemoteRadioButtonField";
 
 type AppState = {
     readonly data: ModuleState
@@ -50,7 +53,8 @@ class App extends React.Component<{}, AppState> {
         return (
             <div>
                 <div>
-                    <Field transformation={0}></Field>
+                    <Field transformation={0} field={getPhantomModuleState().systemState!.state!}></Field>
+                    <RemoteRadioButtonField state={this.state.data} onChange={this.childWillUpdate} name={"testTextField"}/>
                 </div>
                 <ConnectionSettings socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws}
                                     defaultHostPortPair={getStartingPortHostnameCombination()}/>

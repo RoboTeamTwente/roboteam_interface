@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { Vector2f } from "./Vector2f";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Vector2f } from "./Vector2f";
 
 export const protobufPackage = "proto";
 
@@ -1250,3 +1250,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

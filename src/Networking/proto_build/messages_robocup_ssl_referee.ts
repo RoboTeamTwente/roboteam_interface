@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
-import { GameEvent } from "./messages_robocup_ssl_game_event";
 import _m0 from "protobufjs/minimal";
+import { GameEvent } from "./messages_robocup_ssl_game_event";
 
 export const protobufPackage = "proto";
 
@@ -1331,3 +1331,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}

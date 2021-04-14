@@ -1,4 +1,6 @@
 /* eslint-disable */
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 import { World } from "./World";
 import { TeamParameters } from "./RobotParameters";
 import { SSLGeometryData } from "./messages_robocup_ssl_geometry";
@@ -6,8 +8,6 @@ import { SSLReferee } from "./messages_robocup_ssl_referee";
 import { SSLWrapperPacket } from "./messages_robocup_ssl_wrapper";
 import { UiSettings } from "./UiOptions";
 import { Handshake } from "./Handshake";
-import Long from "long";
-import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
@@ -584,3 +584,8 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
