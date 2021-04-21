@@ -14,23 +14,19 @@ export function setFieldWidth(width: number) {
     fieldWidth = width;
 }
 
-export function calculateScaling(length: number, width: number) {
+export function calculateScaling(length: number, width: number, parent: HTMLElement | null) {
     setFieldLength(length);
     setFieldWidth(width);
-    let tentativeScaling = 0.66 * getLength() / fieldLength;
-    if ((tentativeScaling * fieldWidth) <= (0.9 * getWidth())) {
+    let tentativeScaling = 0.9 * getLength(parent) / fieldLength;
         scaling = tentativeScaling;
-    } else {
-        scaling = 0.9 * getWidth() / fieldWidth;
-    }
 }
 
 export function scale(value: number) : number {
     return scaling * value;
 }
 
-export function getLength() : number {
-    return Math.max(
+export function getLength(parent: HTMLElement | null) : number {
+    return parent?.clientWidth ?? Math.max(
         document.body.scrollWidth,
         document.documentElement.scrollWidth,
         document.body.offsetWidth,
@@ -39,8 +35,8 @@ export function getLength() : number {
     );
 }
 
-export function getWidth(): number {
-    return Math.max(
+export function getWidth(parent: HTMLElement | null): number {
+    return parent?.clientHeight ?? Math.max(
         document.body.scrollHeight,
         document.documentElement.scrollHeight,
         document.body.offsetHeight,

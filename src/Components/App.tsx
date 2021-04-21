@@ -9,6 +9,13 @@ import "../Styles/main.css"
 import logo from '../Images/roboteam_logo_trans.png';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import FieldLayout from "./LayoutComponents/FieldLayout";
+import ConnectionSettings from "./ConnectionSettings";
+import SettingsWidget from "./Settings/SettingsWidget";
+import RemoteCheckboxField from "./BasicComponents/RemoteCheckboxField";
+import { sizing } from '@material-ui/system';
+import Field from "./Field/Field";
+import {getPhantomModuleState} from "./PhantomData/State";
 
 type AppState = {
     readonly data: ModuleState
@@ -20,9 +27,6 @@ class App extends React.Component<{}, AppState> {
         systemState: {state: undefined, uiSettings: {uiValues: {}}},
         handshakes: []
     };
-
-    readonly root = "flexGrow: 1";
-    readonly paper = 'textAlign: "center"';
 
     constructor(props: any) {
         super(props);
@@ -53,33 +57,18 @@ class App extends React.Component<{}, AppState> {
 
   render() {
     return (
-      <div className="background">
-        <div className={this.root}>
-          <Grid container spacing={3}>
-            <Grid item xs={7} container>
-              <Grid item xs={12}>
+      <div className="background" style={{height: "100vh"}}>
+          <Grid container spacing={0}>
+            <Grid item xs={7}>
                 <Paper className={"column"}>
-                  <FieldLayout />
+                  <Field transformation={0} field={getPhantomModuleState()?.systemState?.state ?? null}/>
                 </Paper>
-              </Grid>
               <Grid item xs={12}>
                 <Paper className={"column"}>
                   <ConnectionSettings
                     socketSettingsDidChange={this.didChangeServer}
                     wsocket={this.state.ws}
                     defaultHostPortPair={getStartingPortHostnameCombination()}
-                  />
-                  <RemoteCheckboxField
-                    values={
-                      this.state.data.systemState?.uiSettings ??
-                      this.defaultStateData.systemState!.uiSettings!
-                    }
-                    options={
-                      this.state.data.handshakes?.[0]?.options ??
-                      this.defaultStateData.handshakes![0].options
-                    }
-                    onChange={this.childWillUpdate}
-                    name={"Hello, world!"}
                   />
                 </Paper>
               </Grid>
@@ -98,7 +87,6 @@ class App extends React.Component<{}, AppState> {
             </Grid>
           </Grid>
         </div>
-      </div>
     );
   }
 

@@ -5,7 +5,7 @@ import { Vector2f } from '../../Networking/proto_build/Vector2f';
 import { World } from '../../Networking/proto_build/World';
 import { WorldBall } from '../../Networking/proto_build/WorldBall';
 import { WorldRobot } from '../../Networking/proto_build/WorldRobot';
-import { calculateScaling, scale } from '../../Utils/Dimensions';
+import {calculateScaling, scale} from '../../Utils/Dimensions';
 import shallowequal from "shallowequal";
 
 interface FieldProps {
@@ -34,6 +34,7 @@ class Field extends React.Component<FieldProps, FieldState> {
 
         this.update = this.update.bind(this);
         this.drawField = this.drawField.bind(this);
+        this.updateDimensions = this.updateDimensions.bind(this);
     }
 
     scaleTransform(x: number, y: number): { x: number, y: number } {
@@ -64,7 +65,7 @@ class Field extends React.Component<FieldProps, FieldState> {
 
         let world = lastState.lastSeenWorld!;
 
-        calculateScaling(fieldLength, fieldWidth);
+        calculateScaling(fieldLength, fieldWidth, canvas.parentElement);
         canvas.width = scale(fieldLength);
         canvas.height = scale(fieldWidth);
 
@@ -85,12 +86,20 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.stroke();
     }
 
-    // TODO: Comment this out when we get actual data,
-    // Instead just call update() from wherever.
     componentDidMount() {
-        // let data = getPhantomModuleState();
-        // this.update(data);
+        window.addEventListener('resize', this.updateDimensions);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateDimensions);
+    }
+
+    updateDimensions() {
+        if (this.props.field != null) {
+            this.update(this.props.field);
+        }
+    }
+
 
     componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<FieldState>, snapshot?: any) {
         if (this.props.field != null) {
