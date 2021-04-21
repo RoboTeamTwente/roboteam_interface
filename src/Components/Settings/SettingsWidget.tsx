@@ -2,8 +2,13 @@ import { makeStyles, Tab, Tabs } from '@material-ui/core'
 import { Component } from 'react'
 import StpStateWidget from './StpStateWidget';
 import TabPanel from './TabPanel';
+import ConnectionSettings from "../ConnectionSettings";
 
-interface SettingsWidgetProps {}
+interface SettingsWidgetProps {
+    socketSettingsDidChange: (hostname: string, port: number) => void;
+    wsocket: WebSocket | undefined;
+    defaultHostPortPair: [string, number];
+}
 interface SettingsWidgetState {
     tab: number;
 }
@@ -45,6 +50,7 @@ export class SettingsWidget extends Component<SettingsWidgetProps, SettingsWidge
                     <Tab label="Charts" />
                     <Tab label="Robots" />
                     <Tab label="GameStateManager" />
+                    <Tab label="Connectivity" />
                 </Tabs>
                 <TabPanel value={this.state.tab} index={0}>
                     <StpStateWidget></StpStateWidget>
@@ -65,7 +71,7 @@ export class SettingsWidget extends Component<SettingsWidgetProps, SettingsWidge
                     Item Six
                 </TabPanel>
                 <TabPanel value={this.state.tab} index={6}>
-                    Item Seven
+                    <ConnectionSettings socketSettingsDidChange={this.props.socketSettingsDidChange} wsocket={this.props.wsocket} defaultHostPortPair={this.props.defaultHostPortPair}/>
                 </TabPanel>
             </div>
         )

@@ -17,8 +17,9 @@ export function setFieldWidth(width: number) {
 export function calculateScaling(length: number, width: number, parent: HTMLElement | null) {
     setFieldLength(length);
     setFieldWidth(width);
-    let tentativeScaling = 0.9 * getLength(parent) / fieldLength;
-        scaling = tentativeScaling;
+    let lenghtwiseScale = 0.95 * getLength(parent) / fieldLength;
+    let widthwiseScale = 0.95 * getWidth(parent) / fieldWidth;
+    scaling = lenghtwiseScale >= widthwiseScale ? widthwiseScale : lenghtwiseScale;
 }
 
 export function scale(value: number) : number {

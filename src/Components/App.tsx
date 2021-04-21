@@ -1,21 +1,18 @@
 import * as React from "react";
 import "../Styles/main.css";
-import "../Styles/main.css";
 import {ModuleState} from "../Networking/proto_build/State";
 import {CONSTANTS} from "./Constants";
-import {hostnamePortPairToWSURL, saveServerPreferences, getStartingPortHostnameCombination} from "./Util";
+import {getStartingPortHostnameCombination, hostnamePortPairToWSURL, saveServerPreferences} from "./Util";
 import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
-import "../Styles/main.css"
 import logo from '../Images/roboteam_logo_trans.png';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import FieldLayout from "./LayoutComponents/FieldLayout";
 import ConnectionSettings from "./ConnectionSettings";
 import SettingsWidget from "./Settings/SettingsWidget";
-import RemoteCheckboxField from "./BasicComponents/RemoteCheckboxField";
-import { sizing } from '@material-ui/system';
 import Field from "./Field/Field";
 import {getPhantomModuleState} from "./PhantomData/State";
+import FieldLayout from "./LayoutComponents/FieldLayout";
+import {Box} from "@material-ui/core";
 
 type AppState = {
     readonly data: ModuleState
@@ -55,108 +52,88 @@ class App extends React.Component<{}, AppState> {
         };
     }
 
-  render() {
-    return (
-      <div className="background" style={{height: "100vh"}}>
-          <Grid container spacing={0}>
-            <Grid item xs={7}>
-                <Paper className={"column"}>
-                  <Field transformation={0} field={getPhantomModuleState()?.systemState?.state ?? null}/>
-                </Paper>
-              <Grid item xs={12}>
-                <Paper className={"column"}>
-                  <ConnectionSettings
-                    socketSettingsDidChange={this.didChangeServer}
-                    wsocket={this.state.ws}
-                    defaultHostPortPair={getStartingPortHostnameCombination()}
-                  />
-                </Paper>
-              </Grid>
+    render() {
+        return (
+            <Grid container className="background" style={{height: "100vh", margin: 0, width: '100%'}}>
+                <FieldLayout state={this.state.data} onChange={this.childWillUpdate} name={""}/>
+                <Grid item xs={5}>
+                    <Box pt={4} pb={11} pr={5} pl={4} style={{height: "100%"}}>
+                        <Paper style={{height: "100%"}}>
+                            <SettingsWidget socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws} defaultHostPortPair={getStartingPortHostnameCombination()}/>
+                        </Paper>
+                    </Box>
+                </Grid>
             </Grid>
-            <Grid item xs={5} container>
-              <Grid item xs={12}>
-                <Paper className={"column"}>
-                  <SettingsWidget></SettingsWidget>
-                </Paper>
-              </Grid>
-              <Grid item xs={12}>
-                <Paper className={"column"}>
-                  <img className="roboteamLogo" src={logo} alt="Logo" />
-                </Paper>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-    );
-  }
-
-  private coerceRefreshOnWebSocketEvent(): any {
-    this.setState({ ...this.state, ws: this.state.ws });
-  }
-
-  private onWsMessage(event: MessageEvent) {
-    let data: ModuleState | undefined = undefined;
-    try {
-      data = ModuleState.decode(new Uint8Array(event.data));
-    } catch (err) {
-      console.log("[-] Error when decoding data");
-      return;
+        );
     }
 
-    data = this.getEnsureNotEmpty(data);
-
-    this.setState({ ...this.state, data });
-  }
-
-  private installWebsocket(ws: WebSocket) {
-    this.setState({ ...this.state, ws: ws });
-
-    ws.onopen = this.coerceRefreshOnWebSocketEvent;
-    ws.onclose = this.coerceRefreshOnWebSocketEvent;
-    ws.onerror = this.coerceRefreshOnWebSocketEvent;
-
-    ws.binaryType = "arraybuffer";
-    ws.onmessage = this.onWsMessage;
-  }
-
-  private didChangeServer(hostname: string, port: number): void {
-    this.installWebsocket(
-      new WebSocket(hostnamePortPairToWSURL(hostname, port, ""))
-    );
-    saveServerPreferences(hostname, port);
-  }
-
-  private getEnsureNotEmpty(current: ModuleState): ModuleState {
-    let mod = current;
-
-    if (mod.systemState == null) {
-      mod.systemState = this.defaultStateData.systemState;
-    } else if (mod.systemState.uiSettings == null) {
-      mod.systemState.uiSettings = this.defaultStateData.systemState!.uiSettings!;
-    } else if (mod.systemState.uiSettings.uiValues == null) {
-      mod.systemState.uiSettings.uiValues = this.defaultStateData.systemState!.uiSettings?.uiValues!;
+    private coerceRefreshOnWebSocketEvent(): any {
+        this.setState({...this.state, ws: this.state.ws});
     }
 
-    return mod;
-  }
+    private onWsMessage(event: MessageEvent) {
+        let data: ModuleState | undefined = undefined;
+        try {
+            data = ModuleState.decode(new Uint8Array(event.data));
+        } catch (err) {
+            console.log("[-] Error when decoding data");
+            return;
+        }
 
-  private childWillUpdate(name: string, newValue: PossibleUiValue): void {
-    const mod = this.getEnsureNotEmpty(this.state.data);
+        data = this.getEnsureNotEmpty(data);
 
-    mod.systemState!.uiSettings!.uiValues[name] = newValue;
-
-    this.setState({ ...this.state, data: mod });
-
-    if (
-      this.state.ws != null &&
-      this.state.ws?.readyState === this.state.ws?.OPEN &&
-      this.state.data != null
-    ) {
-      console.log(JSON.stringify(mod));
-      const writer = ModuleState.encode(mod).finish();
-      this.state.ws.send(writer);
+        this.setState({...this.state, data});
     }
-  }
+
+    private installWebsocket(ws: WebSocket) {
+        this.setState({...this.state, ws: ws});
+
+        ws.onopen = this.coerceRefreshOnWebSocketEvent;
+        ws.onclose = this.coerceRefreshOnWebSocketEvent;
+        ws.onerror = this.coerceRefreshOnWebSocketEvent;
+
+        ws.binaryType = "arraybuffer";
+        ws.onmessage = this.onWsMessage;
+    }
+
+    private didChangeServer(hostname: string, port: number): void {
+        this.installWebsocket(
+            new WebSocket(hostnamePortPairToWSURL(hostname, port, ""))
+        );
+        saveServerPreferences(hostname, port);
+    }
+
+    private getEnsureNotEmpty(current: ModuleState): ModuleState {
+        let mod = current;
+
+        if (mod.systemState == null) {
+            mod.systemState = this.defaultStateData.systemState;
+        } else if (mod.systemState.uiSettings == null) {
+            mod.systemState.uiSettings = this.defaultStateData.systemState!.uiSettings!;
+        } else if (mod.systemState.uiSettings.uiValues == null) {
+            mod.systemState.uiSettings.uiValues = this.defaultStateData.systemState!.uiSettings?.uiValues!;
+        }
+
+        return mod;
+    }
+
+    private childWillUpdate(name: string, newValue: PossibleUiValue): void {
+        const mod = this.getEnsureNotEmpty(this.state.data);
+
+        mod.systemState!.uiSettings!.uiValues[name] = newValue;
+
+        this.setState({...this.state, data: mod});
+
+        if (
+            this.state.ws != null &&
+            this.state.ws?.readyState === this.state.ws?.OPEN &&
+            this.state.data != null
+        ) {
+            console.log(JSON.stringify(mod));
+            const writer = ModuleState.encode(mod).finish();
+            this.state.ws.send(writer);
+        }
+    }
 }
 
 export default App;
