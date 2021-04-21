@@ -1,31 +1,14 @@
 import * as React from "react";
-import { getWidth } from "../Utils/Dimensions";
-import Field from "./Field/Field";
-import SettingsWidget from "./Settings/SettingsWidget";
 import "../Styles/main.css";
-import {
-  createMuiTheme,
-  CssBaseline,
-  responsiveFontSizes,
-  ThemeProvider,
-} from "@material-ui/core";
-import logo from "../Images/roboteam_logo_trans.png";
-import * as React from "react";
 import "../Styles/main.css";
 import {ModuleState} from "../Networking/proto_build/State";
-import ConnectionSettings from "./ConnectionSettings";
 import {CONSTANTS} from "./Constants";
 import {hostnamePortPairToWSURL, saveServerPreferences, getStartingPortHostnameCombination} from "./Util";
 import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
 import "../Styles/main.css"
-import { createMuiTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import logo from '../Images/roboteam_logo_trans.png';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Field from "./Field/Field";
-import {getPhantomModuleState} from "./PhantomData/State";
-import RemoteSliderField from "./BasicComponents/RemoteSliderField";
-import RemoteRadioButtonField from "./BasicComponents/RemoteRadioButtonField";
 
 type AppState = {
     readonly data: ModuleState
@@ -198,16 +181,5 @@ class App extends React.Component<{}, AppState> {
         }
     }
 }
-// let theme = createMuiTheme({
-//     palette: {
-//         primary: {
-//             main: purple[500],
-//         },
-//         secondary: {
-//             main: green[500],
-//         },
-//     },
-// });
-// theme = responsiveFontSizes(theme);
 
 export default App;
