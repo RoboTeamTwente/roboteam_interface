@@ -7,10 +7,9 @@ import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
 import logo from '../Images/roboteam_logo_trans.png';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import ConnectionSettings from "./ConnectionSettings";
+import CentralServerConnectionSettings from "./CentralServerConnectionSettings";
 import SettingsWidget from "./Settings/SettingsWidget";
 import Field from "./Field/Field";
-import {getPhantomModuleState} from "./PhantomData/State";
 import FieldLayout from "./LayoutComponents/FieldLayout";
 import {Box} from "@material-ui/core";
 
@@ -59,7 +58,7 @@ class App extends React.Component<{}, AppState> {
                 <Grid item xs={5}>
                     <Box pt={4} pb={11} pr={5} pl={4} style={{height: "100%"}}>
                         <Paper style={{height: "100%"}}>
-                            <SettingsWidget socketSettingsDidChange={this.didChangeServer} wsocket={this.state.ws} defaultHostPortPair={getStartingPortHostnameCombination()}/>
+                            <SettingsWidget cs={{socketSettingsDidChange: this.didChangeServer, wsocket: this.state.ws, defaultHostPortPair: getStartingPortHostnameCombination()}} sims={{state: this.state.data, onChange: this.childWillUpdate, name: ""}} />
                         </Paper>
                     </Box>
                 </Grid>

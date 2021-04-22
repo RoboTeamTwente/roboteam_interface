@@ -34,10 +34,8 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
 
     render() {
         return (
-            <label>{this.props.name}
                 <input type="text" name={this.props.name} id={this.props.name} className="remote textField"
-                       value={this.state.textValue} onChange={this.onChange}/>
-            </label>)
+                       value={this.state.textValue} onChange={this.onChange}/>)
     }
 
     private onChange(ev: ChangeEvent<HTMLInputElement>) {

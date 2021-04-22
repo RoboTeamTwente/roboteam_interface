@@ -28,7 +28,11 @@ def build_message():
 
 async def handler(websocket, path):
     while True:
-        data = build_message().SerializeToString()
+        data = None
+        with open('../data/ModuleState.bin', 'rb') as fd:
+            data = fd.read()
+
+#         data = build_message().SerializeToString()
         await websocket.send(data)
         data = await websocket.recv()
         if data == None:

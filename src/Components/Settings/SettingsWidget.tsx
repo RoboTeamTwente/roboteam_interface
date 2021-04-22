@@ -1,27 +1,18 @@
-import { makeStyles, Tab, Tabs } from '@material-ui/core'
+import {Grid, makeStyles, Tab, Tabs, Typography} from '@material-ui/core'
 import { Component } from 'react'
 import StpStateWidget from './StpStateWidget';
 import TabPanel from './TabPanel';
-import ConnectionSettings from "../ConnectionSettings";
+import CentralServerConnectionSettings, {CentralServerSettingsProps} from "../CentralServerConnectionSettings";
+import {RemoteUIProps} from "../BasicComponents/RemoteUIReactComponent";
+import SimulatorConnectionSettings from "../SimulatorConnectionSettings";
+import GeneralConnectionSettings from "../LayoutComponents/GeneralConnectionSettings";
 
-interface SettingsWidgetProps {
-    socketSettingsDidChange: (hostname: string, port: number) => void;
-    wsocket: WebSocket | undefined;
-    defaultHostPortPair: [string, number];
-}
 interface SettingsWidgetState {
     tab: number;
 }
 
-// const useStyles = makeStyles(theme => ({
-//     root: {},
-//     title: {
-//         color: theme.palette.primary.main
-//     }
-// }));
-
-export class SettingsWidget extends Component<SettingsWidgetProps, SettingsWidgetState> {
-    constructor(props: SettingsWidgetProps) {
+export class SettingsWidget extends Component<{cs: CentralServerSettingsProps, sims: RemoteUIProps}, SettingsWidgetState> {
+    constructor(props: any) {
         super(props)
         this.state = {
             tab: 0,
@@ -71,7 +62,7 @@ export class SettingsWidget extends Component<SettingsWidgetProps, SettingsWidge
                     Item Six
                 </TabPanel>
                 <TabPanel value={this.state.tab} index={6}>
-                    <ConnectionSettings socketSettingsDidChange={this.props.socketSettingsDidChange} wsocket={this.props.wsocket} defaultHostPortPair={this.props.defaultHostPortPair}/>
+                    <GeneralConnectionSettings csProps={this.props.cs} simProps={this.props.sims}/>
                 </TabPanel>
             </div>
         )

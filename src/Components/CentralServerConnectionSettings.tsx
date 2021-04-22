@@ -2,13 +2,13 @@ import * as React from 'react';
 import {ChangeEvent} from 'react';
 import {hostnamePortPairToWSURL} from "./Util";
 
-type ConnectionSettingsProps = {
+export type CentralServerSettingsProps = {
     socketSettingsDidChange: (hostname: string, port: number) => void;
     wsocket: WebSocket | undefined;
     defaultHostPortPair: [string, number];
 }
 
-class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, { hostname: string, port: number | undefined }> {
+class CentralServerConnectionSettings extends React.PureComponent<CentralServerSettingsProps, { hostname: string, port: number | undefined }> {
 
     constructor(props: any) {
         super(props);
@@ -24,11 +24,8 @@ class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, { 
 
     render() {
         return <div>
-            <h1>State: {this.getWebsocketReadyStateDisplayString()}</h1>
-            <p>
-                Current: {this.props.wsocket?.url}
-            </p>
-            <p>Proposed change: {this.renderSocketURL()} </p>
+            <h2>State: {this.getWebsocketReadyStateDisplayString()}</h2>
+            <p>URL: {this.renderSocketURL()} </p>
             <form>
                 Hostname:
                 <input type="text" value={this.state.hostname} onChange={this.handleHostnameChange}/>
@@ -86,4 +83,4 @@ class ConnectionSettings extends React.PureComponent<ConnectionSettingsProps, { 
     }
 }
 
-export default ConnectionSettings;
+export default CentralServerConnectionSettings;

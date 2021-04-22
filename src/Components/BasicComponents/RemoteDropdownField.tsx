@@ -41,13 +41,10 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
 
     render() {
         return (
-            <label>{this.getOptions().text}
                 <select className="remote dropdownMenu" value={this.state.selection} name={this.props.name}
                         id={this.props.name} onChange={this.onChange}>
                     {this.renderOptions()}
-                </select>
-            </label>
-        )
+                </select>)
     }
 
     private onChange(ev: ChangeEvent<HTMLSelectElement>) {

@@ -38,12 +38,10 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
 
     render() {
         return (
-            <label>{this.getOptions().text}
                 <input type="range" id={this.props.name} className="remote sliderField"
                        min={this.getOptions().min} max={this.getOptions().max}
                        step={this.getOptions().interval} value={this.state.integerValue}
-                       onChange={this.onChange}/>
-            </label>)
+                       onChange={this.onChange}/>)
     }
 
     private onChange(ev: ChangeEvent<HTMLInputElement>) {
