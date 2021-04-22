@@ -12,7 +12,7 @@ class KeyControlsBottomField extends React.Component<RemoteUIProps, any> {
         return (
             <Grid container xs={12} alignItems={"center"} justify={"center"} spacing={5}>
                 <Grid item>
-                    <label>Stop: </label>
+                    <label>Pause: </label>
                     <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"stop"}/>
                 </Grid>
                 <Grid item>
@@ -24,16 +24,16 @@ class KeyControlsBottomField extends React.Component<RemoteUIProps, any> {
                     <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"ignoreInvariants"}/>
                 </Grid>
                 <Grid item>
-                    <label>Referee: </label>
+                    <label>Use Referee: </label>
                     <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"referee"}/>
                 </Grid>
                 <Grid item>
-                    <label>isYellow: </label>
+                    <label>Is Yellow: </label>
                     <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"isYellow"}/>
                 </Grid>
                 <Grid item>
-                    <label>isLeft: </label>
-                    <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"isLeft"}/>
+                    <label>Play Right: </label>
+                    <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"isRight"}/>
                 </Grid>
             </Grid>
         );
