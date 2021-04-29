@@ -13,11 +13,11 @@ class KeyControlsBottomField extends React.Component<{ui: RemoteUIProps}, any> {
             <Grid container xs={12} alignItems={"center"} justify={"center"} spacing={5}>
                 <Grid item>
                     <label>Pause: </label>
-                    <RemoteCheckboxField ui={{...this.props.ui, name: "stop"}}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "pause_button"}}/>
                 </Grid>
                 <Grid item>
                     <label>Simulator: </label>
-                    <RemoteDropdownField ui={{...this.props.ui, name: "simulator"}}/>
+                    <RemoteDropdownField ui={{...this.props.ui, name: "serial_mode"}}/>
                 </Grid>
                 <Grid item>
                     <label>Ignore Invariants: </label>
@@ -25,15 +25,15 @@ class KeyControlsBottomField extends React.Component<{ui: RemoteUIProps}, any> {
                 </Grid>
                 <Grid item>
                     <label>Use Referee: </label>
-                    <RemoteCheckboxField ui={{...this.props.ui, name: "referee"}}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "listen_to_referee_button"}}/>
                 </Grid>
                 <Grid item>
                     <label>Is Yellow: </label>
-                    <RemoteCheckboxField ui={{...this.props.ui, name: "isYellow"}}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "color_button"}}/>
                 </Grid>
                 <Grid item>
                     <label>Play Right: </label>
-                    <RemoteCheckboxField ui={{...this.props.ui, name: "isRight"}}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "side_button"}}/>
                 </Grid>
             </Grid>
         );
