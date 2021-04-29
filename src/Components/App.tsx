@@ -117,9 +117,10 @@ class App extends React.Component<{}, AppState> {
             this.state.ws != null &&
             this.state.ws?.readyState === this.state.ws?.OPEN
         ) {
-            const mod: ModuleState = {systemState: this.state.fieldVisualisationData, handshakes: [{moduleName: "default", declarations: this.state.declarations, values: vals}]};
-            console.log(JSON.stringify(mod));
-            const writer = ModuleState.encode(mod).finish();
+            //const mod: ModuleState = {systemState: this.state.fieldVisualisationData, handshakes: [{moduleName: "default", declarations: this.state.declarations, values: vals}]};
+            const uivals: UiValues = vals;
+            console.log(JSON.stringify(uivals));
+            const writer = UiValues.encode(uivals).finish();
             this.state.ws.send(writer);
         }
     }
