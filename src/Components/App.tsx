@@ -79,12 +79,12 @@ class App extends React.Component<{}, AppState> {
         }
 
         let newDecls = this.state.declarations;
-        if (data.handshakes[0].declarations != null ){
+        if (data.handshakes?.[0]?.declarations != null ){
             newDecls = data.handshakes[0].declarations;
         }
 
         let newValues = this.state.values;
-        if (data.handshakes[0].values != null) {
+        if (data.handshakes?.[0]?.values != null) {
             newValues = data.handshakes[0].values;
         }
 
@@ -113,13 +113,11 @@ class App extends React.Component<{}, AppState> {
         const vals = this.state.values;
         vals.uiValues[name] = newValue;
 
-        this.setState({...this.state, values: vals});
-
         if (
             this.state.ws != null &&
             this.state.ws?.readyState === this.state.ws?.OPEN
         ) {
-            const mod: ModuleState = {systemState: this.state.fieldVisualisationData, handshakes: [{moduleName: "default", declarations: this.state.declarations, values: this.state.values}]};
+            const mod: ModuleState = {systemState: this.state.fieldVisualisationData, handshakes: [{moduleName: "default", declarations: this.state.declarations, values: vals}]};
             console.log(JSON.stringify(mod));
             const writer = ModuleState.encode(mod).finish();
             this.state.ws.send(writer);
