@@ -6,13 +6,13 @@ import { GameEvent } from "./messages_robocup_ssl_game_event";
 export const protobufPackage = "proto";
 
 /** Each UDP packet contains one of these messages. */
-export interface SSLReferee {
+export interface SslReferee {
   /**
    * The UNIX timestamp when the packet was sent, in microseconds.
    * Divide by 1,000,000 to get a time_t.
    */
   packetTimestamp: Long;
-  stage: SSLReferee_Stage;
+  stage: SslReferee_Stage;
   /**
    * The number of microseconds left in the stage.
    * The following stages have this value; the rest do not:
@@ -29,7 +29,7 @@ export interface SSLReferee {
    * becomes negative.
    */
   stageTimeLeft: number;
-  command: SSLReferee_Command;
+  command: SslReferee_Command;
   /** The number of commands issued since startup (mod 2^32). */
   commandCounter: number;
   /**
@@ -38,9 +38,9 @@ export interface SSLReferee {
    */
   commandTimestamp: Long;
   /** Information about the two teams. */
-  yellow: SSLReferee_TeamInfo | undefined;
-  blue: SSLReferee_TeamInfo | undefined;
-  designatedPosition: SSLReferee_Point | undefined;
+  yellow: SslReferee_TeamInfo | undefined;
+  blue: SslReferee_TeamInfo | undefined;
+  designatedPosition: SslReferee_Point | undefined;
   /**
    * Information about the direction of play.
    * True, if the blue team will have it's goal on the positive x-axis of the ssl-vision coordinate system.
@@ -48,7 +48,7 @@ export interface SSLReferee {
    */
   blueTeamOnPositiveHalf: boolean;
   /** The command that will be issued after the current stoppage and ball placement to continue the game. */
-  nextCommand: SSLReferee_Command;
+  nextCommand: SslReferee_Command;
   gameEvents: GameEvent[];
   gameEventProposals: GameEventProposalGroup[];
   /**
@@ -64,7 +64,7 @@ export interface SSLReferee {
 }
 
 /** These are the "coarse" stages of the game. */
-export enum SSLReferee_Stage {
+export enum SslReferee_Stage {
   /**
    * NORMAL_FIRST_HALF_PRE - The first half is about to start.
    * A kickoff is called within this stage.
@@ -112,86 +112,86 @@ export enum SSLReferee_Stage {
   UNRECOGNIZED = -1,
 }
 
-export function sSLReferee_StageFromJSON(object: any): SSLReferee_Stage {
+export function sslReferee_StageFromJSON(object: any): SslReferee_Stage {
   switch (object) {
     case 0:
     case "NORMAL_FIRST_HALF_PRE":
-      return SSLReferee_Stage.NORMAL_FIRST_HALF_PRE;
+      return SslReferee_Stage.NORMAL_FIRST_HALF_PRE;
     case 1:
     case "NORMAL_FIRST_HALF":
-      return SSLReferee_Stage.NORMAL_FIRST_HALF;
+      return SslReferee_Stage.NORMAL_FIRST_HALF;
     case 2:
     case "NORMAL_HALF_TIME":
-      return SSLReferee_Stage.NORMAL_HALF_TIME;
+      return SslReferee_Stage.NORMAL_HALF_TIME;
     case 3:
     case "NORMAL_SECOND_HALF_PRE":
-      return SSLReferee_Stage.NORMAL_SECOND_HALF_PRE;
+      return SslReferee_Stage.NORMAL_SECOND_HALF_PRE;
     case 4:
     case "NORMAL_SECOND_HALF":
-      return SSLReferee_Stage.NORMAL_SECOND_HALF;
+      return SslReferee_Stage.NORMAL_SECOND_HALF;
     case 5:
     case "EXTRA_TIME_BREAK":
-      return SSLReferee_Stage.EXTRA_TIME_BREAK;
+      return SslReferee_Stage.EXTRA_TIME_BREAK;
     case 6:
     case "EXTRA_FIRST_HALF_PRE":
-      return SSLReferee_Stage.EXTRA_FIRST_HALF_PRE;
+      return SslReferee_Stage.EXTRA_FIRST_HALF_PRE;
     case 7:
     case "EXTRA_FIRST_HALF":
-      return SSLReferee_Stage.EXTRA_FIRST_HALF;
+      return SslReferee_Stage.EXTRA_FIRST_HALF;
     case 8:
     case "EXTRA_HALF_TIME":
-      return SSLReferee_Stage.EXTRA_HALF_TIME;
+      return SslReferee_Stage.EXTRA_HALF_TIME;
     case 9:
     case "EXTRA_SECOND_HALF_PRE":
-      return SSLReferee_Stage.EXTRA_SECOND_HALF_PRE;
+      return SslReferee_Stage.EXTRA_SECOND_HALF_PRE;
     case 10:
     case "EXTRA_SECOND_HALF":
-      return SSLReferee_Stage.EXTRA_SECOND_HALF;
+      return SslReferee_Stage.EXTRA_SECOND_HALF;
     case 11:
     case "PENALTY_SHOOTOUT_BREAK":
-      return SSLReferee_Stage.PENALTY_SHOOTOUT_BREAK;
+      return SslReferee_Stage.PENALTY_SHOOTOUT_BREAK;
     case 12:
     case "PENALTY_SHOOTOUT":
-      return SSLReferee_Stage.PENALTY_SHOOTOUT;
+      return SslReferee_Stage.PENALTY_SHOOTOUT;
     case 13:
     case "POST_GAME":
-      return SSLReferee_Stage.POST_GAME;
+      return SslReferee_Stage.POST_GAME;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return SSLReferee_Stage.UNRECOGNIZED;
+      return SslReferee_Stage.UNRECOGNIZED;
   }
 }
 
-export function sSLReferee_StageToJSON(object: SSLReferee_Stage): string {
+export function sslReferee_StageToJSON(object: SslReferee_Stage): string {
   switch (object) {
-    case SSLReferee_Stage.NORMAL_FIRST_HALF_PRE:
+    case SslReferee_Stage.NORMAL_FIRST_HALF_PRE:
       return "NORMAL_FIRST_HALF_PRE";
-    case SSLReferee_Stage.NORMAL_FIRST_HALF:
+    case SslReferee_Stage.NORMAL_FIRST_HALF:
       return "NORMAL_FIRST_HALF";
-    case SSLReferee_Stage.NORMAL_HALF_TIME:
+    case SslReferee_Stage.NORMAL_HALF_TIME:
       return "NORMAL_HALF_TIME";
-    case SSLReferee_Stage.NORMAL_SECOND_HALF_PRE:
+    case SslReferee_Stage.NORMAL_SECOND_HALF_PRE:
       return "NORMAL_SECOND_HALF_PRE";
-    case SSLReferee_Stage.NORMAL_SECOND_HALF:
+    case SslReferee_Stage.NORMAL_SECOND_HALF:
       return "NORMAL_SECOND_HALF";
-    case SSLReferee_Stage.EXTRA_TIME_BREAK:
+    case SslReferee_Stage.EXTRA_TIME_BREAK:
       return "EXTRA_TIME_BREAK";
-    case SSLReferee_Stage.EXTRA_FIRST_HALF_PRE:
+    case SslReferee_Stage.EXTRA_FIRST_HALF_PRE:
       return "EXTRA_FIRST_HALF_PRE";
-    case SSLReferee_Stage.EXTRA_FIRST_HALF:
+    case SslReferee_Stage.EXTRA_FIRST_HALF:
       return "EXTRA_FIRST_HALF";
-    case SSLReferee_Stage.EXTRA_HALF_TIME:
+    case SslReferee_Stage.EXTRA_HALF_TIME:
       return "EXTRA_HALF_TIME";
-    case SSLReferee_Stage.EXTRA_SECOND_HALF_PRE:
+    case SslReferee_Stage.EXTRA_SECOND_HALF_PRE:
       return "EXTRA_SECOND_HALF_PRE";
-    case SSLReferee_Stage.EXTRA_SECOND_HALF:
+    case SslReferee_Stage.EXTRA_SECOND_HALF:
       return "EXTRA_SECOND_HALF";
-    case SSLReferee_Stage.PENALTY_SHOOTOUT_BREAK:
+    case SslReferee_Stage.PENALTY_SHOOTOUT_BREAK:
       return "PENALTY_SHOOTOUT_BREAK";
-    case SSLReferee_Stage.PENALTY_SHOOTOUT:
+    case SslReferee_Stage.PENALTY_SHOOTOUT:
       return "PENALTY_SHOOTOUT";
-    case SSLReferee_Stage.POST_GAME:
+    case SslReferee_Stage.POST_GAME:
       return "POST_GAME";
     default:
       return "UNKNOWN";
@@ -199,7 +199,7 @@ export function sSLReferee_StageToJSON(object: SSLReferee_Stage): string {
 }
 
 /** These are the "fine" states of play on the field. */
-export enum SSLReferee_Command {
+export enum SslReferee_Command {
   /** HALT - All robots should completely stop moving. */
   HALT = 0,
   /** STOP - Robots must keep 50 cm from the ball. */
@@ -256,106 +256,106 @@ export enum SSLReferee_Command {
   UNRECOGNIZED = -1,
 }
 
-export function sSLReferee_CommandFromJSON(object: any): SSLReferee_Command {
+export function sslReferee_CommandFromJSON(object: any): SslReferee_Command {
   switch (object) {
     case 0:
     case "HALT":
-      return SSLReferee_Command.HALT;
+      return SslReferee_Command.HALT;
     case 1:
     case "STOP":
-      return SSLReferee_Command.STOP;
+      return SslReferee_Command.STOP;
     case 2:
     case "NORMAL_START":
-      return SSLReferee_Command.NORMAL_START;
+      return SslReferee_Command.NORMAL_START;
     case 3:
     case "FORCE_START":
-      return SSLReferee_Command.FORCE_START;
+      return SslReferee_Command.FORCE_START;
     case 4:
     case "PREPARE_KICKOFF_YELLOW":
-      return SSLReferee_Command.PREPARE_KICKOFF_YELLOW;
+      return SslReferee_Command.PREPARE_KICKOFF_YELLOW;
     case 5:
     case "PREPARE_KICKOFF_BLUE":
-      return SSLReferee_Command.PREPARE_KICKOFF_BLUE;
+      return SslReferee_Command.PREPARE_KICKOFF_BLUE;
     case 6:
     case "PREPARE_PENALTY_YELLOW":
-      return SSLReferee_Command.PREPARE_PENALTY_YELLOW;
+      return SslReferee_Command.PREPARE_PENALTY_YELLOW;
     case 7:
     case "PREPARE_PENALTY_BLUE":
-      return SSLReferee_Command.PREPARE_PENALTY_BLUE;
+      return SslReferee_Command.PREPARE_PENALTY_BLUE;
     case 8:
     case "DIRECT_FREE_YELLOW":
-      return SSLReferee_Command.DIRECT_FREE_YELLOW;
+      return SslReferee_Command.DIRECT_FREE_YELLOW;
     case 9:
     case "DIRECT_FREE_BLUE":
-      return SSLReferee_Command.DIRECT_FREE_BLUE;
+      return SslReferee_Command.DIRECT_FREE_BLUE;
     case 10:
     case "INDIRECT_FREE_YELLOW":
-      return SSLReferee_Command.INDIRECT_FREE_YELLOW;
+      return SslReferee_Command.INDIRECT_FREE_YELLOW;
     case 11:
     case "INDIRECT_FREE_BLUE":
-      return SSLReferee_Command.INDIRECT_FREE_BLUE;
+      return SslReferee_Command.INDIRECT_FREE_BLUE;
     case 12:
     case "TIMEOUT_YELLOW":
-      return SSLReferee_Command.TIMEOUT_YELLOW;
+      return SslReferee_Command.TIMEOUT_YELLOW;
     case 13:
     case "TIMEOUT_BLUE":
-      return SSLReferee_Command.TIMEOUT_BLUE;
+      return SslReferee_Command.TIMEOUT_BLUE;
     case 14:
     case "GOAL_YELLOW":
-      return SSLReferee_Command.GOAL_YELLOW;
+      return SslReferee_Command.GOAL_YELLOW;
     case 15:
     case "GOAL_BLUE":
-      return SSLReferee_Command.GOAL_BLUE;
+      return SslReferee_Command.GOAL_BLUE;
     case 16:
     case "BALL_PLACEMENT_YELLOW":
-      return SSLReferee_Command.BALL_PLACEMENT_YELLOW;
+      return SslReferee_Command.BALL_PLACEMENT_YELLOW;
     case 17:
     case "BALL_PLACEMENT_BLUE":
-      return SSLReferee_Command.BALL_PLACEMENT_BLUE;
+      return SslReferee_Command.BALL_PLACEMENT_BLUE;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return SSLReferee_Command.UNRECOGNIZED;
+      return SslReferee_Command.UNRECOGNIZED;
   }
 }
 
-export function sSLReferee_CommandToJSON(object: SSLReferee_Command): string {
+export function sslReferee_CommandToJSON(object: SslReferee_Command): string {
   switch (object) {
-    case SSLReferee_Command.HALT:
+    case SslReferee_Command.HALT:
       return "HALT";
-    case SSLReferee_Command.STOP:
+    case SslReferee_Command.STOP:
       return "STOP";
-    case SSLReferee_Command.NORMAL_START:
+    case SslReferee_Command.NORMAL_START:
       return "NORMAL_START";
-    case SSLReferee_Command.FORCE_START:
+    case SslReferee_Command.FORCE_START:
       return "FORCE_START";
-    case SSLReferee_Command.PREPARE_KICKOFF_YELLOW:
+    case SslReferee_Command.PREPARE_KICKOFF_YELLOW:
       return "PREPARE_KICKOFF_YELLOW";
-    case SSLReferee_Command.PREPARE_KICKOFF_BLUE:
+    case SslReferee_Command.PREPARE_KICKOFF_BLUE:
       return "PREPARE_KICKOFF_BLUE";
-    case SSLReferee_Command.PREPARE_PENALTY_YELLOW:
+    case SslReferee_Command.PREPARE_PENALTY_YELLOW:
       return "PREPARE_PENALTY_YELLOW";
-    case SSLReferee_Command.PREPARE_PENALTY_BLUE:
+    case SslReferee_Command.PREPARE_PENALTY_BLUE:
       return "PREPARE_PENALTY_BLUE";
-    case SSLReferee_Command.DIRECT_FREE_YELLOW:
+    case SslReferee_Command.DIRECT_FREE_YELLOW:
       return "DIRECT_FREE_YELLOW";
-    case SSLReferee_Command.DIRECT_FREE_BLUE:
+    case SslReferee_Command.DIRECT_FREE_BLUE:
       return "DIRECT_FREE_BLUE";
-    case SSLReferee_Command.INDIRECT_FREE_YELLOW:
+    case SslReferee_Command.INDIRECT_FREE_YELLOW:
       return "INDIRECT_FREE_YELLOW";
-    case SSLReferee_Command.INDIRECT_FREE_BLUE:
+    case SslReferee_Command.INDIRECT_FREE_BLUE:
       return "INDIRECT_FREE_BLUE";
-    case SSLReferee_Command.TIMEOUT_YELLOW:
+    case SslReferee_Command.TIMEOUT_YELLOW:
       return "TIMEOUT_YELLOW";
-    case SSLReferee_Command.TIMEOUT_BLUE:
+    case SslReferee_Command.TIMEOUT_BLUE:
       return "TIMEOUT_BLUE";
-    case SSLReferee_Command.GOAL_YELLOW:
+    case SslReferee_Command.GOAL_YELLOW:
       return "GOAL_YELLOW";
-    case SSLReferee_Command.GOAL_BLUE:
+    case SslReferee_Command.GOAL_BLUE:
       return "GOAL_BLUE";
-    case SSLReferee_Command.BALL_PLACEMENT_YELLOW:
+    case SslReferee_Command.BALL_PLACEMENT_YELLOW:
       return "BALL_PLACEMENT_YELLOW";
-    case SSLReferee_Command.BALL_PLACEMENT_BLUE:
+    case SslReferee_Command.BALL_PLACEMENT_BLUE:
       return "BALL_PLACEMENT_BLUE";
     default:
       return "UNKNOWN";
@@ -363,7 +363,7 @@ export function sSLReferee_CommandToJSON(object: SSLReferee_Command): string {
 }
 
 /** Information about a single team. */
-export interface SSLReferee_TeamInfo {
+export interface SslReferee_TeamInfo {
   /** The team's name (empty string if operator has not typed anything). */
   name: string;
   /** The number of goals scored by the team during normal play and overtime. */
@@ -407,7 +407,7 @@ export interface SSLReferee_TeamInfo {
  * always either both present (in the case of a ball placement command) or
  * both absent (in the case of any other command).
  */
-export interface SSLReferee_Point {
+export interface SslReferee_Point {
   x: number;
   y: number;
 }
@@ -420,7 +420,7 @@ export interface GameEventProposalGroup {
   accepted: boolean;
 }
 
-const baseSSLReferee: object = {
+const baseSslReferee: object = {
   packetTimestamp: Long.UZERO,
   stage: 0,
   stageTimeLeft: 0,
@@ -432,9 +432,9 @@ const baseSSLReferee: object = {
   currentActionTimeRemaining: 0,
 };
 
-export const SSLReferee = {
+export const SslReferee = {
   encode(
-    message: SSLReferee,
+    message: SslReferee,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (!message.packetTimestamp.isZero()) {
@@ -456,19 +456,19 @@ export const SSLReferee = {
       writer.uint32(48).uint64(message.commandTimestamp);
     }
     if (message.yellow !== undefined) {
-      SSLReferee_TeamInfo.encode(
+      SslReferee_TeamInfo.encode(
         message.yellow,
         writer.uint32(58).fork()
       ).ldelim();
     }
     if (message.blue !== undefined) {
-      SSLReferee_TeamInfo.encode(
+      SslReferee_TeamInfo.encode(
         message.blue,
         writer.uint32(66).fork()
       ).ldelim();
     }
     if (message.designatedPosition !== undefined) {
-      SSLReferee_Point.encode(
+      SslReferee_Point.encode(
         message.designatedPosition,
         writer.uint32(74).fork()
       ).ldelim();
@@ -491,10 +491,10 @@ export const SSLReferee = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLReferee {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslReferee {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLReferee } as SSLReferee;
+    const message = { ...baseSslReferee } as SslReferee;
     message.gameEvents = [];
     message.gameEventProposals = [];
     while (reader.pos < end) {
@@ -519,13 +519,13 @@ export const SSLReferee = {
           message.commandTimestamp = reader.uint64() as Long;
           break;
         case 7:
-          message.yellow = SSLReferee_TeamInfo.decode(reader, reader.uint32());
+          message.yellow = SslReferee_TeamInfo.decode(reader, reader.uint32());
           break;
         case 8:
-          message.blue = SSLReferee_TeamInfo.decode(reader, reader.uint32());
+          message.blue = SslReferee_TeamInfo.decode(reader, reader.uint32());
           break;
         case 9:
-          message.designatedPosition = SSLReferee_Point.decode(
+          message.designatedPosition = SslReferee_Point.decode(
             reader,
             reader.uint32()
           );
@@ -555,8 +555,8 @@ export const SSLReferee = {
     return message;
   },
 
-  fromJSON(object: any): SSLReferee {
-    const message = { ...baseSSLReferee } as SSLReferee;
+  fromJSON(object: any): SslReferee {
+    const message = { ...baseSslReferee } as SslReferee;
     message.gameEvents = [];
     message.gameEventProposals = [];
     if (
@@ -568,7 +568,7 @@ export const SSLReferee = {
       message.packetTimestamp = Long.UZERO;
     }
     if (object.stage !== undefined && object.stage !== null) {
-      message.stage = sSLReferee_StageFromJSON(object.stage);
+      message.stage = sslReferee_StageFromJSON(object.stage);
     } else {
       message.stage = 0;
     }
@@ -578,7 +578,7 @@ export const SSLReferee = {
       message.stageTimeLeft = 0;
     }
     if (object.command !== undefined && object.command !== null) {
-      message.command = sSLReferee_CommandFromJSON(object.command);
+      message.command = sslReferee_CommandFromJSON(object.command);
     } else {
       message.command = 0;
     }
@@ -596,12 +596,12 @@ export const SSLReferee = {
       message.commandTimestamp = Long.UZERO;
     }
     if (object.yellow !== undefined && object.yellow !== null) {
-      message.yellow = SSLReferee_TeamInfo.fromJSON(object.yellow);
+      message.yellow = SslReferee_TeamInfo.fromJSON(object.yellow);
     } else {
       message.yellow = undefined;
     }
     if (object.blue !== undefined && object.blue !== null) {
-      message.blue = SSLReferee_TeamInfo.fromJSON(object.blue);
+      message.blue = SslReferee_TeamInfo.fromJSON(object.blue);
     } else {
       message.blue = undefined;
     }
@@ -609,7 +609,7 @@ export const SSLReferee = {
       object.designatedPosition !== undefined &&
       object.designatedPosition !== null
     ) {
-      message.designatedPosition = SSLReferee_Point.fromJSON(
+      message.designatedPosition = SslReferee_Point.fromJSON(
         object.designatedPosition
       );
     } else {
@@ -624,7 +624,7 @@ export const SSLReferee = {
       message.blueTeamOnPositiveHalf = false;
     }
     if (object.nextCommand !== undefined && object.nextCommand !== null) {
-      message.nextCommand = sSLReferee_CommandFromJSON(object.nextCommand);
+      message.nextCommand = sslReferee_CommandFromJSON(object.nextCommand);
     } else {
       message.nextCommand = 0;
     }
@@ -654,18 +654,18 @@ export const SSLReferee = {
     return message;
   },
 
-  toJSON(message: SSLReferee): unknown {
+  toJSON(message: SslReferee): unknown {
     const obj: any = {};
     message.packetTimestamp !== undefined &&
       (obj.packetTimestamp = (
         message.packetTimestamp || Long.UZERO
       ).toString());
     message.stage !== undefined &&
-      (obj.stage = sSLReferee_StageToJSON(message.stage));
+      (obj.stage = sslReferee_StageToJSON(message.stage));
     message.stageTimeLeft !== undefined &&
       (obj.stageTimeLeft = message.stageTimeLeft);
     message.command !== undefined &&
-      (obj.command = sSLReferee_CommandToJSON(message.command));
+      (obj.command = sslReferee_CommandToJSON(message.command));
     message.commandCounter !== undefined &&
       (obj.commandCounter = message.commandCounter);
     message.commandTimestamp !== undefined &&
@@ -674,20 +674,20 @@ export const SSLReferee = {
       ).toString());
     message.yellow !== undefined &&
       (obj.yellow = message.yellow
-        ? SSLReferee_TeamInfo.toJSON(message.yellow)
+        ? SslReferee_TeamInfo.toJSON(message.yellow)
         : undefined);
     message.blue !== undefined &&
       (obj.blue = message.blue
-        ? SSLReferee_TeamInfo.toJSON(message.blue)
+        ? SslReferee_TeamInfo.toJSON(message.blue)
         : undefined);
     message.designatedPosition !== undefined &&
       (obj.designatedPosition = message.designatedPosition
-        ? SSLReferee_Point.toJSON(message.designatedPosition)
+        ? SslReferee_Point.toJSON(message.designatedPosition)
         : undefined);
     message.blueTeamOnPositiveHalf !== undefined &&
       (obj.blueTeamOnPositiveHalf = message.blueTeamOnPositiveHalf);
     message.nextCommand !== undefined &&
-      (obj.nextCommand = sSLReferee_CommandToJSON(message.nextCommand));
+      (obj.nextCommand = sslReferee_CommandToJSON(message.nextCommand));
     if (message.gameEvents) {
       obj.gameEvents = message.gameEvents.map((e) =>
         e ? GameEvent.toJSON(e) : undefined
@@ -707,8 +707,8 @@ export const SSLReferee = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLReferee>): SSLReferee {
-    const message = { ...baseSSLReferee } as SSLReferee;
+  fromPartial(object: DeepPartial<SslReferee>): SslReferee {
+    const message = { ...baseSslReferee } as SslReferee;
     message.gameEvents = [];
     message.gameEventProposals = [];
     if (
@@ -748,12 +748,12 @@ export const SSLReferee = {
       message.commandTimestamp = Long.UZERO;
     }
     if (object.yellow !== undefined && object.yellow !== null) {
-      message.yellow = SSLReferee_TeamInfo.fromPartial(object.yellow);
+      message.yellow = SslReferee_TeamInfo.fromPartial(object.yellow);
     } else {
       message.yellow = undefined;
     }
     if (object.blue !== undefined && object.blue !== null) {
-      message.blue = SSLReferee_TeamInfo.fromPartial(object.blue);
+      message.blue = SslReferee_TeamInfo.fromPartial(object.blue);
     } else {
       message.blue = undefined;
     }
@@ -761,7 +761,7 @@ export const SSLReferee = {
       object.designatedPosition !== undefined &&
       object.designatedPosition !== null
     ) {
-      message.designatedPosition = SSLReferee_Point.fromPartial(
+      message.designatedPosition = SslReferee_Point.fromPartial(
         object.designatedPosition
       );
     } else {
@@ -805,7 +805,7 @@ export const SSLReferee = {
   },
 };
 
-const baseSSLReferee_TeamInfo: object = {
+const baseSslReferee_TeamInfo: object = {
   name: "",
   score: 0,
   redCards: 0,
@@ -822,9 +822,9 @@ const baseSSLReferee_TeamInfo: object = {
   ballPlacementFailuresReached: false,
 };
 
-export const SSLReferee_TeamInfo = {
+export const SslReferee_TeamInfo = {
   encode(
-    message: SSLReferee_TeamInfo,
+    message: SslReferee_TeamInfo,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.name !== "") {
@@ -874,10 +874,10 @@ export const SSLReferee_TeamInfo = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLReferee_TeamInfo {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslReferee_TeamInfo {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLReferee_TeamInfo } as SSLReferee_TeamInfo;
+    const message = { ...baseSslReferee_TeamInfo } as SslReferee_TeamInfo;
     message.yellowCardTimes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -939,8 +939,8 @@ export const SSLReferee_TeamInfo = {
     return message;
   },
 
-  fromJSON(object: any): SSLReferee_TeamInfo {
-    const message = { ...baseSSLReferee_TeamInfo } as SSLReferee_TeamInfo;
+  fromJSON(object: any): SslReferee_TeamInfo {
+    const message = { ...baseSslReferee_TeamInfo } as SslReferee_TeamInfo;
     message.yellowCardTimes = [];
     if (object.name !== undefined && object.name !== null) {
       message.name = String(object.name);
@@ -1029,7 +1029,7 @@ export const SSLReferee_TeamInfo = {
     return message;
   },
 
-  toJSON(message: SSLReferee_TeamInfo): unknown {
+  toJSON(message: SslReferee_TeamInfo): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.score !== undefined && (obj.score = message.score);
@@ -1060,8 +1060,8 @@ export const SSLReferee_TeamInfo = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLReferee_TeamInfo>): SSLReferee_TeamInfo {
-    const message = { ...baseSSLReferee_TeamInfo } as SSLReferee_TeamInfo;
+  fromPartial(object: DeepPartial<SslReferee_TeamInfo>): SslReferee_TeamInfo {
+    const message = { ...baseSslReferee_TeamInfo } as SslReferee_TeamInfo;
     message.yellowCardTimes = [];
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
@@ -1150,11 +1150,11 @@ export const SSLReferee_TeamInfo = {
   },
 };
 
-const baseSSLReferee_Point: object = { x: 0, y: 0 };
+const baseSslReferee_Point: object = { x: 0, y: 0 };
 
-export const SSLReferee_Point = {
+export const SslReferee_Point = {
   encode(
-    message: SSLReferee_Point,
+    message: SslReferee_Point,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.x !== 0) {
@@ -1166,10 +1166,10 @@ export const SSLReferee_Point = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLReferee_Point {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslReferee_Point {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLReferee_Point } as SSLReferee_Point;
+    const message = { ...baseSslReferee_Point } as SslReferee_Point;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1187,8 +1187,8 @@ export const SSLReferee_Point = {
     return message;
   },
 
-  fromJSON(object: any): SSLReferee_Point {
-    const message = { ...baseSSLReferee_Point } as SSLReferee_Point;
+  fromJSON(object: any): SslReferee_Point {
+    const message = { ...baseSslReferee_Point } as SslReferee_Point;
     if (object.x !== undefined && object.x !== null) {
       message.x = Number(object.x);
     } else {
@@ -1202,15 +1202,15 @@ export const SSLReferee_Point = {
     return message;
   },
 
-  toJSON(message: SSLReferee_Point): unknown {
+  toJSON(message: SslReferee_Point): unknown {
     const obj: any = {};
     message.x !== undefined && (obj.x = message.x);
     message.y !== undefined && (obj.y = message.y);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLReferee_Point>): SSLReferee_Point {
-    const message = { ...baseSSLReferee_Point } as SSLReferee_Point;
+  fromPartial(object: DeepPartial<SslReferee_Point>): SslReferee_Point {
+    const message = { ...baseSslReferee_Point } as SslReferee_Point;
     if (object.x !== undefined && object.x !== null) {
       message.x = object.x;
     } else {
@@ -1245,7 +1245,7 @@ export const GameEventProposalGroup = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEventProposalGroup {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEventProposalGroup } as GameEventProposalGroup;
     message.gameEvent = [];

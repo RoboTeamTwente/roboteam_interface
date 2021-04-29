@@ -1,7 +1,7 @@
 import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
 import {TextField} from "../../Networking/proto_build/UiOptions";
-import {extractDataForComponent, findUIOptionByName} from "../Util";
+import {findUIOptionByName} from "../Util";
 
 class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
     private readonly defaultValue: TextField = {text: "unknown"};
@@ -12,7 +12,8 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
         this.onChange = this.onChange.bind(this);
 
         // TODO: How should the text in the text value definition be displayed?
-        const [definition, value] = extractDataForComponent(props.name, props.state);
+        const definition = findUIOptionByName(this.props.ui.name, this.props.ui.decls);
+        const value = this.props.ui.values.uiValues?.[this.props.ui.name];
 
         // Decide on default value
         if (value?.textValue != null) {
@@ -22,9 +23,9 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<RemoteUIProps>, prevState: Readonly<any>, snapshot?: any) {
-        const [, oldPropValue] = extractDataForComponent(prevProps.name, prevProps.state);
-        const [, newPropValue] = extractDataForComponent(this.props.name, this.props.state);
+    componentDidUpdate(prevProps: Readonly<{ui: RemoteUIProps}>, prevState: Readonly<any>, snapshot?: any) {
+        const oldPropValue = prevProps.ui.values.uiValues[this.props.ui.name];
+        const newPropValue = this.props.ui.values.uiValues[this.props.ui.name];
 
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.textValue != null && oldPropValue?.textValue != newPropValue?.textValue) {
@@ -34,14 +35,14 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
 
     render() {
         return (
-                <input type="text" name={this.props.name} id={this.props.name} className="remote textField"
+                <input type="text" name={this.props.ui.name} id={this.props.ui.name} className="remote textField"
                        value={this.state.textValue} onChange={this.onChange}/>)
     }
 
     private onChange(ev: ChangeEvent<HTMLInputElement>) {
         this.setState({...this.state, textValue: ev.target.value});
 
-        this.props.onChange(this.props.name, {
+        this.props.ui.onChange(this.props.ui.name, {
             boolValue: undefined,
             integerValue: undefined,
             floatValue: undefined,

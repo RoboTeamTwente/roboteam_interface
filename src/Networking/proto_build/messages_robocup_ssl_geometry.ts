@@ -5,7 +5,7 @@ import { Vector2f } from "./Vector2f";
 
 export const protobufPackage = "proto";
 
-export enum SSLFieldShapeType {
+export enum SslFieldshapetype {
   Undefined = 0,
   CenterCircle = 1,
   TopTouchLine = 2,
@@ -23,86 +23,86 @@ export enum SSLFieldShapeType {
   UNRECOGNIZED = -1,
 }
 
-export function sSLFieldShapeTypeFromJSON(object: any): SSLFieldShapeType {
+export function sslFieldshapetypeFromJSON(object: any): SslFieldshapetype {
   switch (object) {
     case 0:
     case "Undefined":
-      return SSLFieldShapeType.Undefined;
+      return SslFieldshapetype.Undefined;
     case 1:
     case "CenterCircle":
-      return SSLFieldShapeType.CenterCircle;
+      return SslFieldshapetype.CenterCircle;
     case 2:
     case "TopTouchLine":
-      return SSLFieldShapeType.TopTouchLine;
+      return SslFieldshapetype.TopTouchLine;
     case 3:
     case "BottomTouchLine":
-      return SSLFieldShapeType.BottomTouchLine;
+      return SslFieldshapetype.BottomTouchLine;
     case 4:
     case "LeftGoalLine":
-      return SSLFieldShapeType.LeftGoalLine;
+      return SslFieldshapetype.LeftGoalLine;
     case 5:
     case "RightGoalLine":
-      return SSLFieldShapeType.RightGoalLine;
+      return SslFieldshapetype.RightGoalLine;
     case 6:
     case "HalfwayLine":
-      return SSLFieldShapeType.HalfwayLine;
+      return SslFieldshapetype.HalfwayLine;
     case 7:
     case "CenterLine":
-      return SSLFieldShapeType.CenterLine;
+      return SslFieldshapetype.CenterLine;
     case 8:
     case "LeftPenaltyStretch":
-      return SSLFieldShapeType.LeftPenaltyStretch;
+      return SslFieldshapetype.LeftPenaltyStretch;
     case 9:
     case "RightPenaltyStretch":
-      return SSLFieldShapeType.RightPenaltyStretch;
+      return SslFieldshapetype.RightPenaltyStretch;
     case 10:
     case "LeftFieldLeftPenaltyStretch":
-      return SSLFieldShapeType.LeftFieldLeftPenaltyStretch;
+      return SslFieldshapetype.LeftFieldLeftPenaltyStretch;
     case 11:
     case "LeftFieldRightPenaltyStretch":
-      return SSLFieldShapeType.LeftFieldRightPenaltyStretch;
+      return SslFieldshapetype.LeftFieldRightPenaltyStretch;
     case 12:
     case "RightFieldLeftPenaltyStretch":
-      return SSLFieldShapeType.RightFieldLeftPenaltyStretch;
+      return SslFieldshapetype.RightFieldLeftPenaltyStretch;
     case 13:
     case "RightFieldRightPenaltyStretch":
-      return SSLFieldShapeType.RightFieldRightPenaltyStretch;
+      return SslFieldshapetype.RightFieldRightPenaltyStretch;
     case -1:
     case "UNRECOGNIZED":
     default:
-      return SSLFieldShapeType.UNRECOGNIZED;
+      return SslFieldshapetype.UNRECOGNIZED;
   }
 }
 
-export function sSLFieldShapeTypeToJSON(object: SSLFieldShapeType): string {
+export function sslFieldshapetypeToJSON(object: SslFieldshapetype): string {
   switch (object) {
-    case SSLFieldShapeType.Undefined:
+    case SslFieldshapetype.Undefined:
       return "Undefined";
-    case SSLFieldShapeType.CenterCircle:
+    case SslFieldshapetype.CenterCircle:
       return "CenterCircle";
-    case SSLFieldShapeType.TopTouchLine:
+    case SslFieldshapetype.TopTouchLine:
       return "TopTouchLine";
-    case SSLFieldShapeType.BottomTouchLine:
+    case SslFieldshapetype.BottomTouchLine:
       return "BottomTouchLine";
-    case SSLFieldShapeType.LeftGoalLine:
+    case SslFieldshapetype.LeftGoalLine:
       return "LeftGoalLine";
-    case SSLFieldShapeType.RightGoalLine:
+    case SslFieldshapetype.RightGoalLine:
       return "RightGoalLine";
-    case SSLFieldShapeType.HalfwayLine:
+    case SslFieldshapetype.HalfwayLine:
       return "HalfwayLine";
-    case SSLFieldShapeType.CenterLine:
+    case SslFieldshapetype.CenterLine:
       return "CenterLine";
-    case SSLFieldShapeType.LeftPenaltyStretch:
+    case SslFieldshapetype.LeftPenaltyStretch:
       return "LeftPenaltyStretch";
-    case SSLFieldShapeType.RightPenaltyStretch:
+    case SslFieldshapetype.RightPenaltyStretch:
       return "RightPenaltyStretch";
-    case SSLFieldShapeType.LeftFieldLeftPenaltyStretch:
+    case SslFieldshapetype.LeftFieldLeftPenaltyStretch:
       return "LeftFieldLeftPenaltyStretch";
-    case SSLFieldShapeType.LeftFieldRightPenaltyStretch:
+    case SslFieldshapetype.LeftFieldRightPenaltyStretch:
       return "LeftFieldRightPenaltyStretch";
-    case SSLFieldShapeType.RightFieldLeftPenaltyStretch:
+    case SslFieldshapetype.RightFieldLeftPenaltyStretch:
       return "RightFieldLeftPenaltyStretch";
-    case SSLFieldShapeType.RightFieldRightPenaltyStretch:
+    case SslFieldshapetype.RightFieldRightPenaltyStretch:
       return "RightFieldRightPenaltyStretch";
     default:
       return "UNKNOWN";
@@ -115,7 +115,7 @@ export function sSLFieldShapeTypeToJSON(object: SSLFieldShapeType): string {
  * the center of the line, so the thickness of the line extends by thickness / 2
  * on either side of the line.
  */
-export interface SSLFieldLineSegment {
+export interface SslFieldlinesegment {
   /** Name of this field marking. */
   name: string;
   /** Start point of the line segment. */
@@ -125,14 +125,14 @@ export interface SSLFieldLineSegment {
   /** Thickness of the line segment. */
   thickness: number;
   /** The type of this shape */
-  type: SSLFieldShapeType;
+  type: SslFieldshapetype;
 }
 
 /**
  * Represents a field marking as a circular arc segment represented by center point, a
  * start angle, an end angle, and an arc thickness.
  */
-export interface SSLFieldCircularArc {
+export interface SslFieldcirculararc {
   /** Name of this field marking. */
   name: string;
   /** Center point of the circular arc. */
@@ -146,22 +146,22 @@ export interface SSLFieldCircularArc {
   /** Thickness of the arc. */
   thickness: number;
   /** The type of this shape */
-  type: SSLFieldShapeType;
+  type: SslFieldshapetype;
 }
 
-export interface SSLGeometryFieldSize {
+export interface SslGeometryfieldsize {
   fieldLength: number;
   fieldWidth: number;
   goalWidth: number;
   goalDepth: number;
   boundaryWidth: number;
-  fieldLines: SSLFieldLineSegment[];
-  fieldArcs: SSLFieldCircularArc[];
+  fieldLines: SslFieldlinesegment[];
+  fieldArcs: SslFieldcirculararc[];
   penaltyAreaDepth: number;
   penaltyAreaWidth: number;
 }
 
-export interface SSLGeometryCameraCalibration {
+export interface SslGeometrycameracalibration {
   cameraId: number;
   focalLength: number;
   principalPointX: number;
@@ -181,16 +181,16 @@ export interface SSLGeometryCameraCalibration {
   pixelImageHeight: number;
 }
 
-export interface SSLGeometryData {
-  field: SSLGeometryFieldSize | undefined;
-  calib: SSLGeometryCameraCalibration[];
+export interface SslGeometrydata {
+  field: SslGeometryfieldsize | undefined;
+  calib: SslGeometrycameracalibration[];
 }
 
-const baseSSLFieldLineSegment: object = { name: "", thickness: 0, type: 0 };
+const baseSslFieldlinesegment: object = { name: "", thickness: 0, type: 0 };
 
-export const SSLFieldLineSegment = {
+export const SslFieldlinesegment = {
   encode(
-    message: SSLFieldLineSegment,
+    message: SslFieldlinesegment,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.name !== "") {
@@ -211,10 +211,10 @@ export const SSLFieldLineSegment = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLFieldLineSegment {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslFieldlinesegment {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLFieldLineSegment } as SSLFieldLineSegment;
+    const message = { ...baseSslFieldlinesegment } as SslFieldlinesegment;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -241,8 +241,8 @@ export const SSLFieldLineSegment = {
     return message;
   },
 
-  fromJSON(object: any): SSLFieldLineSegment {
-    const message = { ...baseSSLFieldLineSegment } as SSLFieldLineSegment;
+  fromJSON(object: any): SslFieldlinesegment {
+    const message = { ...baseSslFieldlinesegment } as SslFieldlinesegment;
     if (object.name !== undefined && object.name !== null) {
       message.name = String(object.name);
     } else {
@@ -264,14 +264,14 @@ export const SSLFieldLineSegment = {
       message.thickness = 0;
     }
     if (object.type !== undefined && object.type !== null) {
-      message.type = sSLFieldShapeTypeFromJSON(object.type);
+      message.type = sslFieldshapetypeFromJSON(object.type);
     } else {
       message.type = 0;
     }
     return message;
   },
 
-  toJSON(message: SSLFieldLineSegment): unknown {
+  toJSON(message: SslFieldlinesegment): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.p1 !== undefined &&
@@ -280,12 +280,12 @@ export const SSLFieldLineSegment = {
       (obj.p2 = message.p2 ? Vector2f.toJSON(message.p2) : undefined);
     message.thickness !== undefined && (obj.thickness = message.thickness);
     message.type !== undefined &&
-      (obj.type = sSLFieldShapeTypeToJSON(message.type));
+      (obj.type = sslFieldshapetypeToJSON(message.type));
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLFieldLineSegment>): SSLFieldLineSegment {
-    const message = { ...baseSSLFieldLineSegment } as SSLFieldLineSegment;
+  fromPartial(object: DeepPartial<SslFieldlinesegment>): SslFieldlinesegment {
+    const message = { ...baseSslFieldlinesegment } as SslFieldlinesegment;
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
     } else {
@@ -315,7 +315,7 @@ export const SSLFieldLineSegment = {
   },
 };
 
-const baseSSLFieldCircularArc: object = {
+const baseSslFieldcirculararc: object = {
   name: "",
   radius: 0,
   a1: 0,
@@ -324,9 +324,9 @@ const baseSSLFieldCircularArc: object = {
   type: 0,
 };
 
-export const SSLFieldCircularArc = {
+export const SslFieldcirculararc = {
   encode(
-    message: SSLFieldCircularArc,
+    message: SslFieldcirculararc,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.name !== "") {
@@ -353,10 +353,10 @@ export const SSLFieldCircularArc = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLFieldCircularArc {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslFieldcirculararc {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLFieldCircularArc } as SSLFieldCircularArc;
+    const message = { ...baseSslFieldcirculararc } as SslFieldcirculararc;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -389,8 +389,8 @@ export const SSLFieldCircularArc = {
     return message;
   },
 
-  fromJSON(object: any): SSLFieldCircularArc {
-    const message = { ...baseSSLFieldCircularArc } as SSLFieldCircularArc;
+  fromJSON(object: any): SslFieldcirculararc {
+    const message = { ...baseSslFieldcirculararc } as SslFieldcirculararc;
     if (object.name !== undefined && object.name !== null) {
       message.name = String(object.name);
     } else {
@@ -422,14 +422,14 @@ export const SSLFieldCircularArc = {
       message.thickness = 0;
     }
     if (object.type !== undefined && object.type !== null) {
-      message.type = sSLFieldShapeTypeFromJSON(object.type);
+      message.type = sslFieldshapetypeFromJSON(object.type);
     } else {
       message.type = 0;
     }
     return message;
   },
 
-  toJSON(message: SSLFieldCircularArc): unknown {
+  toJSON(message: SslFieldcirculararc): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.center !== undefined &&
@@ -441,12 +441,12 @@ export const SSLFieldCircularArc = {
     message.a2 !== undefined && (obj.a2 = message.a2);
     message.thickness !== undefined && (obj.thickness = message.thickness);
     message.type !== undefined &&
-      (obj.type = sSLFieldShapeTypeToJSON(message.type));
+      (obj.type = sslFieldshapetypeToJSON(message.type));
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLFieldCircularArc>): SSLFieldCircularArc {
-    const message = { ...baseSSLFieldCircularArc } as SSLFieldCircularArc;
+  fromPartial(object: DeepPartial<SslFieldcirculararc>): SslFieldcirculararc {
+    const message = { ...baseSslFieldcirculararc } as SslFieldcirculararc;
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
     } else {
@@ -486,7 +486,7 @@ export const SSLFieldCircularArc = {
   },
 };
 
-const baseSSLGeometryFieldSize: object = {
+const baseSslGeometryfieldsize: object = {
   fieldLength: 0,
   fieldWidth: 0,
   goalWidth: 0,
@@ -496,9 +496,9 @@ const baseSSLGeometryFieldSize: object = {
   penaltyAreaWidth: 0,
 };
 
-export const SSLGeometryFieldSize = {
+export const SslGeometryfieldsize = {
   encode(
-    message: SSLGeometryFieldSize,
+    message: SslGeometryfieldsize,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.fieldLength !== 0) {
@@ -517,10 +517,10 @@ export const SSLGeometryFieldSize = {
       writer.uint32(40).int32(message.boundaryWidth);
     }
     for (const v of message.fieldLines) {
-      SSLFieldLineSegment.encode(v!, writer.uint32(50).fork()).ldelim();
+      SslFieldlinesegment.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.fieldArcs) {
-      SSLFieldCircularArc.encode(v!, writer.uint32(58).fork()).ldelim();
+      SslFieldcirculararc.encode(v!, writer.uint32(58).fork()).ldelim();
     }
     if (message.penaltyAreaDepth !== 0) {
       writer.uint32(64).int32(message.penaltyAreaDepth);
@@ -534,10 +534,10 @@ export const SSLGeometryFieldSize = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): SSLGeometryFieldSize {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  ): SslGeometryfieldsize {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLGeometryFieldSize } as SSLGeometryFieldSize;
+    const message = { ...baseSslGeometryfieldsize } as SslGeometryfieldsize;
     message.fieldLines = [];
     message.fieldArcs = [];
     while (reader.pos < end) {
@@ -560,12 +560,12 @@ export const SSLGeometryFieldSize = {
           break;
         case 6:
           message.fieldLines.push(
-            SSLFieldLineSegment.decode(reader, reader.uint32())
+            SslFieldlinesegment.decode(reader, reader.uint32())
           );
           break;
         case 7:
           message.fieldArcs.push(
-            SSLFieldCircularArc.decode(reader, reader.uint32())
+            SslFieldcirculararc.decode(reader, reader.uint32())
           );
           break;
         case 8:
@@ -582,8 +582,8 @@ export const SSLGeometryFieldSize = {
     return message;
   },
 
-  fromJSON(object: any): SSLGeometryFieldSize {
-    const message = { ...baseSSLGeometryFieldSize } as SSLGeometryFieldSize;
+  fromJSON(object: any): SslGeometryfieldsize {
+    const message = { ...baseSslGeometryfieldsize } as SslGeometryfieldsize;
     message.fieldLines = [];
     message.fieldArcs = [];
     if (object.fieldLength !== undefined && object.fieldLength !== null) {
@@ -613,12 +613,12 @@ export const SSLGeometryFieldSize = {
     }
     if (object.fieldLines !== undefined && object.fieldLines !== null) {
       for (const e of object.fieldLines) {
-        message.fieldLines.push(SSLFieldLineSegment.fromJSON(e));
+        message.fieldLines.push(SslFieldlinesegment.fromJSON(e));
       }
     }
     if (object.fieldArcs !== undefined && object.fieldArcs !== null) {
       for (const e of object.fieldArcs) {
-        message.fieldArcs.push(SSLFieldCircularArc.fromJSON(e));
+        message.fieldArcs.push(SslFieldcirculararc.fromJSON(e));
       }
     }
     if (
@@ -640,7 +640,7 @@ export const SSLGeometryFieldSize = {
     return message;
   },
 
-  toJSON(message: SSLGeometryFieldSize): unknown {
+  toJSON(message: SslGeometryfieldsize): unknown {
     const obj: any = {};
     message.fieldLength !== undefined &&
       (obj.fieldLength = message.fieldLength);
@@ -651,14 +651,14 @@ export const SSLGeometryFieldSize = {
       (obj.boundaryWidth = message.boundaryWidth);
     if (message.fieldLines) {
       obj.fieldLines = message.fieldLines.map((e) =>
-        e ? SSLFieldLineSegment.toJSON(e) : undefined
+        e ? SslFieldlinesegment.toJSON(e) : undefined
       );
     } else {
       obj.fieldLines = [];
     }
     if (message.fieldArcs) {
       obj.fieldArcs = message.fieldArcs.map((e) =>
-        e ? SSLFieldCircularArc.toJSON(e) : undefined
+        e ? SslFieldcirculararc.toJSON(e) : undefined
       );
     } else {
       obj.fieldArcs = [];
@@ -670,8 +670,8 @@ export const SSLGeometryFieldSize = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLGeometryFieldSize>): SSLGeometryFieldSize {
-    const message = { ...baseSSLGeometryFieldSize } as SSLGeometryFieldSize;
+  fromPartial(object: DeepPartial<SslGeometryfieldsize>): SslGeometryfieldsize {
+    const message = { ...baseSslGeometryfieldsize } as SslGeometryfieldsize;
     message.fieldLines = [];
     message.fieldArcs = [];
     if (object.fieldLength !== undefined && object.fieldLength !== null) {
@@ -701,12 +701,12 @@ export const SSLGeometryFieldSize = {
     }
     if (object.fieldLines !== undefined && object.fieldLines !== null) {
       for (const e of object.fieldLines) {
-        message.fieldLines.push(SSLFieldLineSegment.fromPartial(e));
+        message.fieldLines.push(SslFieldlinesegment.fromPartial(e));
       }
     }
     if (object.fieldArcs !== undefined && object.fieldArcs !== null) {
       for (const e of object.fieldArcs) {
-        message.fieldArcs.push(SSLFieldCircularArc.fromPartial(e));
+        message.fieldArcs.push(SslFieldcirculararc.fromPartial(e));
       }
     }
     if (
@@ -729,7 +729,7 @@ export const SSLGeometryFieldSize = {
   },
 };
 
-const baseSSLGeometryCameraCalibration: object = {
+const baseSslGeometrycameracalibration: object = {
   cameraId: 0,
   focalLength: 0,
   principalPointX: 0,
@@ -749,9 +749,9 @@ const baseSSLGeometryCameraCalibration: object = {
   pixelImageHeight: 0,
 };
 
-export const SSLGeometryCameraCalibration = {
+export const SslGeometrycameracalibration = {
   encode(
-    message: SSLGeometryCameraCalibration,
+    message: SslGeometrycameracalibration,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.cameraId !== 0) {
@@ -811,12 +811,12 @@ export const SSLGeometryCameraCalibration = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): SSLGeometryCameraCalibration {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  ): SslGeometrycameracalibration {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
-      ...baseSSLGeometryCameraCalibration,
-    } as SSLGeometryCameraCalibration;
+      ...baseSslGeometrycameracalibration,
+    } as SslGeometrycameracalibration;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -879,10 +879,10 @@ export const SSLGeometryCameraCalibration = {
     return message;
   },
 
-  fromJSON(object: any): SSLGeometryCameraCalibration {
+  fromJSON(object: any): SslGeometrycameracalibration {
     const message = {
-      ...baseSSLGeometryCameraCalibration,
-    } as SSLGeometryCameraCalibration;
+      ...baseSslGeometrycameracalibration,
+    } as SslGeometrycameracalibration;
     if (object.cameraId !== undefined && object.cameraId !== null) {
       message.cameraId = Number(object.cameraId);
     } else {
@@ -992,7 +992,7 @@ export const SSLGeometryCameraCalibration = {
     return message;
   },
 
-  toJSON(message: SSLGeometryCameraCalibration): unknown {
+  toJSON(message: SslGeometrycameracalibration): unknown {
     const obj: any = {};
     message.cameraId !== undefined && (obj.cameraId = message.cameraId);
     message.focalLength !== undefined &&
@@ -1023,11 +1023,11 @@ export const SSLGeometryCameraCalibration = {
   },
 
   fromPartial(
-    object: DeepPartial<SSLGeometryCameraCalibration>
-  ): SSLGeometryCameraCalibration {
+    object: DeepPartial<SslGeometrycameracalibration>
+  ): SslGeometrycameracalibration {
     const message = {
-      ...baseSSLGeometryCameraCalibration,
-    } as SSLGeometryCameraCalibration;
+      ...baseSslGeometrycameracalibration,
+    } as SslGeometrycameracalibration;
     if (object.cameraId !== undefined && object.cameraId !== null) {
       message.cameraId = object.cameraId;
     } else {
@@ -1138,21 +1138,21 @@ export const SSLGeometryCameraCalibration = {
   },
 };
 
-const baseSSLGeometryData: object = {};
+const baseSslGeometrydata: object = {};
 
-export const SSLGeometryData = {
+export const SslGeometrydata = {
   encode(
-    message: SSLGeometryData,
+    message: SslGeometrydata,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.field !== undefined) {
-      SSLGeometryFieldSize.encode(
+      SslGeometryfieldsize.encode(
         message.field,
         writer.uint32(10).fork()
       ).ldelim();
     }
     for (const v of message.calib) {
-      SSLGeometryCameraCalibration.encode(
+      SslGeometrycameracalibration.encode(
         v!,
         writer.uint32(18).fork()
       ).ldelim();
@@ -1160,20 +1160,20 @@ export const SSLGeometryData = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLGeometryData {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslGeometrydata {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLGeometryData } as SSLGeometryData;
+    const message = { ...baseSslGeometrydata } as SslGeometrydata;
     message.calib = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.field = SSLGeometryFieldSize.decode(reader, reader.uint32());
+          message.field = SslGeometryfieldsize.decode(reader, reader.uint32());
           break;
         case 2:
           message.calib.push(
-            SSLGeometryCameraCalibration.decode(reader, reader.uint32())
+            SslGeometrycameracalibration.decode(reader, reader.uint32())
           );
           break;
         default:
@@ -1184,31 +1184,31 @@ export const SSLGeometryData = {
     return message;
   },
 
-  fromJSON(object: any): SSLGeometryData {
-    const message = { ...baseSSLGeometryData } as SSLGeometryData;
+  fromJSON(object: any): SslGeometrydata {
+    const message = { ...baseSslGeometrydata } as SslGeometrydata;
     message.calib = [];
     if (object.field !== undefined && object.field !== null) {
-      message.field = SSLGeometryFieldSize.fromJSON(object.field);
+      message.field = SslGeometryfieldsize.fromJSON(object.field);
     } else {
       message.field = undefined;
     }
     if (object.calib !== undefined && object.calib !== null) {
       for (const e of object.calib) {
-        message.calib.push(SSLGeometryCameraCalibration.fromJSON(e));
+        message.calib.push(SslGeometrycameracalibration.fromJSON(e));
       }
     }
     return message;
   },
 
-  toJSON(message: SSLGeometryData): unknown {
+  toJSON(message: SslGeometrydata): unknown {
     const obj: any = {};
     message.field !== undefined &&
       (obj.field = message.field
-        ? SSLGeometryFieldSize.toJSON(message.field)
+        ? SslGeometryfieldsize.toJSON(message.field)
         : undefined);
     if (message.calib) {
       obj.calib = message.calib.map((e) =>
-        e ? SSLGeometryCameraCalibration.toJSON(e) : undefined
+        e ? SslGeometrycameracalibration.toJSON(e) : undefined
       );
     } else {
       obj.calib = [];
@@ -1216,17 +1216,17 @@ export const SSLGeometryData = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLGeometryData>): SSLGeometryData {
-    const message = { ...baseSSLGeometryData } as SSLGeometryData;
+  fromPartial(object: DeepPartial<SslGeometrydata>): SslGeometrydata {
+    const message = { ...baseSslGeometrydata } as SslGeometrydata;
     message.calib = [];
     if (object.field !== undefined && object.field !== null) {
-      message.field = SSLGeometryFieldSize.fromPartial(object.field);
+      message.field = SslGeometryfieldsize.fromPartial(object.field);
     } else {
       message.field = undefined;
     }
     if (object.calib !== undefined && object.calib !== null) {
       for (const e of object.calib) {
-        message.calib.push(SSLGeometryCameraCalibration.fromPartial(e));
+        message.calib.push(SslGeometrycameracalibration.fromPartial(e));
       }
     }
     return message;

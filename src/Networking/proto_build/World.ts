@@ -37,7 +37,7 @@ export const World = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): World {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseWorld } as World;
     message.yellow = [];

@@ -3,10 +3,9 @@ import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { World } from "./World";
 import { TeamParameters } from "./RobotParameters";
-import { SSLGeometryData } from "./messages_robocup_ssl_geometry";
-import { SSLReferee } from "./messages_robocup_ssl_referee";
-import { SSLWrapperPacket } from "./messages_robocup_ssl_wrapper";
-import { UiSettings } from "./UiOptions";
+import { SslGeometrydata } from "./messages_robocup_ssl_geometry";
+import { SslReferee } from "./messages_robocup_ssl_referee";
+import { SslWrapperpacket } from "./messages_robocup_ssl_wrapper";
 import { Handshake } from "./Handshake";
 
 export const protobufPackage = "proto";
@@ -18,24 +17,15 @@ export interface State {
   blueRobotParameters: TeamParameters | undefined;
   yellowRobotParameters: TeamParameters | undefined;
   /** TODO: later change to a custom field type */
-  field: SSLGeometryData | undefined;
+  field: SslGeometrydata | undefined;
   /** TODO: later change to a custom referee type */
-  referee: SSLReferee | undefined;
-  processedVisionPackets: SSLWrapperPacket[];
-  processedRefereePackets: SSLReferee[];
-}
-
-export interface SystemState {
-  state: State | undefined;
-  uiSettings: UiSettings | undefined;
-}
-
-export interface HandshakeState {
-  state: State | undefined;
+  referee: SslReferee | undefined;
+  processedVisionPackets: SslWrapperpacket[];
+  processedRefereePackets: SslReferee[];
 }
 
 export interface ModuleState {
-  systemState: SystemState | undefined;
+  systemState: State | undefined;
   handshakes: Handshake[];
 }
 
@@ -68,22 +58,22 @@ export const State = {
       ).ldelim();
     }
     if (message.field !== undefined) {
-      SSLGeometryData.encode(message.field, writer.uint32(50).fork()).ldelim();
+      SslGeometrydata.encode(message.field, writer.uint32(50).fork()).ldelim();
     }
     if (message.referee !== undefined) {
-      SSLReferee.encode(message.referee, writer.uint32(58).fork()).ldelim();
+      SslReferee.encode(message.referee, writer.uint32(58).fork()).ldelim();
     }
     for (const v of message.processedVisionPackets) {
-      SSLWrapperPacket.encode(v!, writer.uint32(82).fork()).ldelim();
+      SslWrapperpacket.encode(v!, writer.uint32(82).fork()).ldelim();
     }
     for (const v of message.processedRefereePackets) {
-      SSLReferee.encode(v!, writer.uint32(90).fork()).ldelim();
+      SslReferee.encode(v!, writer.uint32(90).fork()).ldelim();
     }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): State {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseState } as State;
     message.processedVisionPackets = [];
@@ -116,19 +106,19 @@ export const State = {
           );
           break;
         case 6:
-          message.field = SSLGeometryData.decode(reader, reader.uint32());
+          message.field = SslGeometrydata.decode(reader, reader.uint32());
           break;
         case 7:
-          message.referee = SSLReferee.decode(reader, reader.uint32());
+          message.referee = SslReferee.decode(reader, reader.uint32());
           break;
         case 10:
           message.processedVisionPackets.push(
-            SSLWrapperPacket.decode(reader, reader.uint32())
+            SslWrapperpacket.decode(reader, reader.uint32())
           );
           break;
         case 11:
           message.processedRefereePackets.push(
-            SSLReferee.decode(reader, reader.uint32())
+            SslReferee.decode(reader, reader.uint32())
           );
           break;
         default:
@@ -187,12 +177,12 @@ export const State = {
       message.yellowRobotParameters = undefined;
     }
     if (object.field !== undefined && object.field !== null) {
-      message.field = SSLGeometryData.fromJSON(object.field);
+      message.field = SslGeometrydata.fromJSON(object.field);
     } else {
       message.field = undefined;
     }
     if (object.referee !== undefined && object.referee !== null) {
-      message.referee = SSLReferee.fromJSON(object.referee);
+      message.referee = SslReferee.fromJSON(object.referee);
     } else {
       message.referee = undefined;
     }
@@ -201,7 +191,7 @@ export const State = {
       object.processedVisionPackets !== null
     ) {
       for (const e of object.processedVisionPackets) {
-        message.processedVisionPackets.push(SSLWrapperPacket.fromJSON(e));
+        message.processedVisionPackets.push(SslWrapperpacket.fromJSON(e));
       }
     }
     if (
@@ -209,7 +199,7 @@ export const State = {
       object.processedRefereePackets !== null
     ) {
       for (const e of object.processedRefereePackets) {
-        message.processedRefereePackets.push(SSLReferee.fromJSON(e));
+        message.processedRefereePackets.push(SslReferee.fromJSON(e));
       }
     }
     return message;
@@ -239,22 +229,22 @@ export const State = {
         : undefined);
     message.field !== undefined &&
       (obj.field = message.field
-        ? SSLGeometryData.toJSON(message.field)
+        ? SslGeometrydata.toJSON(message.field)
         : undefined);
     message.referee !== undefined &&
       (obj.referee = message.referee
-        ? SSLReferee.toJSON(message.referee)
+        ? SslReferee.toJSON(message.referee)
         : undefined);
     if (message.processedVisionPackets) {
       obj.processedVisionPackets = message.processedVisionPackets.map((e) =>
-        e ? SSLWrapperPacket.toJSON(e) : undefined
+        e ? SslWrapperpacket.toJSON(e) : undefined
       );
     } else {
       obj.processedVisionPackets = [];
     }
     if (message.processedRefereePackets) {
       obj.processedRefereePackets = message.processedRefereePackets.map((e) =>
-        e ? SSLReferee.toJSON(e) : undefined
+        e ? SslReferee.toJSON(e) : undefined
       );
     } else {
       obj.processedRefereePackets = [];
@@ -310,12 +300,12 @@ export const State = {
       message.yellowRobotParameters = undefined;
     }
     if (object.field !== undefined && object.field !== null) {
-      message.field = SSLGeometryData.fromPartial(object.field);
+      message.field = SslGeometrydata.fromPartial(object.field);
     } else {
       message.field = undefined;
     }
     if (object.referee !== undefined && object.referee !== null) {
-      message.referee = SSLReferee.fromPartial(object.referee);
+      message.referee = SslReferee.fromPartial(object.referee);
     } else {
       message.referee = undefined;
     }
@@ -324,7 +314,7 @@ export const State = {
       object.processedVisionPackets !== null
     ) {
       for (const e of object.processedVisionPackets) {
-        message.processedVisionPackets.push(SSLWrapperPacket.fromPartial(e));
+        message.processedVisionPackets.push(SslWrapperpacket.fromPartial(e));
       }
     }
     if (
@@ -332,146 +322,8 @@ export const State = {
       object.processedRefereePackets !== null
     ) {
       for (const e of object.processedRefereePackets) {
-        message.processedRefereePackets.push(SSLReferee.fromPartial(e));
+        message.processedRefereePackets.push(SslReferee.fromPartial(e));
       }
-    }
-    return message;
-  },
-};
-
-const baseSystemState: object = {};
-
-export const SystemState = {
-  encode(
-    message: SystemState,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.state !== undefined) {
-      State.encode(message.state, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.uiSettings !== undefined) {
-      UiSettings.encode(message.uiSettings, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): SystemState {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSystemState } as SystemState;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.state = State.decode(reader, reader.uint32());
-          break;
-        case 2:
-          message.uiSettings = UiSettings.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): SystemState {
-    const message = { ...baseSystemState } as SystemState;
-    if (object.state !== undefined && object.state !== null) {
-      message.state = State.fromJSON(object.state);
-    } else {
-      message.state = undefined;
-    }
-    if (object.uiSettings !== undefined && object.uiSettings !== null) {
-      message.uiSettings = UiSettings.fromJSON(object.uiSettings);
-    } else {
-      message.uiSettings = undefined;
-    }
-    return message;
-  },
-
-  toJSON(message: SystemState): unknown {
-    const obj: any = {};
-    message.state !== undefined &&
-      (obj.state = message.state ? State.toJSON(message.state) : undefined);
-    message.uiSettings !== undefined &&
-      (obj.uiSettings = message.uiSettings
-        ? UiSettings.toJSON(message.uiSettings)
-        : undefined);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<SystemState>): SystemState {
-    const message = { ...baseSystemState } as SystemState;
-    if (object.state !== undefined && object.state !== null) {
-      message.state = State.fromPartial(object.state);
-    } else {
-      message.state = undefined;
-    }
-    if (object.uiSettings !== undefined && object.uiSettings !== null) {
-      message.uiSettings = UiSettings.fromPartial(object.uiSettings);
-    } else {
-      message.uiSettings = undefined;
-    }
-    return message;
-  },
-};
-
-const baseHandshakeState: object = {};
-
-export const HandshakeState = {
-  encode(
-    message: HandshakeState,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    if (message.state !== undefined) {
-      State.encode(message.state, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): HandshakeState {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseHandshakeState } as HandshakeState;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.state = State.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): HandshakeState {
-    const message = { ...baseHandshakeState } as HandshakeState;
-    if (object.state !== undefined && object.state !== null) {
-      message.state = State.fromJSON(object.state);
-    } else {
-      message.state = undefined;
-    }
-    return message;
-  },
-
-  toJSON(message: HandshakeState): unknown {
-    const obj: any = {};
-    message.state !== undefined &&
-      (obj.state = message.state ? State.toJSON(message.state) : undefined);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<HandshakeState>): HandshakeState {
-    const message = { ...baseHandshakeState } as HandshakeState;
-    if (object.state !== undefined && object.state !== null) {
-      message.state = State.fromPartial(object.state);
-    } else {
-      message.state = undefined;
     }
     return message;
   },
@@ -485,10 +337,7 @@ export const ModuleState = {
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.systemState !== undefined) {
-      SystemState.encode(
-        message.systemState,
-        writer.uint32(10).fork()
-      ).ldelim();
+      State.encode(message.systemState, writer.uint32(10).fork()).ldelim();
     }
     for (const v of message.handshakes) {
       Handshake.encode(v!, writer.uint32(18).fork()).ldelim();
@@ -497,7 +346,7 @@ export const ModuleState = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ModuleState {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseModuleState } as ModuleState;
     message.handshakes = [];
@@ -505,7 +354,7 @@ export const ModuleState = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.systemState = SystemState.decode(reader, reader.uint32());
+          message.systemState = State.decode(reader, reader.uint32());
           break;
         case 2:
           message.handshakes.push(Handshake.decode(reader, reader.uint32()));
@@ -522,7 +371,7 @@ export const ModuleState = {
     const message = { ...baseModuleState } as ModuleState;
     message.handshakes = [];
     if (object.systemState !== undefined && object.systemState !== null) {
-      message.systemState = SystemState.fromJSON(object.systemState);
+      message.systemState = State.fromJSON(object.systemState);
     } else {
       message.systemState = undefined;
     }
@@ -538,7 +387,7 @@ export const ModuleState = {
     const obj: any = {};
     message.systemState !== undefined &&
       (obj.systemState = message.systemState
-        ? SystemState.toJSON(message.systemState)
+        ? State.toJSON(message.systemState)
         : undefined);
     if (message.handshakes) {
       obj.handshakes = message.handshakes.map((e) =>
@@ -554,7 +403,7 @@ export const ModuleState = {
     const message = { ...baseModuleState } as ModuleState;
     message.handshakes = [];
     if (object.systemState !== undefined && object.systemState !== null) {
-      message.systemState = SystemState.fromPartial(object.systemState);
+      message.systemState = State.fromPartial(object.systemState);
     } else {
       message.systemState = undefined;
     }

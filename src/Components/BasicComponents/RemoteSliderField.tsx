@@ -1,6 +1,6 @@
 import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
-import {extractDataForComponent, findUIOptionByName} from "../Util";
+import {findUIOptionByName} from "../Util";
 import {Slider} from "../../Networking/proto_build/UiOptions";
 
 class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
@@ -12,7 +12,8 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
         this.getOptions = this.getOptions.bind(this);
         this.onChange = this.onChange.bind(this);
 
-        const [definition, value] = extractDataForComponent(props.name, props.state);
+        const definition = findUIOptionByName(this.props.ui.name, this.props.ui.decls);
+        const value = this.props.ui.values.uiValues?.[this.props.ui.name];
 
         // Decide on default value
         if (value?.integerValue != null) {
@@ -23,12 +24,12 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
     }
 
     private getOptions(): Slider {
-        return findUIOptionByName(this.props.name, this.props.state.handshakes?.[0]?.options)?.slider ?? this.defaultValue;
+        return findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.slider ?? this.defaultValue;
     }
 
-    componentDidUpdate(prevProps: Readonly<RemoteUIProps>, prevState: Readonly<any>, snapshot?: any) {
-        const [, oldPropValue] = extractDataForComponent(prevProps.name, prevProps.state);
-        const [, newPropValue] = extractDataForComponent(this.props.name, this.props.state);
+    componentDidUpdate(prevProps: Readonly<{ui: RemoteUIProps}>, prevState: Readonly<any>, snapshot?: any) {
+        const oldPropValue = prevProps.ui.values.uiValues[this.props.ui.name];
+        const newPropValue = this.props.ui.values.uiValues[this.props.ui.name];
 
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.integerValue != null && oldPropValue?.integerValue != newPropValue?.integerValue) {
@@ -38,7 +39,7 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
 
     render() {
         return (
-                <input type="range" id={this.props.name} className="remote sliderField"
+                <input type="range" id={this.props.ui.name} className="remote sliderField"
                        min={this.getOptions().min} max={this.getOptions().max}
                        step={this.getOptions().interval} value={this.state.integerValue}
                        onChange={this.onChange}/>)
@@ -47,7 +48,7 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
     private onChange(ev: ChangeEvent<HTMLInputElement>) {
         this.setState({...this.state, integerValue: ev.target.value});
 
-        this.props.onChange(this.props.name, {
+        this.props.ui.onChange(this.props.ui.name, {
             boolValue: undefined,
             integerValue: this.state.integerValue,
             floatValue: undefined,

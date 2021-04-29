@@ -9,7 +9,7 @@ class ReplayControl extends React.Component<RemoteUIProps, any> {
     render() {
         return (
             <Grid item>
-                <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={""}/>
+                <RemoteCheckboxField ui={this.props}/>
             </Grid>
         )
     }

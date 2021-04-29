@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SSLFieldCircularArc, SSLFieldLineSegment } from '../../Networking/proto_build/messages_robocup_ssl_geometry';
+import { SslFieldcirculararc, SslFieldlinesegment } from '../../Networking/proto_build/messages_robocup_ssl_geometry';
 import { ModuleState, State } from '../../Networking/proto_build/State';
 import { Vector2f } from '../../Networking/proto_build/Vector2f';
 import { World } from '../../Networking/proto_build/World';
@@ -173,7 +173,7 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.stroke();
     }
 
-    drawLines(ctx: CanvasRenderingContext2D, lines: SSLFieldLineSegment[]) {
+    drawLines(ctx: CanvasRenderingContext2D, lines: SslFieldlinesegment[]) {
         for (let line of lines) {
             let {
                 p1, p2, thickness
@@ -211,7 +211,7 @@ class Field extends React.Component<FieldProps, FieldState> {
         ctx.fillStyle = oldColor;
     }
 
-    drawArcs(ctx: CanvasRenderingContext2D, arcs: SSLFieldCircularArc[]) {
+    drawArcs(ctx: CanvasRenderingContext2D, arcs: SslFieldcirculararc[]) {
         for (let arc of arcs) {
             let { center, radius, thickness } = arc;
             let oldStrokeWidth = ctx.lineWidth;

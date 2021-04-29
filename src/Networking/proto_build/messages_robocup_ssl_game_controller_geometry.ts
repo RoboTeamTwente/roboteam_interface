@@ -34,7 +34,7 @@ export const Vector2 = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Vector2 {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVector2 } as Vector2;
     while (reader.pos < end) {
@@ -112,7 +112,7 @@ export const Vector3 = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Vector3 {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseVector3 } as Vector3;
     while (reader.pos < end) {

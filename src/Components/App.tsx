@@ -1,28 +1,23 @@
 import * as React from "react";
 import "../Styles/main.css";
-import {ModuleState} from "../Networking/proto_build/State";
+import {ModuleState, State} from "../Networking/proto_build/State";
 import {CONSTANTS} from "./Constants";
 import {getStartingPortHostnameCombination, hostnamePortPairToWSURL, saveServerPreferences} from "./Util";
-import {PossibleUiValue} from "../Networking/proto_build/UiOptions";
-import logo from '../Images/roboteam_logo_trans.png';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import CentralServerConnectionSettings from "./CentralServerConnectionSettings";
-import SettingsWidget from "./Settings/SettingsWidget";
-import Field from "./Field/Field";
+import SettingsWidget from "./LayoutComponents/Settings/SettingsWidget";
 import FieldLayout from "./LayoutComponents/FieldLayout";
 import {Box} from "@material-ui/core";
+import {UiOptionDeclaration, UiOptionDeclarations, UiValue, UiValues} from "../Networking/proto_build/UiOptions";
 
 type AppState = {
-    readonly data: ModuleState
+    readonly values: UiValues
+    readonly declarations: UiOptionDeclarations
+    readonly fieldVisualisationData: State | undefined
     readonly ws: WebSocket | undefined
 }
 
 class App extends React.Component<{}, AppState> {
-    private readonly defaultStateData: ModuleState = {
-        systemState: {state: undefined, uiSettings: {uiValues: {}}},
-        handshakes: []
-    };
 
     constructor(props: any) {
         super(props);
@@ -31,11 +26,12 @@ class App extends React.Component<{}, AppState> {
         this.coerceRefreshOnWebSocketEvent = this.coerceRefreshOnWebSocketEvent.bind(this);
         this.childWillUpdate = this.childWillUpdate.bind(this);
         this.onWsMessage = this.onWsMessage.bind(this);
-        this.getEnsureNotEmpty = this.getEnsureNotEmpty.bind(this);
 
-        const pastUIState = localStorage.getItem(CONSTANTS.RECENT_UI_STATE_KEY);
-        const data = pastUIState == null ? this.defaultStateData : ModuleState.fromJSON(pastUIState!);
-        this.state = {data: data, ws: undefined};
+        const initUIValues = UiValues.fromJSON(localStorage.getItem(CONSTANTS.RECENT_UI_STATE_VALUES_KEY) ?? "[]");
+        const pastUIDecls = UiOptionDeclarations.fromJSON(localStorage.getItem(CONSTANTS.RECENT_UI_STATE_DECL_KEY) ?? "[]");
+
+        // TODO: Save old field data?
+        this.state = {values: initUIValues, declarations: pastUIDecls, fieldVisualisationData: undefined, ws: undefined};
 
     }
 
@@ -45,20 +41,19 @@ class App extends React.Component<{}, AppState> {
         this.installWebsocket(new WebSocket(hostnamePortPairToWSURL(host, port, "")));
 
         window.onbeforeunload = () => {
-            if (this.state.data != null) {
-                localStorage.setItem(CONSTANTS.RECENT_UI_STATE_KEY, JSON.stringify(ModuleState.toJSON(this.state.data!)));
-            }
+            localStorage.setItem(CONSTANTS.RECENT_UI_STATE_VALUES_KEY, JSON.stringify(UiValues.toJSON(this.state.values)));
+            localStorage.setItem(CONSTANTS.RECENT_UI_STATE_DECL_KEY, JSON.stringify(UiOptionDeclarations.toJSON(this.state.declarations)));
         };
     }
 
     render() {
         return (
             <Grid container className="background" style={{height: "100vh", margin: 0, width: '100%'}}>
-                <FieldLayout state={this.state.data} onChange={this.childWillUpdate} name={""}/>
+                <FieldLayout ui={{decls: this.state.declarations, values: this.state.values, onChange: this.childWillUpdate, name: ""}} field={this.state.fieldVisualisationData}/>
                 <Grid item xs={5}>
                     <Box pt={4} pb={11} pr={5} pl={4} style={{height: "100%"}}>
                         <Paper style={{height: "100%"}}>
-                            <SettingsWidget cs={{socketSettingsDidChange: this.didChangeServer, wsocket: this.state.ws, defaultHostPortPair: getStartingPortHostnameCombination()}} sims={{state: this.state.data, onChange: this.childWillUpdate, name: ""}} />
+                            <SettingsWidget cs={{socketSettingsDidChange: this.didChangeServer, wsocket: this.state.ws, defaultHostPortPair: getStartingPortHostnameCombination()}} sims={{decls: this.state.declarations, values: this.state.values, onChange: this.childWillUpdate, name: ""}} />
                         </Paper>
                     </Box>
                 </Grid>
@@ -79,9 +74,21 @@ class App extends React.Component<{}, AppState> {
             return;
         }
 
-        data = this.getEnsureNotEmpty(data);
+        if (data.handshakes.length <= 0) {
+            console.log("[-] Got message with no data");
+        }
 
-        this.setState({...this.state, data});
+        let newDecls = this.state.declarations;
+        if (data.handshakes[0].declarations != null ){
+            newDecls = data.handshakes[0].declarations;
+        }
+
+        let newValues = this.state.values;
+        if (data.handshakes[0].values != null) {
+            newValues = data.handshakes[0].values;
+        }
+
+        this.setState({...this.state, values: newValues, declarations: newDecls});
     }
 
     private installWebsocket(ws: WebSocket) {
@@ -102,32 +109,17 @@ class App extends React.Component<{}, AppState> {
         saveServerPreferences(hostname, port);
     }
 
-    private getEnsureNotEmpty(current: ModuleState): ModuleState {
-        let mod = current;
+    private childWillUpdate(name: string, newValue: UiValue): void {
+        const vals = this.state.values;
+        vals.uiValues[name] = newValue;
 
-        if (mod.systemState == null) {
-            mod.systemState = this.defaultStateData.systemState;
-        } else if (mod.systemState.uiSettings == null) {
-            mod.systemState.uiSettings = this.defaultStateData.systemState!.uiSettings!;
-        } else if (mod.systemState.uiSettings.uiValues == null) {
-            mod.systemState.uiSettings.uiValues = this.defaultStateData.systemState!.uiSettings?.uiValues!;
-        }
-
-        return mod;
-    }
-
-    private childWillUpdate(name: string, newValue: PossibleUiValue): void {
-        const mod = this.getEnsureNotEmpty(this.state.data);
-
-        mod.systemState!.uiSettings!.uiValues[name] = newValue;
-
-        this.setState({...this.state, data: mod});
+        this.setState({...this.state, values: vals});
 
         if (
             this.state.ws != null &&
-            this.state.ws?.readyState === this.state.ws?.OPEN &&
-            this.state.data != null
+            this.state.ws?.readyState === this.state.ws?.OPEN
         ) {
+            const mod: ModuleState = {systemState: this.state.fieldVisualisationData, handshakes: [{moduleName: "default", declarations: this.state.declarations, values: this.state.values}]};
             console.log(JSON.stringify(mod));
             const writer = ModuleState.encode(mod).finish();
             this.state.ws.send(writer);

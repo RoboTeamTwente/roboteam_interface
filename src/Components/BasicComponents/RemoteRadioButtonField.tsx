@@ -1,6 +1,6 @@
 import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
-import {extractDataForComponent, findUIOptionByName} from "../Util";
+import { findUIOptionByName} from "../Util";
 import {RadioButton} from "../../Networking/proto_build/UiOptions";
 import Long from "long";
 import shallowequal from "shallowequal";
@@ -14,7 +14,8 @@ class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
         this.getOptions = this.getOptions.bind(this);
         this.onChange = this.onChange.bind(this);
 
-        const [definition, value] = extractDataForComponent(props.name, props.state);
+        const definition = findUIOptionByName(this.props.ui.name, this.props.ui.decls);
+        const value = this.props.ui.values.uiValues?.[this.props.ui.name];
 
         // Decide on default value
         if (value?.integerValue != null) {
@@ -25,14 +26,14 @@ class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
     }
 
     private getOptions(): RadioButton {
-        const [options,] = extractDataForComponent(this.props.name, this.props.state);
+        const options = findUIOptionByName(this.props.ui.name, this.props.ui.decls);
         return options?.radiobutton ?? this.defaultValue;
     }
 
 
-    componentDidUpdate(prevProps: Readonly<RemoteUIProps>, prevState: Readonly<any>, snapshot?: any) {
-        const [, oldPropValue] = extractDataForComponent(prevProps.name, prevProps.state);
-        const [, newPropValue] = extractDataForComponent(this.props.name, this.props.state);
+    componentDidUpdate(prevProps: Readonly<{ui: RemoteUIProps}>, prevState: Readonly<any>, snapshot?: any) {
+        const oldPropValue = prevProps.ui.values.uiValues[this.props.ui.name];
+        const newPropValue = this.props.ui.values.uiValues[this.props.ui.name];
 
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.integerValue != null && oldPropValue?.integerValue != newPropValue?.integerValue) {
@@ -42,7 +43,7 @@ class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
 
     render() {
         return (
-            <div onChange={this.onChange} id={this.props.name} className="remote radioButtonGroup">
+            <div onChange={this.onChange} id={this.props.ui.name} className="remote radioButtonGroup">
                 {this.renderRadioButtons()}
             </div>);
     }
@@ -51,7 +52,7 @@ class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
         const indexOfSelection = Number(ev.target.value);
         this.setState({...this.state, selection: indexOfSelection});
 
-        this.props.onChange(this.props.name, {
+        this.props.ui.onChange(this.props.ui.name, {
             boolValue: undefined,
             integerValue: Long.fromNumber(indexOfSelection),
             floatValue: undefined,
@@ -65,7 +66,7 @@ class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
         for (let i = 0; i < this.getOptions().options.length; i++) {
             options.push(
                 <label className="remote radioLabel">{this.getOptions().options[i]}
-                    <input type="radio" name={this.props.name} key={this.getOptions().options[i]}
+                    <input type="radio" name={this.props.ui.name} key={this.getOptions().options[i]}
                            className="remote radioButton" value={i} checked={this.state.selection === i}/>
                 </label>
             );

@@ -1,31 +1,31 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { SSLDetectionFrame } from "./messages_robocup_ssl_detection";
-import { SSLGeometryData } from "./messages_robocup_ssl_geometry";
+import { SslDetectionframe } from "./messages_robocup_ssl_detection";
+import { SslGeometrydata } from "./messages_robocup_ssl_geometry";
 
 export const protobufPackage = "proto";
 
-export interface SSLWrapperPacket {
-  detection: SSLDetectionFrame | undefined;
-  geometry: SSLGeometryData | undefined;
+export interface SslWrapperpacket {
+  detection: SslDetectionframe | undefined;
+  geometry: SslGeometrydata | undefined;
 }
 
-const baseSSLWrapperPacket: object = {};
+const baseSslWrapperpacket: object = {};
 
-export const SSLWrapperPacket = {
+export const SslWrapperpacket = {
   encode(
-    message: SSLWrapperPacket,
+    message: SslWrapperpacket,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.detection !== undefined) {
-      SSLDetectionFrame.encode(
+      SslDetectionframe.encode(
         message.detection,
         writer.uint32(10).fork()
       ).ldelim();
     }
     if (message.geometry !== undefined) {
-      SSLGeometryData.encode(
+      SslGeometrydata.encode(
         message.geometry,
         writer.uint32(18).fork()
       ).ldelim();
@@ -33,18 +33,18 @@ export const SSLWrapperPacket = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLWrapperPacket {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslWrapperpacket {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLWrapperPacket } as SSLWrapperPacket;
+    const message = { ...baseSslWrapperpacket } as SslWrapperpacket;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.detection = SSLDetectionFrame.decode(reader, reader.uint32());
+          message.detection = SslDetectionframe.decode(reader, reader.uint32());
           break;
         case 2:
-          message.geometry = SSLGeometryData.decode(reader, reader.uint32());
+          message.geometry = SslGeometrydata.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -54,43 +54,43 @@ export const SSLWrapperPacket = {
     return message;
   },
 
-  fromJSON(object: any): SSLWrapperPacket {
-    const message = { ...baseSSLWrapperPacket } as SSLWrapperPacket;
+  fromJSON(object: any): SslWrapperpacket {
+    const message = { ...baseSslWrapperpacket } as SslWrapperpacket;
     if (object.detection !== undefined && object.detection !== null) {
-      message.detection = SSLDetectionFrame.fromJSON(object.detection);
+      message.detection = SslDetectionframe.fromJSON(object.detection);
     } else {
       message.detection = undefined;
     }
     if (object.geometry !== undefined && object.geometry !== null) {
-      message.geometry = SSLGeometryData.fromJSON(object.geometry);
+      message.geometry = SslGeometrydata.fromJSON(object.geometry);
     } else {
       message.geometry = undefined;
     }
     return message;
   },
 
-  toJSON(message: SSLWrapperPacket): unknown {
+  toJSON(message: SslWrapperpacket): unknown {
     const obj: any = {};
     message.detection !== undefined &&
       (obj.detection = message.detection
-        ? SSLDetectionFrame.toJSON(message.detection)
+        ? SslDetectionframe.toJSON(message.detection)
         : undefined);
     message.geometry !== undefined &&
       (obj.geometry = message.geometry
-        ? SSLGeometryData.toJSON(message.geometry)
+        ? SslGeometrydata.toJSON(message.geometry)
         : undefined);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLWrapperPacket>): SSLWrapperPacket {
-    const message = { ...baseSSLWrapperPacket } as SSLWrapperPacket;
+  fromPartial(object: DeepPartial<SslWrapperpacket>): SslWrapperpacket {
+    const message = { ...baseSslWrapperpacket } as SslWrapperpacket;
     if (object.detection !== undefined && object.detection !== null) {
-      message.detection = SSLDetectionFrame.fromPartial(object.detection);
+      message.detection = SslDetectionframe.fromPartial(object.detection);
     } else {
       message.detection = undefined;
     }
     if (object.geometry !== undefined && object.geometry !== null) {
-      message.geometry = SSLGeometryData.fromPartial(object.geometry);
+      message.geometry = SslGeometrydata.fromPartial(object.geometry);
     } else {
       message.geometry = undefined;
     }

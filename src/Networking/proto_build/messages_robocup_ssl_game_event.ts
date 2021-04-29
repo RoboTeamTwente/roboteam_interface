@@ -1,11 +1,11 @@
 /* eslint-disable */
 import Long from "long";
+import _m0 from "protobufjs/minimal";
 import {
   Team,
   teamFromJSON,
   teamToJSON,
 } from "./messages_robocup_ssl_game_controller_common";
-import _m0 from "protobufjs/minimal";
 import { Vector2 } from "./messages_robocup_ssl_game_controller_geometry";
 
 export const protobufPackage = "proto";
@@ -1165,7 +1165,7 @@ export const GameEvent = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GameEvent {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent } as GameEvent;
     message.origin = [];
@@ -2456,7 +2456,7 @@ export const GameEvent_BallLeftField = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BallLeftField {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BallLeftField,
@@ -2565,7 +2565,7 @@ export const GameEvent_AimlessKick = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AimlessKick {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent_AimlessKick } as GameEvent_AimlessKick;
     while (reader.pos < end) {
@@ -2705,7 +2705,7 @@ export const GameEvent_Goal = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GameEvent_Goal {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent_Goal } as GameEvent_Goal;
     while (reader.pos < end) {
@@ -2911,7 +2911,7 @@ export const GameEvent_IndirectGoal = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_IndirectGoal {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent_IndirectGoal } as GameEvent_IndirectGoal;
     while (reader.pos < end) {
@@ -3038,7 +3038,7 @@ export const GameEvent_ChippedGoal = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_ChippedGoal {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent_ChippedGoal } as GameEvent_ChippedGoal;
     while (reader.pos < end) {
@@ -3177,7 +3177,7 @@ export const GameEvent_BotTooFastInStop = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotTooFastInStop {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotTooFastInStop,
@@ -3304,7 +3304,7 @@ export const GameEvent_DefenderTooCloseToKickPoint = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_DefenderTooCloseToKickPoint {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_DefenderTooCloseToKickPoint,
@@ -3439,7 +3439,7 @@ export const GameEvent_BotCrashDrawn = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotCrashDrawn {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotCrashDrawn,
@@ -3606,7 +3606,7 @@ export const GameEvent_BotCrashUnique = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotCrashUnique {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotCrashUnique,
@@ -3779,7 +3779,7 @@ export const GameEvent_BotPushedBot = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotPushedBot {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent_BotPushedBot } as GameEvent_BotPushedBot;
     while (reader.pos < end) {
@@ -3911,7 +3911,7 @@ export const GameEvent_BotTippedOver = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotTippedOver {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotTippedOver,
@@ -4041,7 +4041,7 @@ export const GameEvent_DefenderInDefenseArea = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_DefenderInDefenseArea {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_DefenderInDefenseArea,
@@ -4171,7 +4171,7 @@ export const GameEvent_DefenderInDefenseAreaPartially = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_DefenderInDefenseAreaPartially {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_DefenderInDefenseAreaPartially,
@@ -4315,7 +4315,7 @@ export const GameEvent_AttackerTouchedBallInDefenseArea = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerTouchedBallInDefenseArea {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_AttackerTouchedBallInDefenseArea,
@@ -4446,7 +4446,7 @@ export const GameEvent_BotKickedBallTooFast = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotKickedBallTooFast {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotKickedBallTooFast,
@@ -4590,7 +4590,7 @@ export const GameEvent_BotDribbledBallTooFar = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotDribbledBallTooFar {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotDribbledBallTooFar,
@@ -4716,7 +4716,7 @@ export const GameEvent_AttackerTouchedOpponentInDefenseArea = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerTouchedOpponentInDefenseArea {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_AttackerTouchedOpponentInDefenseArea,
@@ -4836,7 +4836,7 @@ export const GameEvent_AttackerDoubleTouchedBall = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerDoubleTouchedBall {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_AttackerDoubleTouchedBall,
@@ -4952,7 +4952,7 @@ export const GameEvent_AttackerTooCloseToDefenseArea = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_AttackerTooCloseToDefenseArea {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_AttackerTooCloseToDefenseArea,
@@ -5096,7 +5096,7 @@ export const GameEvent_BotHeldBallDeliberately = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotHeldBallDeliberately {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotHeldBallDeliberately,
@@ -5216,7 +5216,7 @@ export const GameEvent_BotInterferedPlacement = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotInterferedPlacement {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotInterferedPlacement,
@@ -5316,7 +5316,7 @@ export const GameEvent_MultipleCards = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_MultipleCards {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_MultipleCards,
@@ -5385,7 +5385,7 @@ export const GameEvent_MultipleFouls = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_MultipleFouls {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_MultipleFouls,
@@ -5454,7 +5454,7 @@ export const GameEvent_MultiplePlacementFailures = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_MultiplePlacementFailures {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_MultiplePlacementFailures,
@@ -5529,7 +5529,7 @@ export const GameEvent_KickTimeout = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_KickTimeout {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent_KickTimeout } as GameEvent_KickTimeout;
     while (reader.pos < end) {
@@ -5626,7 +5626,7 @@ export const GameEvent_NoProgressInGame = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_NoProgressInGame {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_NoProgressInGame,
@@ -5718,7 +5718,7 @@ export const GameEvent_PlacementFailed = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_PlacementFailed {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_PlacementFailed,
@@ -5811,7 +5811,7 @@ export const GameEvent_UnsportingBehaviorMinor = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_UnsportingBehaviorMinor {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_UnsportingBehaviorMinor,
@@ -5897,7 +5897,7 @@ export const GameEvent_UnsportingBehaviorMajor = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_UnsportingBehaviorMajor {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_UnsportingBehaviorMajor,
@@ -5986,7 +5986,7 @@ export const GameEvent_KeeperHeldBall = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_KeeperHeldBall {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_KeeperHeldBall,
@@ -6100,7 +6100,7 @@ export const GameEvent_PlacementSucceeded = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_PlacementSucceeded {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_PlacementSucceeded,
@@ -6208,7 +6208,7 @@ export const GameEvent_Prepared = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GameEvent_Prepared {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGameEvent_Prepared } as GameEvent_Prepared;
     while (reader.pos < end) {
@@ -6269,7 +6269,7 @@ export const GameEvent_BotSubstitution = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BotSubstitution {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BotSubstitution,
@@ -6338,7 +6338,7 @@ export const GameEvent_ChallengeFlag = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_ChallengeFlag {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_ChallengeFlag,
@@ -6407,7 +6407,7 @@ export const GameEvent_EmergencyStop = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_EmergencyStop {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_EmergencyStop,
@@ -6489,7 +6489,7 @@ export const GameEvent_TooManyRobots = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_TooManyRobots {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_TooManyRobots,
@@ -6620,7 +6620,7 @@ export const GameEvent_BoundaryCrossing = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_BoundaryCrossing {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_BoundaryCrossing,
@@ -6709,7 +6709,7 @@ export const GameEvent_PenaltyKickFailed = {
     input: _m0.Reader | Uint8Array,
     length?: number
   ): GameEvent_PenaltyKickFailed {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseGameEvent_PenaltyKickFailed,

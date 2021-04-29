@@ -4,7 +4,7 @@ import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "proto";
 
-export interface SSLDetectionBall {
+export interface SslDetectionball {
   confidence: number;
   area: number;
   x: number;
@@ -14,7 +14,7 @@ export interface SSLDetectionBall {
   pixelY: number;
 }
 
-export interface SSLDetectionRobot {
+export interface SslDetectionrobot {
   confidence: number;
   robotId: number;
   x: number;
@@ -25,17 +25,17 @@ export interface SSLDetectionRobot {
   height: number;
 }
 
-export interface SSLDetectionFrame {
+export interface SslDetectionframe {
   frameNumber: number;
   tCapture: number;
   tSent: number;
   cameraId: number;
-  balls: SSLDetectionBall[];
-  robotsYellow: SSLDetectionRobot[];
-  robotsBlue: SSLDetectionRobot[];
+  balls: SslDetectionball[];
+  robotsYellow: SslDetectionrobot[];
+  robotsBlue: SslDetectionrobot[];
 }
 
-const baseSSLDetectionBall: object = {
+const baseSslDetectionball: object = {
   confidence: 0,
   area: 0,
   x: 0,
@@ -45,9 +45,9 @@ const baseSSLDetectionBall: object = {
   pixelY: 0,
 };
 
-export const SSLDetectionBall = {
+export const SslDetectionball = {
   encode(
-    message: SSLDetectionBall,
+    message: SslDetectionball,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.confidence !== 0) {
@@ -74,10 +74,10 @@ export const SSLDetectionBall = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLDetectionBall {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslDetectionball {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLDetectionBall } as SSLDetectionBall;
+    const message = { ...baseSslDetectionball } as SslDetectionball;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -110,8 +110,8 @@ export const SSLDetectionBall = {
     return message;
   },
 
-  fromJSON(object: any): SSLDetectionBall {
-    const message = { ...baseSSLDetectionBall } as SSLDetectionBall;
+  fromJSON(object: any): SslDetectionball {
+    const message = { ...baseSslDetectionball } as SslDetectionball;
     if (object.confidence !== undefined && object.confidence !== null) {
       message.confidence = Number(object.confidence);
     } else {
@@ -150,7 +150,7 @@ export const SSLDetectionBall = {
     return message;
   },
 
-  toJSON(message: SSLDetectionBall): unknown {
+  toJSON(message: SslDetectionball): unknown {
     const obj: any = {};
     message.confidence !== undefined && (obj.confidence = message.confidence);
     message.area !== undefined && (obj.area = message.area);
@@ -162,8 +162,8 @@ export const SSLDetectionBall = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLDetectionBall>): SSLDetectionBall {
-    const message = { ...baseSSLDetectionBall } as SSLDetectionBall;
+  fromPartial(object: DeepPartial<SslDetectionball>): SslDetectionball {
+    const message = { ...baseSslDetectionball } as SslDetectionball;
     if (object.confidence !== undefined && object.confidence !== null) {
       message.confidence = object.confidence;
     } else {
@@ -203,7 +203,7 @@ export const SSLDetectionBall = {
   },
 };
 
-const baseSSLDetectionRobot: object = {
+const baseSslDetectionrobot: object = {
   confidence: 0,
   robotId: 0,
   x: 0,
@@ -214,9 +214,9 @@ const baseSSLDetectionRobot: object = {
   height: 0,
 };
 
-export const SSLDetectionRobot = {
+export const SslDetectionrobot = {
   encode(
-    message: SSLDetectionRobot,
+    message: SslDetectionrobot,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.confidence !== 0) {
@@ -246,10 +246,10 @@ export const SSLDetectionRobot = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLDetectionRobot {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslDetectionrobot {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLDetectionRobot } as SSLDetectionRobot;
+    const message = { ...baseSslDetectionrobot } as SslDetectionrobot;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -285,8 +285,8 @@ export const SSLDetectionRobot = {
     return message;
   },
 
-  fromJSON(object: any): SSLDetectionRobot {
-    const message = { ...baseSSLDetectionRobot } as SSLDetectionRobot;
+  fromJSON(object: any): SslDetectionrobot {
+    const message = { ...baseSslDetectionrobot } as SslDetectionrobot;
     if (object.confidence !== undefined && object.confidence !== null) {
       message.confidence = Number(object.confidence);
     } else {
@@ -330,7 +330,7 @@ export const SSLDetectionRobot = {
     return message;
   },
 
-  toJSON(message: SSLDetectionRobot): unknown {
+  toJSON(message: SslDetectionrobot): unknown {
     const obj: any = {};
     message.confidence !== undefined && (obj.confidence = message.confidence);
     message.robotId !== undefined && (obj.robotId = message.robotId);
@@ -344,8 +344,8 @@ export const SSLDetectionRobot = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLDetectionRobot>): SSLDetectionRobot {
-    const message = { ...baseSSLDetectionRobot } as SSLDetectionRobot;
+  fromPartial(object: DeepPartial<SslDetectionrobot>): SslDetectionrobot {
+    const message = { ...baseSslDetectionrobot } as SslDetectionrobot;
     if (object.confidence !== undefined && object.confidence !== null) {
       message.confidence = object.confidence;
     } else {
@@ -390,16 +390,16 @@ export const SSLDetectionRobot = {
   },
 };
 
-const baseSSLDetectionFrame: object = {
+const baseSslDetectionframe: object = {
   frameNumber: 0,
   tCapture: 0,
   tSent: 0,
   cameraId: 0,
 };
 
-export const SSLDetectionFrame = {
+export const SslDetectionframe = {
   encode(
-    message: SSLDetectionFrame,
+    message: SslDetectionframe,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.frameNumber !== 0) {
@@ -415,21 +415,21 @@ export const SSLDetectionFrame = {
       writer.uint32(32).uint32(message.cameraId);
     }
     for (const v of message.balls) {
-      SSLDetectionBall.encode(v!, writer.uint32(42).fork()).ldelim();
+      SslDetectionball.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     for (const v of message.robotsYellow) {
-      SSLDetectionRobot.encode(v!, writer.uint32(50).fork()).ldelim();
+      SslDetectionrobot.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     for (const v of message.robotsBlue) {
-      SSLDetectionRobot.encode(v!, writer.uint32(58).fork()).ldelim();
+      SslDetectionrobot.encode(v!, writer.uint32(58).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SSLDetectionFrame {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): SslDetectionframe {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseSSLDetectionFrame } as SSLDetectionFrame;
+    const message = { ...baseSslDetectionframe } as SslDetectionframe;
     message.balls = [];
     message.robotsYellow = [];
     message.robotsBlue = [];
@@ -449,16 +449,16 @@ export const SSLDetectionFrame = {
           message.cameraId = reader.uint32();
           break;
         case 5:
-          message.balls.push(SSLDetectionBall.decode(reader, reader.uint32()));
+          message.balls.push(SslDetectionball.decode(reader, reader.uint32()));
           break;
         case 6:
           message.robotsYellow.push(
-            SSLDetectionRobot.decode(reader, reader.uint32())
+            SslDetectionrobot.decode(reader, reader.uint32())
           );
           break;
         case 7:
           message.robotsBlue.push(
-            SSLDetectionRobot.decode(reader, reader.uint32())
+            SslDetectionrobot.decode(reader, reader.uint32())
           );
           break;
         default:
@@ -469,8 +469,8 @@ export const SSLDetectionFrame = {
     return message;
   },
 
-  fromJSON(object: any): SSLDetectionFrame {
-    const message = { ...baseSSLDetectionFrame } as SSLDetectionFrame;
+  fromJSON(object: any): SslDetectionframe {
+    const message = { ...baseSslDetectionframe } as SslDetectionframe;
     message.balls = [];
     message.robotsYellow = [];
     message.robotsBlue = [];
@@ -496,23 +496,23 @@ export const SSLDetectionFrame = {
     }
     if (object.balls !== undefined && object.balls !== null) {
       for (const e of object.balls) {
-        message.balls.push(SSLDetectionBall.fromJSON(e));
+        message.balls.push(SslDetectionball.fromJSON(e));
       }
     }
     if (object.robotsYellow !== undefined && object.robotsYellow !== null) {
       for (const e of object.robotsYellow) {
-        message.robotsYellow.push(SSLDetectionRobot.fromJSON(e));
+        message.robotsYellow.push(SslDetectionrobot.fromJSON(e));
       }
     }
     if (object.robotsBlue !== undefined && object.robotsBlue !== null) {
       for (const e of object.robotsBlue) {
-        message.robotsBlue.push(SSLDetectionRobot.fromJSON(e));
+        message.robotsBlue.push(SslDetectionrobot.fromJSON(e));
       }
     }
     return message;
   },
 
-  toJSON(message: SSLDetectionFrame): unknown {
+  toJSON(message: SslDetectionframe): unknown {
     const obj: any = {};
     message.frameNumber !== undefined &&
       (obj.frameNumber = message.frameNumber);
@@ -521,21 +521,21 @@ export const SSLDetectionFrame = {
     message.cameraId !== undefined && (obj.cameraId = message.cameraId);
     if (message.balls) {
       obj.balls = message.balls.map((e) =>
-        e ? SSLDetectionBall.toJSON(e) : undefined
+        e ? SslDetectionball.toJSON(e) : undefined
       );
     } else {
       obj.balls = [];
     }
     if (message.robotsYellow) {
       obj.robotsYellow = message.robotsYellow.map((e) =>
-        e ? SSLDetectionRobot.toJSON(e) : undefined
+        e ? SslDetectionrobot.toJSON(e) : undefined
       );
     } else {
       obj.robotsYellow = [];
     }
     if (message.robotsBlue) {
       obj.robotsBlue = message.robotsBlue.map((e) =>
-        e ? SSLDetectionRobot.toJSON(e) : undefined
+        e ? SslDetectionrobot.toJSON(e) : undefined
       );
     } else {
       obj.robotsBlue = [];
@@ -543,8 +543,8 @@ export const SSLDetectionFrame = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<SSLDetectionFrame>): SSLDetectionFrame {
-    const message = { ...baseSSLDetectionFrame } as SSLDetectionFrame;
+  fromPartial(object: DeepPartial<SslDetectionframe>): SslDetectionframe {
+    const message = { ...baseSslDetectionframe } as SslDetectionframe;
     message.balls = [];
     message.robotsYellow = [];
     message.robotsBlue = [];
@@ -570,17 +570,17 @@ export const SSLDetectionFrame = {
     }
     if (object.balls !== undefined && object.balls !== null) {
       for (const e of object.balls) {
-        message.balls.push(SSLDetectionBall.fromPartial(e));
+        message.balls.push(SslDetectionball.fromPartial(e));
       }
     }
     if (object.robotsYellow !== undefined && object.robotsYellow !== null) {
       for (const e of object.robotsYellow) {
-        message.robotsYellow.push(SSLDetectionRobot.fromPartial(e));
+        message.robotsYellow.push(SslDetectionrobot.fromPartial(e));
       }
     }
     if (object.robotsBlue !== undefined && object.robotsBlue !== null) {
       for (const e of object.robotsBlue) {
-        message.robotsBlue.push(SSLDetectionRobot.fromPartial(e));
+        message.robotsBlue.push(SslDetectionrobot.fromPartial(e));
       }
     }
     return message;

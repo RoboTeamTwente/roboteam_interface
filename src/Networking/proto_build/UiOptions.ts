@@ -32,8 +32,12 @@ export interface TextField {
   text: string;
 }
 
-export interface UiOption {
+export interface UiOptionDeclaration {
   name: string;
+  /** If set to true, the module itself can edit the button, and not just the user. */
+  isMutable: boolean;
+  /** description of what this button does */
+  description: string;
   slider: Slider | undefined;
   checkbox: Checkbox | undefined;
   dropdown: Dropdown | undefined;
@@ -41,21 +45,25 @@ export interface UiOption {
   textfield: TextField | undefined;
 }
 
-export interface PossibleUiValue {
+export interface UiOptionDeclarations {
+  options: UiOptionDeclaration[];
+}
+
+export interface UiValue {
   floatValue: number | undefined;
   boolValue: boolean | undefined;
   integerValue: Long | undefined;
   textValue: string | undefined;
 }
 
-export interface UiSettings {
+export interface UiValues {
   /** maps UiOption::name to the value it currently contains. */
-  uiValues: { [key: string]: PossibleUiValue };
+  uiValues: { [key: string]: UiValue };
 }
 
-export interface UiSettings_UiValuesEntry {
+export interface UiValues_UiValuesEntry {
   key: string;
-  value: PossibleUiValue | undefined;
+  value: UiValue | undefined;
 }
 
 const baseSlider: object = {
@@ -90,7 +98,7 @@ export const Slider = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Slider {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseSlider } as Slider;
     while (reader.pos < end) {
@@ -207,7 +215,7 @@ export const Checkbox = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Checkbox {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCheckbox } as Checkbox;
     while (reader.pos < end) {
@@ -285,7 +293,7 @@ export const Dropdown = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Dropdown {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseDropdown } as Dropdown;
     message.options = [];
@@ -382,7 +390,7 @@ export const RadioButton = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): RadioButton {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseRadioButton } as RadioButton;
     message.options = [];
@@ -462,7 +470,7 @@ export const TextField = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TextField {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTextField } as TextField;
     while (reader.pos < end) {
@@ -506,41 +514,51 @@ export const TextField = {
   },
 };
 
-const baseUiOption: object = { name: "" };
+const baseUiOptionDeclaration: object = {
+  name: "",
+  isMutable: false,
+  description: "",
+};
 
-export const UiOption = {
+export const UiOptionDeclaration = {
   encode(
-    message: UiOption,
+    message: UiOptionDeclaration,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
+    if (message.isMutable === true) {
+      writer.uint32(16).bool(message.isMutable);
+    }
+    if (message.description !== "") {
+      writer.uint32(26).string(message.description);
+    }
     if (message.slider !== undefined) {
-      Slider.encode(message.slider, writer.uint32(18).fork()).ldelim();
+      Slider.encode(message.slider, writer.uint32(34).fork()).ldelim();
     }
     if (message.checkbox !== undefined) {
-      Checkbox.encode(message.checkbox, writer.uint32(26).fork()).ldelim();
+      Checkbox.encode(message.checkbox, writer.uint32(42).fork()).ldelim();
     }
     if (message.dropdown !== undefined) {
-      Dropdown.encode(message.dropdown, writer.uint32(34).fork()).ldelim();
+      Dropdown.encode(message.dropdown, writer.uint32(50).fork()).ldelim();
     }
     if (message.radiobutton !== undefined) {
       RadioButton.encode(
         message.radiobutton,
-        writer.uint32(42).fork()
+        writer.uint32(58).fork()
       ).ldelim();
     }
     if (message.textfield !== undefined) {
-      TextField.encode(message.textfield, writer.uint32(50).fork()).ldelim();
+      TextField.encode(message.textfield, writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UiOption {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): UiOptionDeclaration {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseUiOption } as UiOption;
+    const message = { ...baseUiOptionDeclaration } as UiOptionDeclaration;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -548,18 +566,24 @@ export const UiOption = {
           message.name = reader.string();
           break;
         case 2:
-          message.slider = Slider.decode(reader, reader.uint32());
+          message.isMutable = reader.bool();
           break;
         case 3:
-          message.checkbox = Checkbox.decode(reader, reader.uint32());
+          message.description = reader.string();
           break;
         case 4:
-          message.dropdown = Dropdown.decode(reader, reader.uint32());
+          message.slider = Slider.decode(reader, reader.uint32());
           break;
         case 5:
-          message.radiobutton = RadioButton.decode(reader, reader.uint32());
+          message.checkbox = Checkbox.decode(reader, reader.uint32());
           break;
         case 6:
+          message.dropdown = Dropdown.decode(reader, reader.uint32());
+          break;
+        case 7:
+          message.radiobutton = RadioButton.decode(reader, reader.uint32());
+          break;
+        case 8:
           message.textfield = TextField.decode(reader, reader.uint32());
           break;
         default:
@@ -570,12 +594,22 @@ export const UiOption = {
     return message;
   },
 
-  fromJSON(object: any): UiOption {
-    const message = { ...baseUiOption } as UiOption;
+  fromJSON(object: any): UiOptionDeclaration {
+    const message = { ...baseUiOptionDeclaration } as UiOptionDeclaration;
     if (object.name !== undefined && object.name !== null) {
       message.name = String(object.name);
     } else {
       message.name = "";
+    }
+    if (object.isMutable !== undefined && object.isMutable !== null) {
+      message.isMutable = Boolean(object.isMutable);
+    } else {
+      message.isMutable = false;
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = String(object.description);
+    } else {
+      message.description = "";
     }
     if (object.slider !== undefined && object.slider !== null) {
       message.slider = Slider.fromJSON(object.slider);
@@ -605,9 +639,12 @@ export const UiOption = {
     return message;
   },
 
-  toJSON(message: UiOption): unknown {
+  toJSON(message: UiOptionDeclaration): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
+    message.isMutable !== undefined && (obj.isMutable = message.isMutable);
+    message.description !== undefined &&
+      (obj.description = message.description);
     message.slider !== undefined &&
       (obj.slider = message.slider ? Slider.toJSON(message.slider) : undefined);
     message.checkbox !== undefined &&
@@ -629,12 +666,22 @@ export const UiOption = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<UiOption>): UiOption {
-    const message = { ...baseUiOption } as UiOption;
+  fromPartial(object: DeepPartial<UiOptionDeclaration>): UiOptionDeclaration {
+    const message = { ...baseUiOptionDeclaration } as UiOptionDeclaration;
     if (object.name !== undefined && object.name !== null) {
       message.name = object.name;
     } else {
       message.name = "";
+    }
+    if (object.isMutable !== undefined && object.isMutable !== null) {
+      message.isMutable = object.isMutable;
+    } else {
+      message.isMutable = false;
+    }
+    if (object.description !== undefined && object.description !== null) {
+      message.description = object.description;
+    } else {
+      message.description = "";
     }
     if (object.slider !== undefined && object.slider !== null) {
       message.slider = Slider.fromPartial(object.slider);
@@ -665,11 +712,83 @@ export const UiOption = {
   },
 };
 
-const basePossibleUiValue: object = {};
+const baseUiOptionDeclarations: object = {};
 
-export const PossibleUiValue = {
+export const UiOptionDeclarations = {
   encode(
-    message: PossibleUiValue,
+    message: UiOptionDeclarations,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    for (const v of message.options) {
+      UiOptionDeclaration.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): UiOptionDeclarations {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseUiOptionDeclarations } as UiOptionDeclarations;
+    message.options = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.options.push(
+            UiOptionDeclaration.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UiOptionDeclarations {
+    const message = { ...baseUiOptionDeclarations } as UiOptionDeclarations;
+    message.options = [];
+    if (object.options !== undefined && object.options !== null) {
+      for (const e of object.options) {
+        message.options.push(UiOptionDeclaration.fromJSON(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: UiOptionDeclarations): unknown {
+    const obj: any = {};
+    if (message.options) {
+      obj.options = message.options.map((e) =>
+        e ? UiOptionDeclaration.toJSON(e) : undefined
+      );
+    } else {
+      obj.options = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<UiOptionDeclarations>): UiOptionDeclarations {
+    const message = { ...baseUiOptionDeclarations } as UiOptionDeclarations;
+    message.options = [];
+    if (object.options !== undefined && object.options !== null) {
+      for (const e of object.options) {
+        message.options.push(UiOptionDeclaration.fromPartial(e));
+      }
+    }
+    return message;
+  },
+};
+
+const baseUiValue: object = {};
+
+export const UiValue = {
+  encode(
+    message: UiValue,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.floatValue !== undefined) {
@@ -687,10 +806,10 @@ export const PossibleUiValue = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): PossibleUiValue {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): UiValue {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...basePossibleUiValue } as PossibleUiValue;
+    const message = { ...baseUiValue } as UiValue;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -714,8 +833,8 @@ export const PossibleUiValue = {
     return message;
   },
 
-  fromJSON(object: any): PossibleUiValue {
-    const message = { ...basePossibleUiValue } as PossibleUiValue;
+  fromJSON(object: any): UiValue {
+    const message = { ...baseUiValue } as UiValue;
     if (object.floatValue !== undefined && object.floatValue !== null) {
       message.floatValue = Number(object.floatValue);
     } else {
@@ -739,7 +858,7 @@ export const PossibleUiValue = {
     return message;
   },
 
-  toJSON(message: PossibleUiValue): unknown {
+  toJSON(message: UiValue): unknown {
     const obj: any = {};
     message.floatValue !== undefined && (obj.floatValue = message.floatValue);
     message.boolValue !== undefined && (obj.boolValue = message.boolValue);
@@ -749,8 +868,8 @@ export const PossibleUiValue = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<PossibleUiValue>): PossibleUiValue {
-    const message = { ...basePossibleUiValue } as PossibleUiValue;
+  fromPartial(object: DeepPartial<UiValue>): UiValue {
+    const message = { ...baseUiValue } as UiValue;
     if (object.floatValue !== undefined && object.floatValue !== null) {
       message.floatValue = object.floatValue;
     } else {
@@ -775,15 +894,15 @@ export const PossibleUiValue = {
   },
 };
 
-const baseUiSettings: object = {};
+const baseUiValues: object = {};
 
-export const UiSettings = {
+export const UiValues = {
   encode(
-    message: UiSettings,
+    message: UiValues,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     Object.entries(message.uiValues).forEach(([key, value]) => {
-      UiSettings_UiValuesEntry.encode(
+      UiValues_UiValuesEntry.encode(
         { key: key as any, value },
         writer.uint32(10).fork()
       ).ldelim();
@@ -791,19 +910,16 @@ export const UiSettings = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): UiSettings {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): UiValues {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseUiSettings } as UiSettings;
+    const message = { ...baseUiValues } as UiValues;
     message.uiValues = {};
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          const entry1 = UiSettings_UiValuesEntry.decode(
-            reader,
-            reader.uint32()
-          );
+          const entry1 = UiValues_UiValuesEntry.decode(reader, reader.uint32());
           if (entry1.value !== undefined) {
             message.uiValues[entry1.key] = entry1.value;
           }
@@ -816,35 +932,35 @@ export const UiSettings = {
     return message;
   },
 
-  fromJSON(object: any): UiSettings {
-    const message = { ...baseUiSettings } as UiSettings;
+  fromJSON(object: any): UiValues {
+    const message = { ...baseUiValues } as UiValues;
     message.uiValues = {};
     if (object.uiValues !== undefined && object.uiValues !== null) {
       Object.entries(object.uiValues).forEach(([key, value]) => {
-        message.uiValues[key] = PossibleUiValue.fromJSON(value);
+        message.uiValues[key] = UiValue.fromJSON(value);
       });
     }
     return message;
   },
 
-  toJSON(message: UiSettings): unknown {
+  toJSON(message: UiValues): unknown {
     const obj: any = {};
     obj.uiValues = {};
     if (message.uiValues) {
       Object.entries(message.uiValues).forEach(([k, v]) => {
-        obj.uiValues[k] = PossibleUiValue.toJSON(v);
+        obj.uiValues[k] = UiValue.toJSON(v);
       });
     }
     return obj;
   },
 
-  fromPartial(object: DeepPartial<UiSettings>): UiSettings {
-    const message = { ...baseUiSettings } as UiSettings;
+  fromPartial(object: DeepPartial<UiValues>): UiValues {
+    const message = { ...baseUiValues } as UiValues;
     message.uiValues = {};
     if (object.uiValues !== undefined && object.uiValues !== null) {
       Object.entries(object.uiValues).forEach(([key, value]) => {
         if (value !== undefined) {
-          message.uiValues[key] = PossibleUiValue.fromPartial(value);
+          message.uiValues[key] = UiValue.fromPartial(value);
         }
       });
     }
@@ -852,18 +968,18 @@ export const UiSettings = {
   },
 };
 
-const baseUiSettings_UiValuesEntry: object = { key: "" };
+const baseUiValues_UiValuesEntry: object = { key: "" };
 
-export const UiSettings_UiValuesEntry = {
+export const UiValues_UiValuesEntry = {
   encode(
-    message: UiSettings_UiValuesEntry,
+    message: UiValues_UiValuesEntry,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
     if (message.value !== undefined) {
-      PossibleUiValue.encode(message.value, writer.uint32(18).fork()).ldelim();
+      UiValue.encode(message.value, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -871,12 +987,10 @@ export const UiSettings_UiValuesEntry = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): UiSettings_UiValuesEntry {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+  ): UiValues_UiValuesEntry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseUiSettings_UiValuesEntry,
-    } as UiSettings_UiValuesEntry;
+    const message = { ...baseUiValues_UiValuesEntry } as UiValues_UiValuesEntry;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -884,7 +998,7 @@ export const UiSettings_UiValuesEntry = {
           message.key = reader.string();
           break;
         case 2:
-          message.value = PossibleUiValue.decode(reader, reader.uint32());
+          message.value = UiValue.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -894,46 +1008,40 @@ export const UiSettings_UiValuesEntry = {
     return message;
   },
 
-  fromJSON(object: any): UiSettings_UiValuesEntry {
-    const message = {
-      ...baseUiSettings_UiValuesEntry,
-    } as UiSettings_UiValuesEntry;
+  fromJSON(object: any): UiValues_UiValuesEntry {
+    const message = { ...baseUiValues_UiValuesEntry } as UiValues_UiValuesEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = String(object.key);
     } else {
       message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
-      message.value = PossibleUiValue.fromJSON(object.value);
+      message.value = UiValue.fromJSON(object.value);
     } else {
       message.value = undefined;
     }
     return message;
   },
 
-  toJSON(message: UiSettings_UiValuesEntry): unknown {
+  toJSON(message: UiValues_UiValuesEntry): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined &&
-      (obj.value = message.value
-        ? PossibleUiValue.toJSON(message.value)
-        : undefined);
+      (obj.value = message.value ? UiValue.toJSON(message.value) : undefined);
     return obj;
   },
 
   fromPartial(
-    object: DeepPartial<UiSettings_UiValuesEntry>
-  ): UiSettings_UiValuesEntry {
-    const message = {
-      ...baseUiSettings_UiValuesEntry,
-    } as UiSettings_UiValuesEntry;
+    object: DeepPartial<UiValues_UiValuesEntry>
+  ): UiValues_UiValuesEntry {
+    const message = { ...baseUiValues_UiValuesEntry } as UiValues_UiValuesEntry;
     if (object.key !== undefined && object.key !== null) {
       message.key = object.key;
     } else {
       message.key = "";
     }
     if (object.value !== undefined && object.value !== null) {
-      message.value = PossibleUiValue.fromPartial(object.value);
+      message.value = UiValue.fromPartial(object.value);
     } else {
       message.value = undefined;
     }

@@ -49,7 +49,7 @@ export const RobotParameters = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): RobotParameters {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseRobotParameters } as RobotParameters;
     while (reader.pos < end) {
@@ -171,7 +171,7 @@ export const TeamParameters = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TeamParameters {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseTeamParameters } as TeamParameters;
     while (reader.pos < end) {

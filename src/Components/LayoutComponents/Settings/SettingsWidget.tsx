@@ -2,10 +2,10 @@ import {Grid, makeStyles, Tab, Tabs, Typography} from '@material-ui/core'
 import { Component } from 'react'
 import StpStateWidget from './StpStateWidget';
 import TabPanel from './TabPanel';
-import CentralServerConnectionSettings, {CentralServerSettingsProps} from "../CentralServerConnectionSettings";
-import {RemoteUIProps} from "../BasicComponents/RemoteUIReactComponent";
-import SimulatorConnectionSettings from "../SimulatorConnectionSettings";
-import GeneralConnectionSettings from "../LayoutComponents/GeneralConnectionSettings";
+import CentralServerConnectionSettings, {CentralServerSettingsProps} from "../../CentralServerConnectionSettings";
+import {RemoteUIProps} from "../../BasicComponents/RemoteUIReactComponent";
+import SimulatorConnectionSettings from "../../SimulatorConnectionSettings";
+import GeneralConnectionSettings from "../GeneralConnectionSettings";
 
 interface SettingsWidgetState {
     tab: number;

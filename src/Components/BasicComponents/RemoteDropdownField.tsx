@@ -1,7 +1,7 @@
 import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
 import Long from "long";
-import {extractDataForComponent, findUIOptionByName} from "../Util";
+import { findUIOptionByName} from "../Util";
 import {Dropdown} from "../../Networking/proto_build/UiOptions";
 
 class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
@@ -14,7 +14,8 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
         this.getOptions = this.getOptions.bind(this);
         this.onChange = this.onChange.bind(this);
 
-        const [definition, value] = extractDataForComponent(props.name, props.state);
+        const definition = findUIOptionByName(this.props.ui.name, this.props.ui.decls);
+        const value = this.props.ui.values.uiValues?.[this.props.ui.name];
 
         // Decide on default value
         if (value?.integerValue != null) {
@@ -25,13 +26,13 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
     }
 
     private getOptions(): Dropdown {
-        const [definition,] = extractDataForComponent(this.props.name, this.props.state);
+        const definition = findUIOptionByName(this.props.ui.name, this.props.ui.decls);
         return definition?.dropdown ?? this.defaultValue;
     }
 
-    componentDidUpdate(prevProps: Readonly<RemoteUIProps>, prevState: Readonly<any>, snapshot?: any) {
-        const [, oldPropValue] = extractDataForComponent(prevProps.name, prevProps.state);
-        const [, newPropValue] = extractDataForComponent(this.props.name, this.props.state);
+    componentDidUpdate(prevProps: Readonly<{ui: RemoteUIProps}>, prevState: Readonly<any>, snapshot?: any) {
+        const oldPropValue = prevProps.ui.values.uiValues[this.props.ui.name];
+        const newPropValue = this.props.ui.values.uiValues[this.props.ui.name];
 
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.integerValue != null && oldPropValue?.integerValue != newPropValue?.integerValue) {
@@ -41,8 +42,8 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
 
     render() {
         return (
-                <select className="remote dropdownMenu" value={this.state.selection} name={this.props.name}
-                        id={this.props.name} onChange={this.onChange}>
+                <select className="remote dropdownMenu" value={this.state.selection} name={this.props.ui.name}
+                        id={this.props.ui.name} onChange={this.onChange}>
                     {this.renderOptions()}
                 </select>)
     }
@@ -51,7 +52,7 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
         const indexOfSelection = Number(ev.target.value)
         this.setState({...this.state, selection: indexOfSelection});
 
-        this.props.onChange(this.props.name, {
+        this.props.ui.onChange(this.props.ui.name, {
             boolValue: undefined,
             integerValue: new Long(indexOfSelection),
             floatValue: undefined,

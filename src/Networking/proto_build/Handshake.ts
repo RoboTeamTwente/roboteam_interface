@@ -1,48 +1,57 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { UiOption } from "./UiOptions";
+import { UiOptionDeclarations, UiValues } from "./UiOptions";
 
 export const protobufPackage = "proto";
 
+/** A message which contains either a list of declarations or a list of values for a single module. */
 export interface Handshake {
-  name: string;
-  options: UiOption[];
+  moduleName: string;
+  declarations: UiOptionDeclarations | undefined;
+  values: UiValues | undefined;
 }
 
-export interface HandshakeAccumulation {
-  handshakes: Handshake[];
-}
-
-const baseHandshake: object = { name: "" };
+const baseHandshake: object = { moduleName: "" };
 
 export const Handshake = {
   encode(
     message: Handshake,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (message.name !== "") {
-      writer.uint32(10).string(message.name);
+    if (message.moduleName !== "") {
+      writer.uint32(10).string(message.moduleName);
     }
-    for (const v of message.options) {
-      UiOption.encode(v!, writer.uint32(18).fork()).ldelim();
+    if (message.declarations !== undefined) {
+      UiOptionDeclarations.encode(
+        message.declarations,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.values !== undefined) {
+      UiValues.encode(message.values, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Handshake {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseHandshake } as Handshake;
-    message.options = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.name = reader.string();
+          message.moduleName = reader.string();
           break;
         case 2:
-          message.options.push(UiOption.decode(reader, reader.uint32()));
+          message.declarations = UiOptionDeclarations.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.values = UiValues.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -54,117 +63,56 @@ export const Handshake = {
 
   fromJSON(object: any): Handshake {
     const message = { ...baseHandshake } as Handshake;
-    message.options = [];
-    if (object.name !== undefined && object.name !== null) {
-      message.name = String(object.name);
+    if (object.moduleName !== undefined && object.moduleName !== null) {
+      message.moduleName = String(object.moduleName);
     } else {
-      message.name = "";
+      message.moduleName = "";
     }
-    if (object.options !== undefined && object.options !== null) {
-      for (const e of object.options) {
-        message.options.push(UiOption.fromJSON(e));
-      }
+    if (object.declarations !== undefined && object.declarations !== null) {
+      message.declarations = UiOptionDeclarations.fromJSON(object.declarations);
+    } else {
+      message.declarations = undefined;
+    }
+    if (object.values !== undefined && object.values !== null) {
+      message.values = UiValues.fromJSON(object.values);
+    } else {
+      message.values = undefined;
     }
     return message;
   },
 
   toJSON(message: Handshake): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    if (message.options) {
-      obj.options = message.options.map((e) =>
-        e ? UiOption.toJSON(e) : undefined
-      );
-    } else {
-      obj.options = [];
-    }
+    message.moduleName !== undefined && (obj.moduleName = message.moduleName);
+    message.declarations !== undefined &&
+      (obj.declarations = message.declarations
+        ? UiOptionDeclarations.toJSON(message.declarations)
+        : undefined);
+    message.values !== undefined &&
+      (obj.values = message.values
+        ? UiValues.toJSON(message.values)
+        : undefined);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Handshake>): Handshake {
     const message = { ...baseHandshake } as Handshake;
-    message.options = [];
-    if (object.name !== undefined && object.name !== null) {
-      message.name = object.name;
+    if (object.moduleName !== undefined && object.moduleName !== null) {
+      message.moduleName = object.moduleName;
     } else {
-      message.name = "";
+      message.moduleName = "";
     }
-    if (object.options !== undefined && object.options !== null) {
-      for (const e of object.options) {
-        message.options.push(UiOption.fromPartial(e));
-      }
-    }
-    return message;
-  },
-};
-
-const baseHandshakeAccumulation: object = {};
-
-export const HandshakeAccumulation = {
-  encode(
-    message: HandshakeAccumulation,
-    writer: _m0.Writer = _m0.Writer.create()
-  ): _m0.Writer {
-    for (const v of message.handshakes) {
-      Handshake.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: _m0.Reader | Uint8Array,
-    length?: number
-  ): HandshakeAccumulation {
-    const reader = input instanceof Uint8Array ? new _m0.Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseHandshakeAccumulation } as HandshakeAccumulation;
-    message.handshakes = [];
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.handshakes.push(Handshake.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): HandshakeAccumulation {
-    const message = { ...baseHandshakeAccumulation } as HandshakeAccumulation;
-    message.handshakes = [];
-    if (object.handshakes !== undefined && object.handshakes !== null) {
-      for (const e of object.handshakes) {
-        message.handshakes.push(Handshake.fromJSON(e));
-      }
-    }
-    return message;
-  },
-
-  toJSON(message: HandshakeAccumulation): unknown {
-    const obj: any = {};
-    if (message.handshakes) {
-      obj.handshakes = message.handshakes.map((e) =>
-        e ? Handshake.toJSON(e) : undefined
+    if (object.declarations !== undefined && object.declarations !== null) {
+      message.declarations = UiOptionDeclarations.fromPartial(
+        object.declarations
       );
     } else {
-      obj.handshakes = [];
+      message.declarations = undefined;
     }
-    return obj;
-  },
-
-  fromPartial(
-    object: DeepPartial<HandshakeAccumulation>
-  ): HandshakeAccumulation {
-    const message = { ...baseHandshakeAccumulation } as HandshakeAccumulation;
-    message.handshakes = [];
-    if (object.handshakes !== undefined && object.handshakes !== null) {
-      for (const e of object.handshakes) {
-        message.handshakes.push(Handshake.fromPartial(e));
-      }
+    if (object.values !== undefined && object.values !== null) {
+      message.values = UiValues.fromPartial(object.values);
+    } else {
+      message.values = undefined;
     }
     return message;
   },

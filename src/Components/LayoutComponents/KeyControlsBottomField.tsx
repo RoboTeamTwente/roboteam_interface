@@ -7,33 +7,33 @@ import RemoteCheckboxField from "../BasicComponents/RemoteCheckboxField";
 import {RemoteUIProps} from "../BasicComponents/RemoteUIReactComponent";
 import RemoteDropdownField from "../BasicComponents/RemoteDropdownField";
 
-class KeyControlsBottomField extends React.Component<RemoteUIProps, any> {
+class KeyControlsBottomField extends React.Component<{ui: RemoteUIProps}, any> {
     render() {
         return (
             <Grid container xs={12} alignItems={"center"} justify={"center"} spacing={5}>
                 <Grid item>
                     <label>Pause: </label>
-                    <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"stop"}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "stop"}}/>
                 </Grid>
                 <Grid item>
                     <label>Simulator: </label>
-                    <RemoteDropdownField state={this.props.state} onChange={this.props.onChange} name={"simulator"}/>
+                    <RemoteDropdownField ui={{...this.props.ui, name: "simulator"}}/>
                 </Grid>
                 <Grid item>
                     <label>Ignore Invariants: </label>
-                    <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"ignoreInvariants"}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "ignoreInvariants"}}/>
                 </Grid>
                 <Grid item>
                     <label>Use Referee: </label>
-                    <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"referee"}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "referee"}}/>
                 </Grid>
                 <Grid item>
                     <label>Is Yellow: </label>
-                    <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"isYellow"}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "isYellow"}}/>
                 </Grid>
                 <Grid item>
                     <label>Play Right: </label>
-                    <RemoteCheckboxField state={this.props.state} onChange={this.props.onChange} name={"isRight"}/>
+                    <RemoteCheckboxField ui={{...this.props.ui, name: "isRight"}}/>
                 </Grid>
             </Grid>
         );

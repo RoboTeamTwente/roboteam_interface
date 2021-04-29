@@ -16,7 +16,7 @@ class GeneralConnectionSettings extends React.PureComponent<{csProps: CentralSer
             </Grid>
             <Grid item xs={12}>
                 <h1>Simulation Server Settings</h1>
-                <SimulatorConnectionSettings state={this.props.simProps.state} onChange={this.props.simProps.onChange} name={""}/>
+                <SimulatorConnectionSettings ui={this.props.simProps}/>
             </Grid>
         </Grid>
     }
