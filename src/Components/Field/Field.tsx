@@ -100,7 +100,6 @@ class Field extends React.Component<FieldProps, FieldState> {
         }
     }
 
-
     componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<FieldState>, snapshot?: any) {
         if (this.props.field != null) {
             this.update(this.props.field) // TODO: Don't have to update on every render - should do a shallow equality check
@@ -118,7 +117,7 @@ class Field extends React.Component<FieldProps, FieldState> {
             // penaltyAreaDepth,
             // penaltyAreaWidth
         } = data;
-        console.log(data)
+        // console.log(data)
         this.drawLines(ctx, fieldLines);
         this.drawArcs(ctx, fieldArcs);
     }
@@ -133,7 +132,7 @@ class Field extends React.Component<FieldProps, FieldState> {
         if (ball !== undefined) {
             this.drawBall(ctx, ball!);
         }
-        console.log(world);
+        // console.log(world);
     }
 
     drawBall(ctx: CanvasRenderingContext2D, ball: WorldBall) {

@@ -17,9 +17,9 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
 
         // Decide on default value
         if (value?.textValue != null) {
-            this.state = {selection: value.textValue};
+            this.state = {textValue: value.textValue};
         } else {
-            this.state = {selection: definition?.textfield?.text ?? this.defaultValue.text};
+            this.state = {textValue: definition?.textfield?.text ?? this.defaultValue.text};
         }
     }
 
@@ -36,7 +36,7 @@ class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
     render() {
         return (
                 <input type="text" name={this.props.ui.name} id={this.props.ui.name} className="remote textField"
-                       value={this.state.textValue} onChange={this.onChange}/>)
+                       value={this.state.textValue} onChange={this.onChange} readOnly={!findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.isMutable ?? false}/>)
     }
 
     private onChange(ev: ChangeEvent<HTMLInputElement>) {

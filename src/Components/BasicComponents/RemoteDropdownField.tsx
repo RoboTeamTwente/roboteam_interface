@@ -3,6 +3,7 @@ import {ChangeEvent} from "react";
 import Long from "long";
 import { findUIOptionByName} from "../Util";
 import {Dropdown} from "../../Networking/proto_build/UiOptions";
+import shallowequal from "shallowequal";
 
 class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
 
@@ -34,9 +35,14 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
         const oldPropValue = prevProps.ui.values.uiValues[this.props.ui.name];
         const newPropValue = this.props.ui.values.uiValues[this.props.ui.name];
 
+        const oldDefinition = findUIOptionByName(this.props.ui.name, prevProps.ui.decls)?.dropdown;
+        const newDefinition = findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.dropdown;
+
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.integerValue != null && oldPropValue?.integerValue != newPropValue?.integerValue) {
             this.setState({selection: newPropValue?.integerValue})
+        } else if (oldDefinition?.default != newDefinition?.default && newDefinition?.default != null) {
+            this.setState({selection: findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.dropdown?.default})
         }
     }
 
@@ -64,8 +70,9 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
         const selections = [];
 
         for (let i = 0; i < this.getOptions().options.length; i++) {
+            let isDisabled = (!findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.isMutable ?? false) && this.state.selection !== i;
             selections.push(<option key={i} className="remote dropdownOption"
-                                    value={i}>{this.getOptions().options[i]}</option>)
+                                    value={i} disabled={isDisabled}>{this.getOptions().options[i]}</option>)
         }
 
         return selections;

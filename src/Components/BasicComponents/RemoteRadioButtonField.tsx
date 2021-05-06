@@ -37,13 +37,13 @@ class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
 
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.integerValue != null && oldPropValue?.integerValue != newPropValue?.integerValue) {
-            this.setState({integerValue: newPropValue?.integerValue})
+            this.setState({selection: newPropValue?.integerValue})
         }
     }
 
     render() {
         return (
-            <div onChange={this.onChange} id={this.props.ui.name} className="remote radioButtonGroup">
+            <div onChange={this.onChange} id={this.props.ui.name} className="remote radioButtonGroup" >
                 {this.renderRadioButtons()}
             </div>);
     }
@@ -64,10 +64,11 @@ class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
         const options = [];
 
         for (let i = 0; i < this.getOptions().options.length; i++) {
+            let isDisabled = (!findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.isMutable ?? false) && this.state.selection !== i;
             options.push(
                 <label className="remote radioLabel">{this.getOptions().options[i]}
                     <input type="radio" name={this.props.ui.name} key={this.getOptions().options[i]}
-                           className="remote radioButton" value={i} checked={this.state.selection === i}/>
+                           className="remote radioButton" value={i} disabled={isDisabled} checked={this.state.selection === i}/>
                 </label>
             );
         }

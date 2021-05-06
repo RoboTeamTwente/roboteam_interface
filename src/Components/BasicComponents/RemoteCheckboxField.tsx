@@ -28,15 +28,21 @@ class RemoteCheckboxField extends AbstractRemoteSubscribedReactComponent {
         const oldPropValue = prevProps.ui.values.uiValues[this.props.ui.name];
         const newPropValue = this.props.ui.values.uiValues[this.props.ui.name];
 
+        const oldDefinition = findUIOptionByName(this.props.ui.name, prevProps.ui.decls)?.checkbox;
+        const newDefinition = findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.checkbox;
+
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.boolValue != null && oldPropValue?.boolValue != newPropValue?.boolValue) {
             this.setState({selection: newPropValue?.boolValue})
+        } else if (oldDefinition?.default != newDefinition?.default && newDefinition?.default != null) {
+            console.log("Got new definition for a button!")
+            this.setState({selection: findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.dropdown?.default})
         }
     }
 
     render() {
         return (<input type="checkbox" id={this.props.ui.name} className="remote checkboxField"
-                       checked={this.state.selection} onChange={this.onChange}/>)
+                       checked={this.state.selection} onChange={this.onChange} readOnly={!findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.isMutable ?? false}/>)
     }
 
     private onChange(ev: ChangeEvent<HTMLInputElement>) {

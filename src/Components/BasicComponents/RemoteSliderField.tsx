@@ -17,9 +17,9 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
 
         // Decide on default value
         if (value?.integerValue != null) {
-            this.state = {selection: value.integerValue};
+            this.state = {integerValue: value.integerValue};
         } else {
-            this.state = {selection: definition?.slider?.default ?? this.defaultValue.default};
+            this.state = {integerValue: definition?.slider?.default ?? this.defaultValue.default};
         }
     }
 
@@ -42,7 +42,7 @@ class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
                 <input type="range" id={this.props.ui.name} className="remote sliderField"
                        min={this.getOptions().min} max={this.getOptions().max}
                        step={this.getOptions().interval} value={this.state.integerValue}
-                       onChange={this.onChange}/>)
+                       onChange={this.onChange} readOnly={!findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.isMutable ?? false}/>)
     }
 
     private onChange(ev: ChangeEvent<HTMLInputElement>) {

@@ -88,7 +88,13 @@ class App extends React.Component<{}, AppState> {
             newValues = data.handshakes[0].values;
         }
 
-        this.setState({...this.state, values: newValues, declarations: newDecls});
+        let newField = this.state.fieldVisualisationData;
+        if (data.systemState != null) {
+            newField = data.systemState;
+        }
+
+        // console.log(data);
+        this.setState({...this.state, values: newValues, declarations: newDecls, fieldVisualisationData: newField});
     }
 
     private installWebsocket(ws: WebSocket) {
