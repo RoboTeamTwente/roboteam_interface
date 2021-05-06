@@ -14,7 +14,7 @@ interface FieldProps {
     field: State | null;
 }
 
-class Field extends React.Component<FieldProps, void> {
+class Field extends React.Component<FieldProps, {}> {
     fieldWidthOffset: number;
     fieldHeightOffset: number;
 
@@ -101,7 +101,7 @@ class Field extends React.Component<FieldProps, void> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<void>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<{}>, snapshot?: any) {
         this.updateDimensions();
     }
 
