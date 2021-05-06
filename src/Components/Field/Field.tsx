@@ -7,30 +7,26 @@ import { WorldBall } from '../../Networking/proto_build/WorldBall';
 import { WorldRobot } from '../../Networking/proto_build/WorldRobot';
 import {calculateScaling, scale} from '../../Utils/Dimensions';
 import shallowequal from "shallowequal";
+import {RefObject} from "react";
 
 interface FieldProps {
     transformation: number; // degrees, valid values are 0, 90, 180, 270
     field: State | null;
 }
 
-interface FieldState {
-    state: ModuleState | null;
-    canvas: string;
-}
-
-class Field extends React.Component<FieldProps, FieldState> {
+class Field extends React.Component<FieldProps, void> {
     fieldWidthOffset: number;
     fieldHeightOffset: number;
 
+    canvas: RefObject<HTMLCanvasElement>;
+
     constructor(props: FieldProps) {
         super(props);
-        this.state = {
-            state: null,
-            canvas: "",
-        };
 
         this.fieldWidthOffset = 0;
         this.fieldHeightOffset = 0;
+
+        this.canvas = React.createRef();
 
         this.update = this.update.bind(this);
         this.drawField = this.drawField.bind(this);
@@ -54,7 +50,12 @@ class Field extends React.Component<FieldProps, FieldState> {
     }
 
     public update(state: State | null) {
-        let canvas = document.querySelector(".fieldCanvas")! as HTMLCanvasElement;
+        const canvas = this.canvas.current;
+
+        if (canvas == null || state == null) {
+            return;
+        }
+
         let ctx = canvas.getContext("2d");
 
         let lastState = state!;
@@ -100,10 +101,8 @@ class Field extends React.Component<FieldProps, FieldState> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<FieldState>, snapshot?: any) {
-        if (this.props.field != null) {
-            this.update(this.props.field) // TODO: Don't have to update on every render - should do a shallow equality check
-        }
+    componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<void>, snapshot?: any) {
+        this.updateDimensions();
     }
 
     drawField(ctx: CanvasRenderingContext2D, state: State) {
@@ -221,7 +220,7 @@ class Field extends React.Component<FieldProps, FieldState> {
     }
 
     render() {
-        return <canvas className="fieldCanvas" ref={this.state.canvas} />;
+        return <canvas className="fieldCanvas" ref={this.canvas} />;
     }
 }
 
