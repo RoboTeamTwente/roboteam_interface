@@ -2,8 +2,9 @@ import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIR
 import {ChangeEvent} from "react";
 import {TextField} from "../../Networking/proto_build/UiOptions";
 import {findUIOptionByName} from "../Util";
+import RemoteUIReactComponent from "./RemoteUIReactComponent";
 
-class RemoteTextField extends AbstractRemoteSubscribedReactComponent {
+class RemoteTextField extends RemoteUIReactComponent {
     private readonly defaultValue: TextField = {text: "unknown"};
 
     constructor(props: any) {

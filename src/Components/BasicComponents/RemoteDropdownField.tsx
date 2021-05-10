@@ -4,8 +4,9 @@ import Long from "long";
 import { findUIOptionByName} from "../Util";
 import {Dropdown} from "../../Networking/proto_build/UiOptions";
 import shallowequal from "shallowequal";
+import RemoteUIReactComponent from "./RemoteUIReactComponent";
 
-class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
+class RemoteDropdownField extends RemoteUIReactComponent {
 
     private readonly defaultValue: Dropdown = {text: "unknown", default: Long.ZERO, options: ["unknown"]};
 
@@ -41,7 +42,8 @@ class RemoteDropdownField extends AbstractRemoteSubscribedReactComponent {
         // If we got a valid update from the server, set it as the current state
         if (newPropValue?.integerValue != null && oldPropValue?.integerValue != newPropValue?.integerValue) {
             this.setState({selection: newPropValue?.integerValue})
-        } else if (oldDefinition?.default != newDefinition?.default && newDefinition?.default != null) {
+        }
+        else if (oldDefinition?.default != newDefinition?.default && newDefinition?.default != null) {
             this.setState({selection: findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.dropdown?.default})
         }
     }

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@material-ui/core";
 import React from "react";
 
-export default class TabPanel extends React.Component<any> {
+export default class TabPanel extends React.PureComponent<any> {
     render() {
         const { children, value, index, ...other } = this.props;
         return (
@@ -14,7 +14,7 @@ export default class TabPanel extends React.Component<any> {
             >
                 {value === index && (
                     <Box p={3}>
-                        <Typography>{children}</Typography>
+                       {children}
                     </Box>
                 )}
             </div>

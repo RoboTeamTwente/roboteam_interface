@@ -4,10 +4,11 @@ import Field from "../Field/Field";
 import {Box, Grid, Paper} from "@material-ui/core";
 import {ModuleState} from "../../Networking/proto_build/State";
 import RemoteCheckboxField from "../BasicComponents/RemoteCheckboxField";
-import {RemoteUIProps} from "../BasicComponents/RemoteUIReactComponent";
+import RemoteUIReactComponent, {RemoteUIProps} from "../BasicComponents/RemoteUIReactComponent";
 import RemoteDropdownField from "../BasicComponents/RemoteDropdownField";
 
-class KeyControlsBottomField extends React.Component<{ui: RemoteUIProps}, any> {
+class KeyControlsBottomField extends RemoteUIReactComponent {
+
     render() {
         return (
             <Grid container xs={12} alignItems={"center"} justify={"center"} spacing={5}>
@@ -37,6 +38,10 @@ class KeyControlsBottomField extends React.Component<{ui: RemoteUIProps}, any> {
                 </Grid>
             </Grid>
         );
+    }
+
+    subscribedValues(): string[] {
+        return ["pause_button", "serial_mode", "ignoreInvariants", "listen_to_referee_button", "listen_to_referee_button", "color_button", "side_button"];
     }
 }
 

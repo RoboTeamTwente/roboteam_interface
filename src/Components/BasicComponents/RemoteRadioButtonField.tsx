@@ -4,8 +4,9 @@ import { findUIOptionByName} from "../Util";
 import {RadioButton} from "../../Networking/proto_build/UiOptions";
 import Long from "long";
 import shallowequal from "shallowequal";
+import RemoteUIReactComponent from "./RemoteUIReactComponent";
 
-class RemoteRadioButtonField extends AbstractRemoteSubscribedReactComponent {
+class RemoteRadioButtonField extends RemoteUIReactComponent {
 
     private readonly defaultValue: RadioButton = {default: Long.ONE, options: ["Unknown"]};
 

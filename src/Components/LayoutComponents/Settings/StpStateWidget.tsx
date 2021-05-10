@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, {Component, PureComponent} from 'react'
 
 interface StpStateWidgetState { }
 interface StpStateWidgetProps { }
 
-export class StpStateWidget extends Component<StpStateWidgetState, StpStateWidgetProps> {
+export class StpStateWidget extends PureComponent<StpStateWidgetState, StpStateWidgetProps> {
     constructor(props: StpStateWidgetProps) {
         super(props);
         this.state = {}

@@ -9,6 +9,7 @@ import SettingsWidget from "./LayoutComponents/Settings/SettingsWidget";
 import FieldLayout from "./LayoutComponents/FieldLayout";
 import {Box} from "@material-ui/core";
 import {UiOptionDeclaration, UiOptionDeclarations, UiValue, UiValues} from "../Networking/proto_build/UiOptions";
+import _ from "lodash";
 
 type AppState = {
     readonly values: UiValues
@@ -18,6 +19,8 @@ type AppState = {
 }
 
 class App extends React.Component<{}, AppState> {
+
+    readonly throttledSetState = _.throttle(this.setState, 35);
 
     constructor(props: any) {
         super(props);
@@ -93,8 +96,7 @@ class App extends React.Component<{}, AppState> {
             newField = data.systemState;
         }
 
-        // console.log(data);
-        this.setState({...this.state, values: newValues, declarations: newDecls, fieldVisualisationData: newField});
+        this.throttledSetState({...this.state, values: newValues, declarations: newDecls, fieldVisualisationData: newField});
     }
 
     private installWebsocket(ws: WebSocket) {

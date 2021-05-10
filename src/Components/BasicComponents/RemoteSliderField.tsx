@@ -2,8 +2,9 @@ import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIR
 import {ChangeEvent} from "react";
 import {findUIOptionByName} from "../Util";
 import {Slider} from "../../Networking/proto_build/UiOptions";
+import RemoteUIReactComponent from "./RemoteUIReactComponent";
 
-class RemoteSliderField extends AbstractRemoteSubscribedReactComponent {
+class RemoteSliderField extends RemoteUIReactComponent {
 
     private readonly defaultValue: Slider = {text: "unknown", interval: 1, min: 0, max: 100, default: 50};
 

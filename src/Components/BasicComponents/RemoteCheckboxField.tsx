@@ -1,8 +1,9 @@
 import AbstractRemoteSubscribedReactComponent, {RemoteUIProps} from "./RemoteUIReactComponent";
 import {ChangeEvent} from "react";
 import {findUIOptionByName} from "../Util";
+import RemoteUIReactComponent from "./RemoteUIReactComponent";
 
-class RemoteCheckboxField extends AbstractRemoteSubscribedReactComponent {
+class RemoteCheckboxField extends RemoteUIReactComponent {
 
     private readonly defaultValue: boolean = false;
 
@@ -35,8 +36,7 @@ class RemoteCheckboxField extends AbstractRemoteSubscribedReactComponent {
         if (newPropValue?.boolValue != null && oldPropValue?.boolValue != newPropValue?.boolValue) {
             this.setState({selection: newPropValue?.boolValue})
         } else if (oldDefinition?.default != newDefinition?.default && newDefinition?.default != null) {
-            console.log("Got new definition for a button!")
-            this.setState({selection: findUIOptionByName(this.props.ui.name, this.props.ui.decls)?.dropdown?.default})
+            this.setState({selection: newDefinition!.default})
         }
     }
 

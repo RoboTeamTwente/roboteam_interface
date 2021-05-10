@@ -29,15 +29,28 @@ class RemoteUIReactComponent extends React.Component<{ui: RemoteUIProps}, any> {
             const thisDef = findUIOptionByName(value, this.props.ui.decls);
             const nextDef = findUIOptionByName(value, nextProps.ui.decls);
 
-            if (!shallowequal(thisDef, nextDef)) return true;
+            // if (!shallowequal(thisDef, nextDef)) return true;
+            if (thisDef?.description !== nextDef?.description ||
+                thisDef?.isMutable !== nextDef?.isMutable) return true;
             if (!shallowequal(nextValue, thisValue)) return true;
 
             if (!shallowequal(thisDef?.checkbox, nextDef?.checkbox)) return true;
             if (!shallowequal(thisDef?.textfield, nextDef?.textfield)) return true;
-            if (!shallowequal(thisDef?.dropdown, nextDef?.dropdown)) return true;
+            // if (!shallowequal(thisDef?.dropdown, nextDef?.dropdown)) return true;
+            if (thisDef?.dropdown?.text !== nextDef?.dropdown?.text ||
+                thisDef?.dropdown?.default !== nextDef?.dropdown?.default) return true;
+
+            if (thisDef?.dropdown?.options?.length != nextDef?.dropdown?.options?.length) return true;
+            for (let entry in thisDef?.dropdown?.options ?? []) {
+                if (thisDef?.dropdown?.options?.[entry] !== nextDef?.dropdown?.options?.[entry]) return true;
+            }
+
+
             if (!shallowequal(thisDef?.radiobutton, nextDef?.radiobutton)) return true;
             if (!shallowequal(thisDef?.slider, nextDef?.slider)) return true;
         }
+
+        // return true;
 
         return false;
     }

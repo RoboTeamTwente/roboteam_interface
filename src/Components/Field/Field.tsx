@@ -6,7 +6,6 @@ import { World } from '../../Networking/proto_build/World';
 import { WorldBall } from '../../Networking/proto_build/WorldBall';
 import { WorldRobot } from '../../Networking/proto_build/WorldRobot';
 import {calculateScaling, scale} from '../../Utils/Dimensions';
-import shallowequal from "shallowequal";
 import {RefObject} from "react";
 
 interface FieldProps {
@@ -19,6 +18,13 @@ class Field extends React.Component<FieldProps, {}> {
     fieldHeightOffset: number;
 
     canvas: RefObject<HTMLCanvasElement>;
+
+
+    // We abuse the lifecycle function. We never need to re-render - just update.
+    shouldComponentUpdate(nextProps: Readonly<FieldProps>, nextState: Readonly<{}>, nextContext: any): boolean {
+        this.updateDimensions();
+        return this.canvas.current == null;
+    }
 
     constructor(props: FieldProps) {
         super(props);
@@ -52,19 +58,18 @@ class Field extends React.Component<FieldProps, {}> {
     public update(state: State | null) {
         const canvas = this.canvas.current;
 
-        if (canvas == null || state == null) {
+        if (canvas == null || state == null || state?.field == null) {
             return;
         }
 
         let ctx = canvas.getContext("2d");
 
-        let lastState = state!;
         let {
             fieldLength,
             fieldWidth,
-        } = lastState.field!.field!;
+        } = state!.field!.field!;
 
-        let world = lastState.lastSeenWorld!;
+        let world = state!.lastSeenWorld!;
 
         calculateScaling(fieldLength, fieldWidth, canvas.parentElement);
         canvas.width = scale(fieldLength);
@@ -74,21 +79,19 @@ class Field extends React.Component<FieldProps, {}> {
             return;
         }
 
-        if (state == null) {
-            return;
-        }
         ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.lineWidth = 1;
 
         // Draw the field
         // ctx.strokeStyle = "#000000";
         this.drawField(ctx, state);
-        this.drawWorld(ctx, world, lastState);
+        this.drawWorld(ctx, world, state!);
         ctx.stroke();
     }
 
     componentDidMount() {
         window.addEventListener('resize', this.updateDimensions);
+        this.update(null);
     }
 
     componentWillUnmount() {
@@ -101,9 +104,9 @@ class Field extends React.Component<FieldProps, {}> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<{}>, snapshot?: any) {
-        this.updateDimensions();
-    }
+    // componentDidUpdate(prevProps: Readonly<FieldProps>, prevState: Readonly<{}>, snapshot?: any) {
+    //     this.updateDimensions();
+    // }
 
     drawField(ctx: CanvasRenderingContext2D, state: State) {
         let data = state.field!.field!;
