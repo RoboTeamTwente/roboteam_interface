@@ -25,9 +25,13 @@ type AppState = {
 
 class App extends React.Component<{}, AppState> {
 
-    readonly throttledSetState = _.throttle(this.setState, 250);
-    readonly worker: Worker = new Worker();
+
     throttledUpdate: any = null;
+    readonly throttledProtobufParsing: any;
+    readonly throttledSetState = _.throttle(this.setState, CONSTANTS.THROTTLE_SET_STATE);
+
+    readonly worker: Worker = new Worker();
+
     fieldRef: RefObject<Field>;
 
     constructor(props: any) {
@@ -42,15 +46,16 @@ class App extends React.Component<{}, AppState> {
         const initUIValues = UiValues.fromJSON(localStorage.getItem(CONSTANTS.RECENT_UI_STATE_VALUES_KEY) ?? "[]");
         const pastUIDecls = UiOptionDeclarations.fromJSON(localStorage.getItem(CONSTANTS.RECENT_UI_STATE_DECL_KEY) ?? "[]");
 
-        // TODO: Save old field data?
         this.state = {values: initUIValues, declarations: pastUIDecls, fieldVisualisationData: undefined, ws: undefined};
 
         this.fieldRef = React.createRef<Field>();
+
         this.worker.addEventListener("message", this.onWorkerMessage);
+        this.worker.postMessage = this.worker.postMessage.bind(this.worker);
+        this.throttledProtobufParsing = _.throttle(this.worker.postMessage, CONSTANTS.THROTTLE_PROTOBUF_MSG_PARSE);
     }
 
     componentDidMount() {
-
         const [host, port] = getStartingPortHostnameCombination();
 
         this.installWebsocket(new WebSocket(hostnamePortPairToWSURL(host, port, "")));
@@ -60,7 +65,7 @@ class App extends React.Component<{}, AppState> {
             localStorage.setItem(CONSTANTS.RECENT_UI_STATE_DECL_KEY, JSON.stringify(UiOptionDeclarations.toJSON(this.state.declarations)));
         };
 
-        this.throttledUpdate = _.throttle(this.fieldRef.current!.update, 17);
+        this.throttledUpdate = _.throttle(this.fieldRef.current!.update, CONSTANTS.THROTTLE_FIELD_UPDATE);
     }
 
     render() {
@@ -92,9 +97,7 @@ class App extends React.Component<{}, AppState> {
     }
 
     private onWsMessage(event: MessageEvent) {
-        let data: ModuleState | undefined = undefined;
-
-        this.worker.postMessage(new Uint8Array(event.data))
+        this.throttledProtobufParsing(new Uint8Array(event.data))
     }
 
     private installWebsocket(ws: WebSocket) {
