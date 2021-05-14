@@ -2,32 +2,44 @@
 // Could probably encapsulate this in a class
 // But eh for now
 // TODO: Encapsulate in class
-let fieldLength: number;
-let fieldWidth: number;
-let scaling: number = 0;
+let fieldLength: number = 0;
+let fieldWidth: number = 0;
+let canvasScaling: number = 0;
 
-export function setFieldLength(length: number) {
+export function getServerReportedLength(): number {
+    return fieldLength;
+}
+
+export function getServerReportedWidth(): number {
+    return fieldWidth;
+}
+
+export function setServerReportedFieldLength(length: number) {
     fieldLength = length;
 }
 
-export function setFieldWidth(width: number) {
+export function setServerReportedFieldWidth(width: number) {
     fieldWidth = width;
 }
 
-export function calculateScaling(length: number, width: number, parent: HTMLElement | null) {
-    setFieldLength(length);
-    setFieldWidth(width);
-    let lenghtwiseScale = 0.95 * getLength(parent) / fieldLength;
-    let widthwiseScale = 0.95 * getWidth(parent) / fieldWidth;
-    scaling = lenghtwiseScale >= widthwiseScale ? widthwiseScale : lenghtwiseScale;
+export function calculateScalingForFitParent(parent: HTMLElement | null): number {
+    let lenghtwiseScale = getParentOrDocHeight(parent) / scaleForCanvas(fieldWidth);
+    let widthwiseScale = getParentOrDocWidth(parent) / scaleForCanvas(fieldLength) ;
+    return Math.min(lenghtwiseScale, widthwiseScale);
 }
 
-export function scale(value: number) : number {
-    return scaling * value;
+export function calculateCanvasSpecificScaling() {
+    let lenghtwiseScale = window.devicePixelRatio * 1000 / fieldLength;
+    let widthwiseScale =  window.devicePixelRatio * 500 / fieldWidth;
+    canvasScaling = lenghtwiseScale >= widthwiseScale ? widthwiseScale : lenghtwiseScale;
 }
 
-export function getLength(parent: HTMLElement | null) : number {
-    return parent?.clientWidth ?? Math.max(
+export function scaleForCanvas(value: number) : number {
+    return canvasScaling * value;
+}
+
+function getMaxDocumentLength(): number {
+    return  Math.max(
         document.body.scrollWidth,
         document.documentElement.scrollWidth,
         document.body.offsetWidth,
@@ -36,12 +48,20 @@ export function getLength(parent: HTMLElement | null) : number {
     );
 }
 
-export function getWidth(parent: HTMLElement | null): number {
-    return parent?.clientHeight ?? Math.max(
+export function getParentOrDocWidth(parent: HTMLElement | null) : number {
+    return parent?.clientWidth ?? getMaxDocumentLength();
+}
+
+function getMaxDocumentHeight(): number {
+    return Math.max(
         document.body.scrollHeight,
         document.documentElement.scrollHeight,
         document.body.offsetHeight,
         document.documentElement.offsetHeight,
         document.documentElement.clientHeight
     );
+}
+
+export function getParentOrDocHeight(parent: HTMLElement | null): number {
+    return parent?.clientHeight ?? getMaxDocumentHeight();
 }

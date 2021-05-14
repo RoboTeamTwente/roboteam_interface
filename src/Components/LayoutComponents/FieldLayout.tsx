@@ -13,16 +13,16 @@ type CombinedUiFieldProps = {
 
 class FieldLayout extends React.Component<CombinedUiFieldProps, any> {
   render() {
-    return (
-        <Grid container xs={7} style={{height: "100vh"}}>
-            <Grid item xs={12} style={{minHeight: "80vh"}}>
-                    <Field transformation={0} field={this.props.field ?? null}/>
-            </Grid>
-                    <Grid item xs={12}>
-                        <KeyControlsBottomField ui={this.props.ui}/>
-                    </Grid>
-        </Grid>
-    );
+    return null; //(
+        // <Grid container xs={7} style={{height: "100vh"}}>
+        //     <Grid item xs={12} style={{minHeight: "80vh"}}>
+        //             <Field transformation={0} field={this.props.field ?? null}/>
+        //     </Grid>
+        //             <Grid item xs={12}>
+        //                 <KeyControlsBottomField ui={this.props.ui}/>
+        //             </Grid>
+        // </Grid>
+    // );
   }
 }
 
