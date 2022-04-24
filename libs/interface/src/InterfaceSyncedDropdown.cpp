@@ -19,7 +19,7 @@ namespace rtt::Interface {
         auto sptr = iface.get()->getValues().lock();
         if (!sptr) return;
 
-        sptr.get()->setSetting(this->identity, InterfaceValue((int64_t)this->currentIndex()));
+        sptr.get()->setSetting(this->identity, InterfaceValue(this->currentText().toStdString()));
     }
 
     void InterfaceSyncedDropdown::updateProps(const InterfaceDeclaration& decl) {
