@@ -3,15 +3,19 @@
 //
 
 #include "InterfaceFieldRenderer.h"
-void InterfaceFieldRenderer::renderBall(QPainter *painter, proto::State info, QRect size) {
+#include <cmath>
+
+InterfaceFieldRenderer::InterfaceFieldRenderer(std::weak_ptr<InterfaceFieldStateStore> storage) {
+    this->storage = storage;
+}
+
+void InterfaceFieldRenderer::renderBall(QPainter *painter, QRect size) {
 
 }
 
-void InterfaceFieldRenderer::renderField(QPainter *painter, proto::State info, QRect size) {
-    auto req_w = info.field().field().field_width();
-    auto req_h = info.field().field().field_length();
+void InterfaceFieldRenderer::renderField(QPainter *painter, QRect size) {
 
-    double scale = get_scale(size.width(), size.height(), req_w, req_h);
+    auto info = this->storage.lock()->getState();
 
     auto arcs = info.field().field().field_arcs();
     auto lines = info.field().field().field_lines();
@@ -48,15 +52,60 @@ void InterfaceFieldRenderer::renderField(QPainter *painter, proto::State info, Q
     painter->restore();
 }
 
-void InterfaceFieldRenderer::renderRobot(QPainter *painter, proto::State info, QRect size, bool isYellow, int id) {
+void InterfaceFieldRenderer::renderRobot(QPainter *painter, QRect size, bool isYellow, int id) {
 }
 
-double InterfaceFieldRenderer::get_scale(int canvas_w, int canvas_h, int field_w, int field_h) {
-    if (!field_h || !field_w) return 0;
-    double w_scale = (double)canvas_w / (double)field_w;
-    double h_scale =  (double)canvas_h / (double)field_h;
+//void InterfaceFieldRenderer::renderPaths(QPainter *painter, QRect size) {
+//    painter->save();
+//    painter->setRenderHint(QPainter::RenderHint::Antialiasing, true);
+//
+//    auto dPen = painter->pen();
+//    dPen.setWidth(1);
+//    dPen.setColor(Qt::cyan);
+//    painter->setPen(dPen);
+//
+//    painter->drawRect(0, 0, 50, 30);
+//
+//    painter->translate(size.width()/2, size.height()/2);
+//
+//    std::vector<rtt::RobotPath> yellowPaths;
+//    std::vector<rtt::RobotPath> bluePaths;
+//    {
+//        auto storagePointer = this->storage.lock();
+//        yellowPaths = storagePointer->getAIData(rtt::Team::YELLOW).robotPaths;
+//        bluePaths = storagePointer->getAIData(rtt::Team::BLUE).robotPaths;
+//    }
+//
+//    for (const auto& path : yellowPaths) {
+//        auto beginIt = path.path.begin();
+//        auto nextIt = std::next(beginIt);
+//
+//        for (const auto& point : path.path) {
+//            std::cout << "{" << point.x << "," << point.y << "},";
+//        } std::cout << std::endl;
+//    }
+//
+//
+////        while (beginIt != path.path.end() && nextIt != path.path.end()) {
+////            QPoint begin(static_cast<int>(this->scale * (*beginIt).x), static_cast<int>(this->scale * (*beginIt).y));
+////            QPoint end(static_cast<int>(this->scale * (*nextIt).x), static_cast<int>(this->scale * (*nextIt).y));
+////
+////            painter->drawLine(begin, end);
+////
+////            beginIt = nextIt;
+////            std::advance(nextIt, 1);
+////        }
+//
+//    painter->restore();
+//}
 
-    return std::min({w_scale, h_scale});
+void InterfaceFieldRenderer::updateScale(int canvasWidth, int canvasHeight, double fieldWidth, double fieldHeight) {
+    if (fieldWidth == 0 || fieldHeight == 0) this->scale = 1;
+
+    double w_scale = static_cast<double>(canvasWidth) / fieldWidth;
+    double h_scale =  static_cast<double>(canvasHeight) / fieldHeight;
+
+    this->scale = std::fmin(w_scale, h_scale);
 }
 
 
