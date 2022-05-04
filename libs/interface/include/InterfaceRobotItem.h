@@ -14,6 +14,7 @@ private:
     bool isYellow;
     std::weak_ptr<InterfaceFieldStateStore> storage;
     double scale;
+    int radius;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;

@@ -3,14 +3,26 @@
 //
 
 #include "InterfaceRobotItem.h"
-#include <QGraphicsView>
 
-#include <math.h>
+#include <QGraphicsView>
+#include <QStaticText>
+#include <cmath>
+
+constexpr double REAL_ROBOT_RADIUS = 0.09; // radius is about 8 cm
 
 void InterfaceRobotItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    ////////////////////////////////////////////////////
     painter->save();
     painter->setRenderHint(QPainter::RenderHint::Antialiasing);
+
+    // Draw rotation-line of robot
+    painter->setPen(QPen(Qt::red, 2));
+    painter->drawLine(0, 0, radius*3, 0);
+
+    // Draw role of robot
+    QStaticText role("Halt_#");
+    painter->drawStaticText(-role.size().width()/2, radius, role);
+
+    // Draw robot
     if (!isYellow) {
         painter->setPen(Qt::blue);
         painter->setBrush(Qt::blue);
@@ -18,14 +30,8 @@ void InterfaceRobotItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
         painter->setPen(Qt::yellow);
         painter->setBrush(Qt::yellow);
     }
+    painter->drawEllipse(QPointF(0, 0), radius, radius);
 
-    //std::cout << "Drawing robot" << std::endl;
-
-    //painter->drawEllipse(QPoint{20, 20}, 20, 20);
-
-    //painter->setPen(QPen(Qt::red, 3));
-    //painter->setBrush(Qt::red);
-    //painter->drawLine(20, 20, 40, 20);
     painter->restore();
 }
 
@@ -37,7 +43,7 @@ int InterfaceRobotItem::getRobotId() const {
     return this->id;
 }
 QRectF InterfaceRobotItem::boundingRect() const {
-    return QRectF(0, 0, 40, 40);
+    return QRectF(-60, -60, 120, 120);
 }
 
 void InterfaceRobotItem::triggerUpdate() {
@@ -52,7 +58,6 @@ void InterfaceRobotItem::triggerUpdate() {
         return itm.id() == this->id;
     });
 
-
     if (us == searchArea.end()) {
         this->setVisible(false);
         return;
@@ -60,23 +65,16 @@ void InterfaceRobotItem::triggerUpdate() {
         this->setVisible(true);
     }
 
-    double canvasCenterX = this->scene()->views()[0]->viewport()->width()/2;
-    double canvasCenterY = this->scene()->views()[0]->viewport()->height()/2;
+    int canvasCenterX = this->scene()->views()[0]->viewport()->width()/2;
+    int canvasCenterY = this->scene()->views()[0]->viewport()->height()/2;
 
-    double x = canvasCenterX + (scale * (us->pos().x()/1000)) - 20;
-    double y = canvasCenterY + (scale * (us->pos().y()/1000)) - 20;
-
-    std::cout << "Robot: " << x << ", " << y << std::endl;
-
-    this->setTransformOriginPoint(QPoint(20 ,20));
-
-    this->setRotation((us->angle()/M_PI) * 180);
-    this->setScale((20 * scale * 4)/20);
+    double x = us->pos().x() * scale + canvasCenterX;
+    double y = scale * us->pos().y() + canvasCenterY;
 
     this->setPos(x, y);
+    this->setRotation((us->angle()/M_PI) * 180);
 
-
-    //        std::cout << "[" + std::to_string(id) + "]" + " X: " + std::to_string(x) + " | Y: " + std::to_string(y) + " [Yellow = " <<  std::boolalpha <<  isYellow << "]" << std::endl;
+    this->update();
 }
 
 void InterfaceRobotItem::updateScale(double fieldWidth, double fieldHeight) {
@@ -88,8 +86,6 @@ void InterfaceRobotItem::updateScale(double fieldWidth, double fieldHeight) {
     double widthScale = canvasWidth / (fieldWidth/1000);
     double heightScale = canvasHeight / (fieldHeight/1000);
 
-    std::cout << "WidthScale: c: " << canvasWidth << ", f: " << fieldWidth << " --> " << widthScale << std::endl;
-    std::cout << "HeightScale: c: " << canvasHeight << ", f: " << fieldHeight << " --> " << heightScale << std::endl;
-
     this->scale = std::fmin(widthScale, heightScale);
+    this->radius = static_cast<int>(REAL_ROBOT_RADIUS * this->scale);
 }
