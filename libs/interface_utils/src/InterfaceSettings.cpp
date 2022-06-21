@@ -52,14 +52,12 @@ void InterfaceSettings::handleData(const proto::UiValues& uiValues, std::weak_pt
         return;
     }
 
-    this->values.clear();
-
     for (const auto& entry : uiValues.ui_values()) {
         const auto declForVal = decls->getDeclaration(entry.first);
 
         if (!declForVal.has_value()) continue;
-        if (precedence == InterfaceSettingsPrecedence::AI && declForVal->isMutable) continue; // Prevent interface from changing AI-only uiValues
-        if (precedence == InterfaceSettingsPrecedence::IFACE && !declForVal->isMutable) continue; // Prevent AI from changing interface-only uiValues
+        if (precedence == InterfaceSettingsPrecedence::AI && !declForVal->isMutable && this->values.contains(declForVal->path)) continue; // Prevent interface from changing AI-only uiValues
+        if (precedence == InterfaceSettingsPrecedence::IFACE && declForVal->isMutable && this->values.contains(declForVal->path)) continue; // Prevent AI from changing interface-only uiValues
 
         this->values.insert_or_assign(entry.first, entry.second);
     }
@@ -81,7 +79,6 @@ proto::UiValues InterfaceSettings::toProto() const noexcept {
 
 [[maybe_unused]] void InterfaceSettings::removeSetting(const std::string name) noexcept {
     std::scoped_lock lck(this->mtx);
-
     this->values.erase(name);
 
     this->did_change.store(true);
@@ -89,6 +86,14 @@ proto::UiValues InterfaceSettings::toProto() const noexcept {
 
 bool InterfaceSettings::getDidChange() {
     return this->did_change.exchange(false);
+}
+
+void InterfaceSettings::populateWithDefaults(std::weak_ptr<InterfaceDeclarations> declsPtr) noexcept {
+    if (auto decls = declsPtr.lock()) {
+        for (const auto& decl : decls->getDeclarations()) {
+            this->setSetting(decl.first, decl.second.defaultValue);
+        }
+    }
 }
 
 
